@@ -1,0 +1,27 @@
+[submodule "themes/bluelake"]
+	path = themes/bluelake
+	url = https://github.com/suzhouxing/hexo-theme-BlueLake.git
+[submodule "themes/concise"]
+	path = themes/concise
+	url = https://github.com/suzhouxing/hexo-theme-concise.git
+[submodule "themes/freemind"]
+	path = themes/freemind
+	url = https://github.com/suzhouxing/hexo-theme-freemind.git
+[submodule "themes/landscape"]
+	path = themes/landscape
+	url = https://github.com/suzhouxing/hexo-theme-landscape.git
+[submodule "themes/light"]
+	path = themes/light
+	url = https://github.com/suzhouxing/hexo-theme-light.git
+[submodule "themes/materialflow"]
+	path = themes/materialflow
+	url = https://github.com/suzhouxing/hexo-theme-material-flow.git
+[submodule "maupassant"]
+	path = themes/maupassant
+	url = https://github.com/suzhouxing/maupassant-hexo.git
+[submodule "themes/next"]
+	path = themes/next
+	url = https://github.com/suzhouxing/hexo-theme-next.git
+[submodule "themes/pacman"]
+	path = themes/pacman
+	url = https://github.com/suzhouxing/pacman.git
