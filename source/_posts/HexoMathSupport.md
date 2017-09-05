@@ -12,12 +12,6 @@ tags:
 - LaTeX
 - Bug
 ---
-<!-- <script type="text/javascript" async
-  src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script> -->
-
-# 背景
-
 为了在 Hexo 生成的网站里面显示 LaTeX 书写风格的数学公式, 尝试了不少方法.
 比如官方的 `hexo-math`, 还有别人提到的 `hexo-renderer-mathjax`, 以及 `hexo-renderer-pandoc`.
 但是始终不能正确显示数学公式.
@@ -65,7 +59,7 @@ script(src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-M
 ```
 
 其中 `maupassant` 的位置填你自己选择的主题名字.
-`head.jade` 是嵌入下面的脚本的位置, 不一定非要在 head 里, 而且后缀可能不同主题的不一样 (使用了不同的引擎).
+`head.jade` 是嵌入上面的脚本的位置, 不一定非要在 head 里, 而且后缀可能不同主题的不一样 (使用了不同的引擎).
 我这里选择了和主题原有文件一致的后缀, 因为主题已经声明了其依赖的插件, 不用担心无法解析的问题.
 
 
