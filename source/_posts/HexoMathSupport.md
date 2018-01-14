@@ -55,7 +55,7 @@ npm uninstall hexo-inject --save
 在 `themes/maupassant/layout/_partial/head.jade` 的末尾添加以下代码.
 
 ```jade
-script(src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML")
+script(type='text/javascript', src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML", async)
 ```
 
 其中 `maupassant` 的位置填你自己选择的主题名字.
