@@ -1,3 +1,12 @@
+# 高价值问题汇总
+
+- 旅行采购员
+- 带间隔约束的一维放置问题
+- 代码压缩问题 -> web (html + css + js) code minifier
+- 航班延误概率分布预测
+
+
+
 # NP问题
 
 ## 天线布局设计
@@ -193,7 +202,7 @@ Shortest Path with Layover
 
 # 复杂度未知的问题
 
-## 放置问题
+## 带间隔约束的一维放置问题
 Placement Problem with Gap Constraint
 
 ### 抽象描述
@@ -291,6 +300,30 @@ Weapon Target Assignment
 ### 扩展
 
 - 给定一个分配方案, 要求重合度尽可能高.
+
+
+## 代码压缩问题
+Code Minifier
+
+### 抽象描述
+
+将便于阅读的代码转换为体积最小的可正确编译运行的代码.
+将代码中的用户自定义标识符 (类型/函数/变量) 按 Huffman 编码的方式, 使用更短的标识符替换.
+删除所有无用的空白字符, 注意不能删除用户的字符串常量中的空白字符.
+删除不影响算符优先级的小括号和不影响代码逻辑的大括号.
+
+### 应用场景
+
+- 对前端代码或者脚本语言的代码进行混淆, 提高解析速度同时避免抄袭.
+
+### 参考资料
+
+- https://www.keycdn.com/support/how-to-minify-css-js-and-html/
+- https://developers.google.com/closure/compiler/
+- https://developers.google.com/speed/docs/insights/MinifyResources
+- https://github.com/kangax/html-minifier
+- http://html-minify.online-domain-tools.com/
+- https://github.com/samccone/The-cost-of-transpiling-es2015-in-2016#summary-of-findings
 
 
 ## 波长分配
