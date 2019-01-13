@@ -24,9 +24,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 数学 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 数学 </tag>
             
         </tags>
       
@@ -55,9 +55,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 数学 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 数学 </tag>
             
         </tags>
       
@@ -113,9 +113,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 数学 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 数学 </tag>
             
         </tags>
       
@@ -144,9 +144,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 数学 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 数学 </tag>
             
         </tags>
       
@@ -241,9 +241,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 数学 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 数学 </tag>
             
         </tags>
       
@@ -299,9 +299,9 @@
       
         <tags>
             
-            <tag> 数学 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 数学 </tag>
             
             <tag> 高中 </tag>
             
@@ -419,13 +419,13 @@
             
             <tag> Hexo </tag>
             
-            <tag> Bug </tag>
-            
             <tag> 数学公式 </tag>
             
             <tag> MathJax </tag>
             
             <tag> LaTeX </tag>
+            
+            <tag> Bug </tag>
             
         </tags>
       
@@ -487,11 +487,11 @@
             
             <tag> Hexo </tag>
             
+            <tag> Bug </tag>
+            
             <tag> 主题 </tag>
             
             <tag> 缓存 </tag>
-            
-            <tag> Bug </tag>
             
         </tags>
       
