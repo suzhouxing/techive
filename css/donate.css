@@ -32,7 +32,6 @@ a{
 	height: 100%;
 }
 .blur {
-	-webkit-filter: blur(3px);
 	filter: blur(3px);
 }
 .tr3 {
@@ -79,13 +78,11 @@ a{
 	overflow: hidden;
 	line-height: 600px;
 	height: 28px;
-	-webkit-filter: grayscale(1);
 	filter: grayscale(1);
 	opacity: 0.5;
 }
 #donateBox li:hover {
 	background-color: rgba(204, 217, 220,0.3);
-	-webkit-filter: grayscale(0);
 	filter: grayscale(0);
 	opacity: 1;
 }
