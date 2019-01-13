@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="An Archive for Technologies by Zhouxing Su"><title>数学规划基础 | Techive</title><link rel="stylesheet" type="text/css" href="/techive/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/techive/favicon.ico"><link rel="apple-touch-icon" href="/techive/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/techive/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/techive/atom.xml"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">数学规划基础</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">数学规划基础</h1><div class="post-meta">Jan 13, 2019<span> | </span><span class="category"><a href="/techive/categories/技术/">技术</a></span></div><a data-disqus-identifier="2019/01/13/Opt-MathematicalProgramming/" href="/techive/2019/01/13/Opt-MathematicalProgramming/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><h1 id="线性规划与混合整数规划">线性规划与混合整数规划</h1>
+<h2 id="思维方式">思维方式</h2>
+<h3 id="已知">已知</h3>
+<ul>
+<li>约束和目标中的系数</li>
+</ul>
+<h3 id="决策">决策</h3>
+<ul>
+<li>确定哪些可控因素需要做决策
+<ul>
+<li>定义域
+<ul>
+<li>布尔 / 整数 / 实数</li>
+<li>上界 / 下界</li>
+</ul></li>
+</ul></li>
+<li>从最根本的需求开始
+<ul>
+<li>显示决策 (根本需求)</li>
+<li>隐式决策 (客户不关心但十分重要)</li>
+<li>辅助决策 (将非线性约束转化为线性约束)</li>
+</ul></li>
+<li>不够用再返回来补充</li>
+</ul>
+<h3 id="约束">约束</h3>
+<ul>
+<li>决策变量组成的表达式满足的关系
+<ul>
+<li>等式或不等式 <span class="math inline">\(f(x) ? g(x)\)</span></li>
+<li>下标的取值范围 <span class="math inline">\(\forall i \in V\)</span></li>
+</ul></li>
+<li>可以和目标对调顺序, 谁简单先考虑谁</li>
+<li>如何验证约束是否完备?
+<ul>
+<li>经验?</li>
+<li>详尽的测试?</li>
+<li>...</li>
+</ul></li>
+</ul>
+<h3 id="目标">目标</h3>
+<ul>
+<li>不同决策变量取值组合产生的后果</li>
+</ul>
+<h3 id="思考问题的角度-决策变量的设置">思考问题的角度 (决策变量的设置)</h3>
+<ul>
+<li>图着色问题
+<ul>
+<li>每个节点染什么颜色</li>
+<li>每种颜色的节点集合包含了哪些节点</li>
+<li>每两个节点是否染了相同的颜色</li>
+</ul></li>
+<li>布尔表达式可满足性问题
+<ul>
+<li>保证每个布尔变量在所有子句中取值一致，最大化为真的子句数量</li>
+<li>保证每个子句均为真，最大化布尔变量的一致性</li>
+</ul></li>
+</ul>
+<h2 id="编程实现">编程实现</h2>
+<h3 id="求解器选择">求解器选择</h3>
+<ul>
+<li><a href="http://www.gurobi.com/" target="_blank" rel="noopener">Gurobi</a>
+<ul>
+<li>目前最高效的线性规划/混合整数规划求解器</li>
+<li>支持免费学术许可证申请</li>
+</ul></li>
+<li><a href="https://www.ibm.com/software/commerce/optimization/cplex-optimizer/" target="_blank" rel="noopener">CPLEX</a>
+<ul>
+<li>IBM旗下的 &quot;行业标准&quot;</li>
+</ul></li>
+<li><a href="http://scip.zib.de/" target="_blank" rel="noopener">SCIP</a>
+<ul>
+<li>号称最快的开源求解器</li>
+</ul></li>
+<li><a href="https://projects.coin-or.org/Cbc" target="_blank" rel="noopener">COIN-OR</a>
+<ul>
+<li>功能繁多的开源运筹学工具包</li>
+</ul></li>
+<li><a href="https://github.com/google/or-tools" target="_blank" rel="noopener">or-tools</a>
+<ul>
+<li>开源经典组合优化算法库</li>
+<li>提供统一的接口调用各大常见求解器</li>
+</ul></li>
+</ul>
+<h3 id="接口选择">接口选择</h3>
+<ul>
+<li>编程语言接口
+<ul>
+<li>开发中最常用的接口</li>
+<li>提供更高层次的抽象</li>
+<li>更快的模型构建速度</li>
+<li>C / C++ / Java / C# / Python / Matlab / R</li>
+</ul></li>
+<li>模型文件接口
+<ul>
+<li>需要自己将模型展开为线性规划的标准型</li>
+<li>文件 I/O 速度较慢</li>
+</ul></li>
+<li>交互式命令行接口 (Gurobi)
+<ul>
+<li>类似于解释型的脚本语言</li>
+</ul></li>
+<li>OPLIDE (CPLEX)
+<ul>
+<li>介于命令式语言与建模语言之间</li>
+</ul></li>
+<li>Excel 插件</li>
+<li>...</li>
+</ul>
+<h3 id="使用编程语言接口的求解过程-gurobi">使用编程语言接口的求解过程 (Gurobi)</h3>
+<p>参考自带的示例工程 diet, facility, mip1. 基本流程如下.</p>
+<ul>
+<li>初始化环境 GRBEnv()
+<ul>
+<li>反盗版</li>
+<li>其他全局数据</li>
+</ul></li>
+<li>初始化模型 GRBModel()</li>
+<li>添加决策变量 GRBModel::addVar()
+<ul>
+<li>按照一定规律组织决策变量</li>
+<li>使用额外的数据结构将决策变量与用户变量绑定</li>
+</ul></li>
+<li>更新模型 GRBModel::update()
+<ul>
+<li>惰性更新提升效率</li>
+<li>CPLEX 不需要此步骤</li>
+</ul></li>
+<li>设置目标 GRBModel::setObjective()</li>
+<li>添加约束 GRBModel::addConstr()</li>
+<li>设置其他参数 GRBModel::set(), GRBEnv::set()
+<ul>
+<li>运行时间</li>
+<li>输出日志</li>
+</ul></li>
+<li>求解 GRBModel::optimize()</li>
+<li>检查求解状态 GRBModel::get(GRB_IntAttr_Status)</li>
+<li>获取目标函数值 GRBModel::get(GRB_DoubleAttr_ObjVal)</li>
+<li>获取解向量 GRBVar::get()</li>
+</ul>
+<h3 id="使用模型文件接口的求解过程-gurobi">使用模型文件接口的求解过程 (Gurobi)</h3>
+<p>参考自带的示例工程 lp. 基本流程如下.</p>
+<ul>
+<li>准备好 .mps 或 .lp 等模型文件 GRBModel::write()
+<ul>
+<li>一般由另外的程序输出</li>
+</ul></li>
+<li>读取模型文件 GRBModel(), GRBModel::read()</li>
+<li>求解并输出</li>
+</ul>
+</div><div class="tags"><a href="/techive/tags/技术/">技术</a><a href="/techive/tags/建模/">建模</a><a href="/techive/tags/数学/">数学</a><a href="/techive/tags/优化/">优化</a></div><div class="post-nav"><a href="/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/" class="pre">数学规划进阶</a><a href="/techive/2019/01/13/Opt-SoftwareEngineering/" class="next">算法工程</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
+var disqus_identifier = '2019/01/13/Opt-MathematicalProgramming/';
+var disqus_title = '数学规划基础';
+var disqus_url = 'http://suzhouxing.github.io/techive/2019/01/13/Opt-MathematicalProgramming/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/next/config.json',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/运筹学/" style="font-size: 15px;">运筹学</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/">数学规划进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-MathematicalProgramming/">数学规划基础</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-SoftwareEngineering/">算法工程</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-AlgorithmDesign/">组合优化算法简介</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-CombinatorialOptimization/">组合优化简介</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2018/06/09/IdealCodingTest/">理想的编程测试</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2018/06/07/SearchingInDatabaseOrOptimization/">数据库中的搜索, 组合优化问题的搜索, 统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2018/04/01/ModelingInCombinatorialOptimization/">组合优化问题的数学建模资料整理</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2018/01/31/DifferentWayOfThinking/">欧美的优化算法公司在中国的水土不服</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2018/01/14/IntervalEliminationMethod/">二分法与黄金分割法的区别</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://suzhouxing.github.io" title="苏宙行的简历" target="_blank">苏宙行的简历</a><ul></ul><a href="http://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume" target="_blank">Zhouxing Su's Resume</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a><ul></ul><a href="http://galaxy_chenchen.coding.me/blog/" title="叶琛的博客" target="_blank">叶琛的博客</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/techive/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7883c2955793d67a171ccf194220c5c5";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/techive/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/techive/js/smartresize.js?v=0.0.0"></script></div></body></html>
