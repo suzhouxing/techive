@@ -6,7 +6,7 @@
   <link href="/techive/atom.xml" rel="self"/>
   
   <link href="http://suzhouxing.github.io/techive/"/>
-  <updated>2019-01-13T08:16:29.802Z</updated>
+  <updated>2019-10-17T08:12:39.988Z</updated>
   <id>http://suzhouxing.github.io/techive/</id>
   
   <author>
@@ -15,6 +15,74 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>用 Gitea 搭建自己的 Git 服务器</title>
+    <link href="http://suzhouxing.github.io/techive/2019/10/17/SetupGitServerWithGitea/"/>
+    <id>http://suzhouxing.github.io/techive/2019/10/17/SetupGitServerWithGitea/</id>
+    <published>2019-10-17T06:18:36.000Z</published>
+    <updated>2019-10-17T08:12:39.988Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="windows-环境下操作步骤">Windows 环境下操作步骤</h1><h2 id="第三方库依赖">第三方库依赖</h2><ul><li>安装 Git<ol type="1"><li>在官方网站下载最新版安装包</li></ol><ul><li>官方网站为 https://git-scm.com/</li></ul><ol start="2" type="1"><li>双击运行安装包按照安装向导的提示不断点下一步即可</li></ol><ul><li>推荐使用默认设置</li></ul></li></ul><h2 id="基本流程">基本流程</h2><ol type="1"><li>在官方网站或者 Github 的 release 页面下载最新版本</li></ol><ul><li>官方网站为 https://gitea.io</li><li>Github 的 release 页面为 https://github.com/go-gitea/gitea/releases</li><li>截至本文发布时最新版本为 <code>gitea-1.9.4-windows-4.0-amd64.exe</code></li></ul><ol start="2" type="1"><li>将下载的文件重命名为 <code>gitea.exe</code> 并移动至任意目录下</li></ol><ul><li>本文后续将使用 <code>C:\YOUR\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径</li></ul><ol start="3" type="1"><li>以管理员身份打开命令行, 执行 <code>sc create gitea start= auto binPath= &quot;&quot;C:\YOUR\INSTALL\PATH\gitea.exe&quot; web --config &quot;C:\YOUR\INSTALL\PATH\custom\conf\app.ini&quot;&quot;</code> 命令添加 Gitea 为 Windows 服务</li></ol><ul><li>详情请见 https://docs.gitea.io/zh-cn/windows-service/</li><li>在 PowerShell 中执行上述命令可能会失败, 需要使用经典的 cmd</li><li>假设使用的管理员账号为 <code>admin</code>, 密码为 <code>123</code>, 后面其他地方要用时最好保持一致</li></ul><ol start="4" type="1"><li>如果该服务未自动启动, 在 Windows 的服务列表中找到 <code>gitea</code> 并启动</li></ol><ul><li>打开服务列表<ul><li>开始按钮上点右键 -&gt; 计算机管理 -&gt; 服务和应用程序 -&gt; 服务</li><li>Ctrl+Shift+Esc 打开任务管理器 -&gt; 服务 -&gt; 打开服务</li><li>控制面板 -&gt; 系统和安全 -&gt; 管理工具 -&gt; 服务</li></ul></li><li>在服务器上一般需要以管理员身份打开服务列表</li><li>建议在 <code>gitea</code> 服务上点右键 -&gt; 属性 -&gt; 登陆 -&gt; 此账户, 设置账户为之前使用的管理员账户 <code>admin</code>, 然后重启服务</li></ul><ol start="5" type="1"><li>在浏览器中访问默认的地址 <code>http://localhost:3000</code> 打开网页端, 点击注册按钮</li></ol><ul><li>第一次点击注册时将进入初始配置页面<ul><li>数据库推荐选择 SQLite3, 数据库路径建议使用默认的安装目录下的子目录</li><li><code>站点名称</code> 随便填</li><li><code>仓库根目录</code> 建议更改至安装目录下, 例如 <code>C:\YOUR\INSTALL\PATH\data\repo</code></li><li><code>以用户名运行</code> 建议使用上面用过的管理员账号 <code>admin</code></li><li>把 <code>SSH 服务域名</code> 和 <code>Gitea 基本 URL</code> 中的 <code>localhost</code> 替换为服务器的 IP 地址或域名</li><li>端口根据个人偏好设置, 设为 80 的话以后的仓库链接可以省略端口号, 但是有和其他 web 服务冲突的可能性, 建议使用默认端口</li><li>可选设置中的 <code>管理员账号设置</code> 为 Gitea 网页端的管理员, 不是操作系统的管理员, 如果此时不设置则第一个注册的用户将自动成为管理员</li></ul></li></ul><h2 id="疑难解答">疑难解答</h2><ul><li>更改配置<ul><li>在 <code>C:\YOUR\INSTALL\PATH\custom\conf\app.ini</code> 文件中修改相关项目<ul><li>网页端地址或者代码仓库地址前缀: <code>ROOT_URL</code>, <code>DOMAIN</code>, <code>SSH_DOMAIN</code></li><li>端口: <code>HTTP_PORT</code>, <code>SSH_PORT</code></li></ul></li><li>参考资料<ul><li>https://docs.gitea.io/zh-cn/customizing-gitea/</li><li>https://docs.gitea.io/zh-cn/config-cheat-sheet/</li><li>https://github.com/go-gitea/gitea/blob/master/custom/conf/app.ini.sample</li></ul></li></ul></li><li>局域网或者互联网上其他机器无法访问网页端<ul><li>添加防火墙放行规则<ol type="1"><li>控制面板 -&gt; 系统和安全 -&gt; Windows Defender 防火墙 -&gt; 允许应用或功能通过 Windows Defender 防火墙 -&gt; 更改设置 -&gt; 允许其他应用 -&gt; 浏览 -&gt; 选中 <code>C:\YOUR\INSTALL\PATH\gitea.exe</code> -&gt; 网络类型 -&gt; 确保公用和专用均被勾选</li></ol></li><li>更换端口</li><li>咨询单位网管或互联网服务提供商</li></ul></li><li>初始化设置时无法创建数据库<ul><li>设置 <code>gitea</code> 服务以管理员账号启动</li><li>安装 SQLite3<ol type="1"><li>从官方网站下载 SQLite3</li></ol><ul><li>官方网站为 https://sqlite.org</li><li>截至本文发布时最新版本为 <code>sqlite-dll-win64-x64-3300100.zip</code></li></ul><ol start="2" type="1"><li>将压缩包内的文件解压至任意目录下</li></ol><ul><li>本文后续将使用 <code>C:\SQLITE3\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径</li></ul><ol start="3" type="1"><li>在环境变量 <code>Path</code> 中添加安装目录</li></ol><ul><li>控制面板 -&gt; 系统和安全 -&gt; 系统 -&gt; 高级系统设置 -&gt; 环境变量 -&gt; 系统变量 -&gt; 双击变量 <code>Path</code></li><li>新建一行 <code>C:\SQLITE3\INSTALL\PATH</code> 或者在变量值字符串开头添加 <code>C:\SQLITE3\INSTALL\PATH;</code></li></ul></li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;windows-环境下操作步骤&quot;&gt;Windows 环境下操作步骤&lt;/h1&gt;
+&lt;h2 id=&quot;第三方库依赖&quot;&gt;第三方库依赖&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;安装 Git
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;在官方网站下载最新版安装包&lt;/li&gt;
+&lt;/ol&gt;
+
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="http://suzhouxing.github.io/techive/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="技术" scheme="http://suzhouxing.github.io/techive/tags/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Git" scheme="http://suzhouxing.github.io/techive/tags/Git/"/>
+    
+      <category term="Gitea" scheme="http://suzhouxing.github.io/techive/tags/Gitea/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于三类主流编程范式的思考</title>
+    <link href="http://suzhouxing.github.io/techive/2019/01/22/ProgrammingParadigms/"/>
+    <id>http://suzhouxing.github.io/techive/2019/01/22/ProgrammingParadigms/</id>
+    <published>2019-01-22T07:45:59.000Z</published>
+    <updated>2019-01-22T07:48:30.891Z</updated>
+    
+    <content type="html"><![CDATA[<p>有损规约 vs 无损规约 最大团 &lt;=&gt; 独立集 停机位分配 &lt;=&gt; 二次指派</p><p>面向过程: 数据是数据, 函数是函数 面向对象: 数据和函数是一个对象的属性和行为 函数式: 数据就是函数, 函数就是数据 声明式: 函数是什么?</p><p>面向过程: 通过各种标记位判断当前状态然后做该做的事 一层套一层的参数/返回值状态判断产生了冗长的函数 (CUDA)</p><p>面向对象: 通过继承或接口表示每种状态下应该做什么</p><p>函数式: 直接传参或者赋值说明什么情况下该做什么</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;有损规约 vs 无损规约 最大团 &amp;lt;=&amp;gt; 独立集 停机位分配 &amp;lt;=&amp;gt; 二次指派&lt;/p&gt;
+&lt;p&gt;面向过程: 数据是数据, 函数是函数 面向对象: 数据和函数是一个对象的属性和行为 函数式: 数据就是函数, 函数就是数据 声明式: 函数是什么?&lt;/p&gt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="http://suzhouxing.github.io/techive/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="技术" scheme="http://suzhouxing.github.io/techive/tags/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="编程语言" scheme="http://suzhouxing.github.io/techive/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+      <category term="编程范式" scheme="http://suzhouxing.github.io/techive/tags/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/"/>
+    
+      <category term="程序设计" scheme="http://suzhouxing.github.io/techive/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>数学规划进阶</title>
@@ -41,9 +109,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -72,9 +140,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -130,9 +198,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -161,9 +229,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -261,9 +329,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -320,9 +388,9 @@
       <category term="数学" scheme="http://suzhouxing.github.io/techive/categories/%E6%95%B0%E5%AD%A6/"/>
     
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
       <category term="高中" scheme="http://suzhouxing.github.io/techive/tags/%E9%AB%98%E4%B8%AD/"/>
     
@@ -407,9 +475,9 @@
       <category term="日常" scheme="http://suzhouxing.github.io/techive/categories/%E6%97%A5%E5%B8%B8/"/>
     
     
-      <category term="技术" scheme="http://suzhouxing.github.io/techive/tags/%E6%8A%80%E6%9C%AF/"/>
-    
       <category term="日常" scheme="http://suzhouxing.github.io/techive/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+      <category term="技术" scheme="http://suzhouxing.github.io/techive/tags/%E6%8A%80%E6%9C%AF/"/>
     
       <category term="面试" scheme="http://suzhouxing.github.io/techive/tags/%E9%9D%A2%E8%AF%95/"/>
     
@@ -440,11 +508,11 @@
     
       <category term="技术" scheme="http://suzhouxing.github.io/techive/tags/%E6%8A%80%E6%9C%AF/"/>
     
-      <category term="Bug" scheme="http://suzhouxing.github.io/techive/tags/Bug/"/>
-    
       <category term="博客" scheme="http://suzhouxing.github.io/techive/tags/%E5%8D%9A%E5%AE%A2/"/>
     
       <category term="Hexo" scheme="http://suzhouxing.github.io/techive/tags/Hexo/"/>
+    
+      <category term="Bug" scheme="http://suzhouxing.github.io/techive/tags/Bug/"/>
     
       <category term="数学公式" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/"/>
     
@@ -475,13 +543,13 @@
       <category term="异想天开" scheme="http://suzhouxing.github.io/techive/categories/%E5%BC%82%E6%83%B3%E5%A4%A9%E5%BC%80/"/>
     
     
+      <category term="Bug" scheme="http://suzhouxing.github.io/techive/tags/Bug/"/>
+    
       <category term="异想天开" scheme="http://suzhouxing.github.io/techive/tags/%E5%BC%82%E6%83%B3%E5%A4%A9%E5%BC%80/"/>
     
       <category term="电影" scheme="http://suzhouxing.github.io/techive/tags/%E7%94%B5%E5%BD%B1/"/>
     
       <category term="黑客帝国" scheme="http://suzhouxing.github.io/techive/tags/%E9%BB%91%E5%AE%A2%E5%B8%9D%E5%9B%BD/"/>
-    
-      <category term="Bug" scheme="http://suzhouxing.github.io/techive/tags/Bug/"/>
     
   </entry>
   
@@ -509,8 +577,6 @@
     
       <category term="技术" scheme="http://suzhouxing.github.io/techive/tags/%E6%8A%80%E6%9C%AF/"/>
     
-      <category term="Bug" scheme="http://suzhouxing.github.io/techive/tags/Bug/"/>
-    
       <category term="博客" scheme="http://suzhouxing.github.io/techive/tags/%E5%8D%9A%E5%AE%A2/"/>
     
       <category term="Hexo" scheme="http://suzhouxing.github.io/techive/tags/Hexo/"/>
@@ -518,6 +584,8 @@
       <category term="主题" scheme="http://suzhouxing.github.io/techive/tags/%E4%B8%BB%E9%A2%98/"/>
     
       <category term="缓存" scheme="http://suzhouxing.github.io/techive/tags/%E7%BC%93%E5%AD%98/"/>
+    
+      <category term="Bug" scheme="http://suzhouxing.github.io/techive/tags/Bug/"/>
     
   </entry>
   
