@@ -33,37 +33,6 @@
     
     
     <entry>
-      <title>关于三类主流编程范式的思考</title>
-      <link href="/techive/2019/01/22/ProgrammingParadigms/"/>
-      <url>/techive/2019/01/22/ProgrammingParadigms/</url>
-      
-        <content type="html"><![CDATA[<p>有损规约 vs 无损规约 最大团 &lt;=&gt; 独立集 停机位分配 &lt;=&gt; 二次指派</p><p>面向过程: 数据是数据, 函数是函数 面向对象: 数据和函数是一个对象的属性和行为 函数式: 数据就是函数, 函数就是数据 声明式: 函数是什么?</p><p>面向过程: 通过各种标记位判断当前状态然后做该做的事 一层套一层的参数/返回值状态判断产生了冗长的函数 (CUDA)</p><p>面向对象: 通过继承或接口表示每种状态下应该做什么</p><p>函数式: 直接传参或者赋值说明什么情况下该做什么</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 技术 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 技术 </tag>
-            
-            <tag> 编程语言 </tag>
-            
-            <tag> 编程范式 </tag>
-            
-            <tag> 程序设计 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>数学规划进阶</title>
       <link href="/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/"/>
       <url>/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/</url>
@@ -442,9 +411,9 @@
       
         <tags>
             
-            <tag> 日常 </tag>
-            
             <tag> 技术 </tag>
+            
+            <tag> 日常 </tag>
             
             <tag> 面试 </tag>
             
