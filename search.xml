@@ -8,7 +8,7 @@
       <link href="/techive/2019/10/17/SetupGitServerWithGitea/"/>
       <url>/techive/2019/10/17/SetupGitServerWithGitea/</url>
       
-        <content type="html"><![CDATA[<p>在永恒之蓝等通过网络文件共享传播的病毒肆虐之后, 很多网络供应商都封禁了文件共享相关端口, 以至于无法简单地通过映射网络驱动器来搭建 Git 的远端仓库, 然后使用 &quot;哑协议&quot; 执行 clone, push, pull 等操作. 因此, 我们可能需要使用支持 http 或者 ssh 的 Git 服务器. 目前功能最强大的免费 Git 服务器为 <a href="https://about.gitlab.com/install/" target="_blank" rel="noopener">Gitlab</a>, 它可以让用户自己搭建与 https://github.com 或者 https://gitlab.com 一样的网站. 但 Gitlab 不支持免费用于商业用途. 此外, 还有 <a href="https://bonobogitserver.com/" target="_blank" rel="noopener">Bonobo</a>, <a href="https://gogs.io/" target="_blank" rel="noopener">Gogs</a>, <a href="https://www.scm-manager.org/" target="_blank" rel="noopener">SCM-Manager</a>, <a href="http://gitblit.com/" target="_blank" rel="noopener">Gitblit</a> 等.</p><h1 id="windows-环境下操作步骤">Windows 环境下操作步骤</h1><h2 id="第三方库依赖">第三方库依赖</h2><ol type="1"><li>安装 Git<ol type="1"><li>在<a href="https://git-scm.com/" target="_blank" rel="noopener">官方网站</a>下载最新版安装包</li><li>双击运行安装包按照安装向导的提示点下一步即可</li></ol></li></ol><h2 id="基本流程">基本流程</h2><ol type="1"><li>在官方网站或者 Github 的 release 页面下载最新版本<ol type="1"><li>官方网站为 https://gitea.io</li><li>Github 的 release 页面为 https://github.com/go-gitea/gitea/releases</li><li>截至本文发布时最新版本为 <code>gitea-1.9.4-windows-4.0-amd64.exe</code></li></ol></li><li><p>将下载的文件重命名为 <code>gitea.exe</code> 并移动至任意目录下 (本文后续将使用 <code>C:\YOUR\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径)</p></li><li>以管理员身份打开命令行, 执行 <code>sc create gitea start= auto binPath= &quot;&quot;C:\YOUR\INSTALL\PATH\gitea.exe&quot; web --config &quot;C:\YOUR\INSTALL\PATH\custom\conf\app.ini&quot;&quot;</code> 命令添加 Gitea 为 Windows 服务<ol type="1"><li>详情请见 https://docs.gitea.io/zh-cn/windows-service/</li><li>在 PowerShell 中执行上述命令可能会失败, 需要使用经典的 cmd</li><li>假设使用的管理员账号为 <code>admin</code>, 密码为 <code>123</code>, 后面其他地方要用时最好保持一致</li></ol></li><li>如果该服务未自动启动, 在 Windows 的服务列表中找到 <code>gitea</code> 并启动<ol type="1"><li>以管理员身份打开服务列表 (下面三种方式任选一种即可)<ol type="1"><li>开始按钮上点右键 -&gt; 计算机管理 -&gt; 服务和应用程序 -&gt; 服务</li><li>Ctrl+Shift+Esc 打开任务管理器 -&gt; 服务 -&gt; 打开服务</li><li>控制面板 -&gt; 系统和安全 -&gt; 管理工具 -&gt; 服务</li></ol></li><li>建议在 <code>gitea</code> 服务上点右键 -&gt; 属性 -&gt; 登陆 -&gt; 此账户, 设置账户为之前使用的管理员账户 <code>admin</code>, 然后重启服务</li></ol></li><li>在浏览器中访问默认的地址 <code>http://localhost:3000</code> 打开网页端, 点击注册按钮<ol type="1"><li>第一次点击注册时将进入初始配置页面<ol type="1"><li>数据库推荐选择 SQLite3, 数据库路径建议使用默认的安装目录下的子目录</li><li><code>站点名称</code> 随便填</li><li><code>仓库根目录</code> 建议更改至安装目录下, 例如 <code>C:\YOUR\INSTALL\PATH\data\repo</code></li><li><code>以用户名运行</code> 建议使用上面用过的管理员账号 <code>admin</code></li><li>把 <code>SSH 服务域名</code> 和 <code>Gitea 基本 URL</code> 中的 <code>localhost</code> 替换为服务器的 IP 地址或域名</li><li>端口根据个人偏好设置, 设为 80 的话以后的仓库链接可以省略端口号, 但是有和其他 web 服务冲突的可能性, 建议使用默认端口</li><li>可选设置中的 <code>管理员账号设置</code> 为 Gitea 网页端的管理员, 不是操作系统的管理员, 如果此时不设置则第一个注册的用户将自动成为管理员</li></ol></li><li>再次点击注册, 完成用户注册</li></ol></li></ol><h2 id="疑难解答">疑难解答</h2><ol type="1"><li>更改配置<ol type="1"><li>在 <code>C:\YOUR\INSTALL\PATH\custom\conf\app.ini</code> 文件中修改相关项目<ol type="1"><li>网页端地址或者代码仓库地址前缀: <code>ROOT_URL</code>, <code>DOMAIN</code>, <code>SSH_DOMAIN</code></li><li>端口: <code>HTTP_PORT</code>, <code>SSH_PORT</code></li></ol></li><li>参考资料<ol type="1"><li>https://docs.gitea.io/zh-cn/customizing-gitea/</li><li>https://docs.gitea.io/zh-cn/config-cheat-sheet/</li><li>https://github.com/go-gitea/gitea/blob/master/custom/conf/app.ini.sample</li></ol></li></ol></li><li>局域网或者互联网上其他机器无法访问网页端<ol type="1"><li>添加防火墙放行规则<ol type="1"><li>控制面板 -&gt; 系统和安全 -&gt; Windows Defender 防火墙 -&gt; 允许应用或功能通过 Windows Defender 防火墙 -&gt; 更改设置 -&gt; 允许其他应用 -&gt; 浏览 -&gt; 选中 <code>C:\YOUR\INSTALL\PATH\gitea.exe</code> -&gt; 网络类型 -&gt; 确保公用和专用均被勾选</li></ol></li><li>更换端口</li><li>咨询单位网管或互联网服务提供商</li></ol></li><li>初始化设置时无法创建数据库<ol type="1"><li>设置 <code>gitea</code> 服务以管理员账号启动</li><li>安装 SQLite3<ol type="1"><li>从官方网站下载 SQLite3<ol type="1"><li>官方网站为 https://sqlite.org</li><li>截至本文发布时最新版本为 <code>sqlite-dll-win64-x64-3300100.zip</code></li></ol></li><li>将压缩包内的文件解压至任意目录下<ul><li>本文后续将使用 <code>C:\SQLITE3\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径</li></ul></li></ol></li><li>在环境变量 <code>Path</code> 中添加安装目录<ul><li>控制面板 -&gt; 系统和安全 -&gt; 系统 -&gt; 高级系统设置 -&gt; 环境变量 -&gt; 系统变量 -&gt; 双击变量 <code>Path</code></li><li>新建一行 <code>C:\SQLITE3\INSTALL\PATH</code> 或者在变量值字符串开头添加 <code>C:\SQLITE3\INSTALL\PATH;</code></li></ul></li></ol></li></ol>]]></content>
+        <content type="html"><![CDATA[<p>在永恒之蓝等通过网络文件共享传播的病毒肆虐之后, 很多网络供应商都封禁了文件共享相关端口, 以至于无法简单地通过映射网络驱动器来搭建 Git 的远端仓库, 然后使用 &quot;哑协议&quot; 执行 clone, push, pull 等操作. 因此, 我们可能需要使用支持 http 或者 ssh 的 Git 服务器. 目前功能最强大的免费 Git 服务器为 <a href="https://about.gitlab.com/install/" target="_blank" rel="noopener">Gitlab</a>, 它可以让用户自己搭建与 https://github.com 或者 https://gitlab.com 一样的网站. 但 Gitlab 不支持免费用于商业用途. 此外, 同类开源或免费软件还有 <a href="https://bonobogitserver.com/" target="_blank" rel="noopener">Bonobo</a>, <a href="https://gogs.io/" target="_blank" rel="noopener">Gogs</a>, <a href="https://www.scm-manager.org/" target="_blank" rel="noopener">SCM-Manager</a>, <a href="http://gitblit.com/" target="_blank" rel="noopener">Gitblit</a> 等.</p><h1 id="windows-环境下操作步骤">Windows 环境下操作步骤</h1><h2 id="第三方库依赖">第三方库依赖</h2><ol type="1"><li>安装 Git<ol type="1"><li>在<a href="https://git-scm.com/" target="_blank" rel="noopener">官方网站</a>下载最新版安装包</li><li>双击运行安装包按照安装向导的提示点下一步即可</li></ol></li></ol><h2 id="基本流程">基本流程</h2><ol type="1"><li>在<a href="https://gitea.io" target="_blank" rel="noopener">官方网站</a>或者 <a href="https://github.com/go-gitea/gitea/releases" target="_blank" rel="noopener">Github 的 release 页面</a>下载最新版本<ul><li>截至本文发布时最新版本为 <code>gitea-1.9.4-windows-4.0-amd64.exe</code></li></ul></li><li><p>将下载的文件重命名为 <code>gitea.exe</code> 并移动至任意目录下 (本文后续将使用 <code>C:\YOUR\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径)</p></li><li>以管理员身份打开命令行, 执行以下命令添加 Gitea 为 Windows 服务 <code>sc create gitea start= auto binPath= &quot;&quot;C:\YOUR\INSTALL\PATH\gitea.exe&quot; web --config &quot;C:\YOUR\INSTALL\PATH\custom\conf\app.ini&quot;&quot;</code><ul><li>详情请见 https://docs.gitea.io/zh-cn/windows-service/</li><li>在 PowerShell 中执行上述命令可能会失败, 需要使用经典的 cmd</li><li>假设使用的管理员账号为 <code>admin</code>, 密码为 <code>123</code>, 后面其他地方要用时最好保持一致</li></ul></li><li>如果该服务未自动启动, 在 Windows 的服务列表中找到 <code>gitea</code> 并启动<ol type="1"><li>以管理员身份打开服务列表<ul><li>开始按钮上点右键 -&gt; 计算机管理 -&gt; 服务和应用程序 -&gt; 服务</li><li>Ctrl+Shift+Esc 打开任务管理器 -&gt; 服务 -&gt; 打开服务</li><li>控制面板 -&gt; 系统和安全 -&gt; 管理工具 -&gt; 服务</li></ul></li><li>建议在 <code>gitea</code> 服务上点右键 -&gt; 属性 -&gt; 登陆 -&gt; 此账户, 设置账户为之前使用的管理员账户 <code>admin</code>, 然后重启服务</li></ol></li><li>在浏览器中访问默认的地址 <code>http://localhost:3000</code> 打开网页端, 点击注册按钮<ol type="1"><li>第一次点击注册时将进入初始配置页面<ol type="1"><li>数据库推荐选择 SQLite3, 数据库路径建议使用默认的安装目录下的子目录</li><li><code>站点名称</code> 随便填</li><li><code>仓库根目录</code> 建议更改至安装目录下, 例如 <code>C:\YOUR\INSTALL\PATH\data\repo</code></li><li><code>以用户名运行</code> 建议使用上面用过的管理员账号 <code>admin</code></li><li>把 <code>SSH 服务域名</code> 和 <code>Gitea 基本 URL</code> 中的 <code>localhost</code> 替换为服务器的 IP 地址或域名</li><li>端口根据个人偏好设置, 设为 80 的话以后的仓库链接可以省略端口号, 但是有和其他 web 服务冲突的可能性, 建议使用默认端口</li><li>可选设置中的 <code>管理员账号设置</code> 为 Gitea 网页端的管理员, 不是操作系统的管理员, 如果此时不设置则第一个注册的用户将自动成为管理员</li></ol></li><li>再次点击注册, 完成用户注册</li></ol></li></ol><h2 id="疑难解答">疑难解答</h2><ol type="1"><li>更改配置<ol type="1"><li>在 <code>C:\YOUR\INSTALL\PATH\custom\conf\app.ini</code> 文件中修改相关项目<ul><li>网页端地址或者代码仓库地址前缀: <code>ROOT_URL</code>, <code>DOMAIN</code>, <code>SSH_DOMAIN</code></li><li>端口: <code>HTTP_PORT</code>, <code>SSH_PORT</code></li></ul></li><li>参考资料<ul><li>https://docs.gitea.io/zh-cn/customizing-gitea/</li><li>https://docs.gitea.io/zh-cn/config-cheat-sheet/</li><li>https://github.com/go-gitea/gitea/blob/master/custom/conf/app.ini.sample</li></ul></li></ol></li><li>局域网或者互联网上其他机器无法访问网页端<ol type="1"><li>添加防火墙放行规则<ol type="1"><li>控制面板 -&gt; 系统和安全 -&gt; Windows Defender 防火墙 -&gt; 允许应用或功能通过 Windows Defender 防火墙 -&gt; 更改设置 -&gt; 允许其他应用 -&gt; 浏览 -&gt; 选中 <code>C:\YOUR\INSTALL\PATH\gitea.exe</code> -&gt; 网络类型 -&gt; 确保公用和专用均被勾选</li></ol></li><li>更换端口</li><li>咨询单位网管或互联网服务提供商</li></ol></li><li>初始化设置时无法创建数据库<ol type="1"><li>设置 <code>gitea</code> 服务以管理员账号启动</li><li>安装 SQLite3<ol type="1"><li>从<a href="https://sqlite.org" target="_blank" rel="noopener">官方网站</a>下载 SQLite3<ul><li>截至本文发布时最新版本为 <code>sqlite-dll-win64-x64-3300100.zip</code></li></ul></li><li>将压缩包内的文件解压至任意目录下<ul><li>本文后续将使用 <code>C:\SQLITE3\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径</li></ul></li></ol></li><li>在环境变量 <code>Path</code> 中添加安装目录<ol type="1"><li>控制面板 -&gt; 系统和安全 -&gt; 系统 -&gt; 高级系统设置 -&gt; 环境变量 -&gt; 系统变量 -&gt; 双击变量 <code>Path</code></li><li>新建一行 <code>C:\SQLITE3\INSTALL\PATH</code> 或者在变量值字符串开头添加 <code>C:\SQLITE3\INSTALL\PATH;</code></li></ol></li></ol></li></ol>]]></content>
       
       
       <categories>
@@ -84,9 +84,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -115,9 +115,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -173,9 +173,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -204,9 +204,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -301,9 +301,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -359,9 +359,9 @@
       
         <tags>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
             <tag> 高中 </tag>
             
@@ -442,9 +442,9 @@
       
         <tags>
             
-            <tag> 技术 </tag>
-            
             <tag> 日常 </tag>
+            
+            <tag> 技术 </tag>
             
             <tag> 面试 </tag>
             
