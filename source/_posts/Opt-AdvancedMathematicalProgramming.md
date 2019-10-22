@@ -1,5 +1,5 @@
 ---
-title: 数学规划进阶
+title: 组合优化 (五) 数学规划进阶
 date: 2019-01-13 11:14:59
 categories:
 - 技术
@@ -30,7 +30,7 @@ tags:
   - Mixed Integer Program (MIP)
   - ...
 
-详见 `线性化非线性表达式.docx`.
+详见 [[1.5] 线性化非线性表达式.docx](https://github.com/HUST-Smart/Training/blob/master/%5B1.5%5D%20%E7%BA%BF%E6%80%A7%E5%8C%96%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A1%A8%E8%BE%BE%E5%BC%8F.docx).
 
 ### 最小化最大值
 
@@ -120,6 +120,54 @@ Processing supplementary constraints inevitably slows down execution. However, t
 如果说 TSP 中经典的子回路消除 (割平面法) 是一种逐步添加惰性约束的 "行生成" 算法, 那么其对偶算法就是逐步添加决策变量的 "列生成" 算法.
 前者适用于原始问题约束非常多, 但是真正对限制最优解的取值发挥作用的重要约束很少的情况;
 后者则恰好相反, 适用于决策变量非常多, 但大多数决策变量的子集的取值组合不可能出现在最优解中的情况.
+
+### 原理
+
+给定主问题及其对偶问题的线性规划模型
+$$
+\begin{align}
+\min &  & \mathbf{c}^{T} \mathbf{x}            & &                 & & \max &  & \mathbf{y}^{T} \mathbf{b}\\
+s.t. &  & \mathbf{A} \mathbf{x} \ge \mathbf{b} & & \Leftrightarrow & & s.t. &  & \mathbf{y}^{T} \mathbf{A} \le \mathbf{c}^{T}\\
+     &  & \mathbf{x} \ge \mathbf{0}            & &                 & &      &  & \mathbf{y} \ge \mathbf{0}
+\end{align}
+$$
+
+令 $\mathbf{x}^{T} = [\mathbf{x}^{T}_{B}, \mathbf{x}^{T}_{N}]$, 其中 $\mathbf{x}_{B}$ 表示基向量, $\mathbf{x}_{N}$ 表示非基变量. 对应地, $\mathbf{A} = [\mathbf{B}, \mathbf{N}]$, $\mathbf{c} = [\mathbf{c}_{B}, \mathbf{c}_{N}]$.
+
+对约束进行如下等价变换
+$$
+\mathbf{A} \mathbf{x} \ge \mathbf{b} ~~\Leftrightarrow~~ \mathbf{B} \mathbf{x}_{B} + \mathbf{N} \mathbf{x}_{N} \ge \mathbf{b} ~~\Leftrightarrow~~ \mathbf{x}_{B} \ge \mathbf{B}^{-1} \mathbf{b} - \mathbf{B}^{-1} \mathbf{N} \mathbf{x}_{N}
+$$
+
+将上式代入目标函数
+$$
+\mathbf{c}^{T} \mathbf{x} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{x}_{B} + \mathbf{c}^{T}_{N} \mathbf{x}_{N} ~~\ge~~ \mathbf{c}^{T}_{B} (\mathbf{B}^{-1} \mathbf{b} - \mathbf{B}^{-1} \mathbf{N} \mathbf{x}_{N}) + \mathbf{c}^{T}_{N} \mathbf{x}_{N} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{b} + (\mathbf{c}^{T}_{N} - \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N}) \mathbf{x}_{N}
+$$
+
+定义目标函数中非基变量的系数 Reduced Cost 为
+$$
+\mathbf{r} = \mathbf{c}^{T}_{N} - \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N}
+$$
+
+若 $\exist \mathbf{N}_{i} \in \mathbf{N}$ 满足 $\mathbf{r}_{i} < 0$, 则可通过增加非基变量 $\mathbf{x}_{i}$ 的值实现降低目标函数值.
+若不存在这样的项, 即 $\forall \mathbf{N}_{i} \in \mathbf{N}, \mathbf{c}^{T}_{i} - \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N}_{i} \ge 0$, 则 $[\mathbf{x}_{B}, \mathbf{0}]$ 为最优解.
+
+由 Complementary Slackness 定理可知 $\mathbf{y}^{T} = \mathbf{c}^{T}_{B} \mathbf{B}^{-1}$, 由此可得 $\mathbf{r} = \mathbf{c}^{T}_{N} - \mathbf{y}^{T} \mathbf{N}$.
+则寻找可最大程度改进当前解的非基变量的子问题目标函数为 $\min \mathbf{c}^{T}_{N} - \mathbf{y}^{T} \mathbf{N}$.
+
+$~~~~$
+
+_(本节内容基于 https://zhuanlan.zhihu.com/p/55424545 整理)_
+
+>附: Complementary Slackness 定理证明过程 (可能有问题):
+>令 $\mathbf{y}^{T} = \mathbf{c}^{T}_{B} \mathbf{B}^{-1}$, 对于限制主问题的最优解 $\mathbf{x}$, 有 $\mathbf{x}_{N} = \mathbf{0}$, 以及 $\mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N} \le \mathbf{c}^{T}_{N}$, 可得
+>$$
+>\mathbf{y}^{T} \mathbf{A} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{A} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{B}^{-1} [\mathbf{B}, \mathbf{N}] ~~=~~ [\mathbf{c}^{T}_{B}, \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N}] ~~\le~~ [\mathbf{c}^{T}_{B}, \mathbf{c}^{T}_{N}] ~~=~~ \mathbf{c}^{T}
+>$$
+>$$
+>\mathbf{y}^{T} \mathbf{b} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{b} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{x}_{B} ~~=~~ \mathbf{c}^{T} \mathbf{x}
+>$$
+>即 $\mathbf{y}^{T}$ 为限制对偶问题的最优解.
 
 
 ## 线性分数规划 (Linear-Fractional Programming)
