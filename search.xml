@@ -8,7 +8,7 @@
       <link href="/techive/2020/12/09/Contest-2020GraphColoring/"/>
       <url>/techive/2020/12/09/Contest-2020GraphColoring/</url>
       
-        <content type="html"><![CDATA[<h1 id="图着色算法训练">图着色算法训练</h1><h2 id="命令行参数">命令行参数</h2><p>请大家编写程序时支持三个命令行参数, 分别为算例文件路径, 输出解文件路径和随机种子. 后续我们可能会通过在控制台运行 <code>你的算法.exe 输入算例路径 输出解文件路径 随机种子</code> 测试大家提交的算法, 例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcp.exe ../DSJC500.5.col dsjc500.5.txt 123456</span><br></pre></td></tr></table></figure></p><ul><li>随机种子设置.<ul><li>使用 C 语言随机数生成器请用 <code>srand</code>.</li><li>使用 C++ 随机数生成器 (如 <code>mt19937</code>) 请在构造时传参.</li></ul></li><li>测试时可能会修改算例文件名，请勿针对文件名做特殊处理.</li></ul><h2 id="输出的解文件格式">输出的解文件格式</h2><p>对于 N 个节点的算例, 输出 N 行. 每一行输出用空格分隔的两个数字, 分别表示算例中的节点编号以及为该节点分配的颜色.</p><p>颜色可以取 <code>int</code> 范围内任意整数, 检查程序自动统计不同的整数的数量.</p><p>例如, 以下解文件表示 1 号节点染颜色 0, 2 号节点染颜色 2, 3 号节点染颜色 1: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 0 </span><br><span class="line">2 2 </span><br><span class="line">3 1</span><br></pre></td></tr></table></figure></p><h2 id="提交要求">提交要求</h2><ul><li>发送至邮箱 <a href="mailto:su.zhouxing@qq.com" target="_blank" rel="noopener">su.zhouxing@qq.com</a>.</li><li>邮件标题格式为 &quot;Challenge2020GCP-姓名-班级&quot;.</li><li>邮件附件为单个压缩包, 文件名为 &quot;姓名-班级&quot;, 其内包含下列文件.<ul><li>算法的可执行文件.</li><li>算法源码.</li><li>算法在各算例上的运行情况, 至少包括以下几项信息.<ul><li>算例名.</li><li>颜色数.</li><li>计算耗时.</li></ul></li></ul></li></ul>]]></content>
+        <content type="html"><![CDATA[<h1 id="图着色算法训练">图着色算法训练</h1><h2 id="命令行参数">命令行参数</h2><p>请大家编写程序时支持四个命令行参数, 分别为算例文件路径, 输出解文件路径, 颜色数和随机种子. 后续我们可能会通过在控制台运行 <code>你的算法.exe 输入算例路径 输出解文件路径 颜色数 随机种子</code> 测试大家提交的算法, 例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcp.exe ../DSJC500.5.col dsjc500.5.txt 48 123456</span><br></pre></td></tr></table></figure></p><ul><li>随机种子设置.<ul><li>使用 C 语言随机数生成器请用 <code>srand</code>.</li><li>使用 C++ 随机数生成器 (如 <code>mt19937</code>) 请在构造时传参或调用 <code>seed()</code> 方法设置.</li></ul></li><li>测试时可能会修改算例文件名，请勿针对文件名做特殊处理.</li></ul><h2 id="输出的解文件格式">输出的解文件格式</h2><p>对于 N 个节点的算例, 输出 N 行. 每一行输出用空格分隔的两个数字, 分别表示算例中的节点编号以及为该节点分配的颜色.</p><p>颜色可以取 <code>int</code> 范围内任意整数, 检查程序自动统计不同的整数的数量.</p><p>例如, 以下解文件表示 1 号节点染颜色 0, 2 号节点染颜色 2, 3 号节点染颜色 1: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 0 </span><br><span class="line">2 2 </span><br><span class="line">3 1</span><br></pre></td></tr></table></figure></p><h2 id="提交要求">提交要求</h2><ul><li>发送至邮箱 <a href="mailto:su.zhouxing@qq.com" target="_blank" rel="noopener">su.zhouxing@qq.com</a>.</li><li>邮件标题格式为 &quot;Challenge2020GCP-姓名-班级&quot;.</li><li>邮件附件为单个压缩包, 文件名为 &quot;姓名-班级&quot;, 其内包含下列文件.<ul><li>算法的可执行文件.</li><li>算法源码.</li><li>算法在各算例上的运行情况, 至少包括以下几项信息.<ul><li>算例名.</li><li>颜色数.</li><li>计算耗时.</li></ul></li></ul></li></ul><h2 id="检查程序">检查程序</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;random&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">genSeed</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(random_device()() &amp; <span class="number">0xffff</span>); &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">enum</span> &#123; MaxLineLen = <span class="number">1024</span>, Repeat = <span class="number">10</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">inputFilePath</span><span class="params">(argv[<span class="number">1</span>])</span></span>;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">outputFilePath</span><span class="params">(argv[<span class="number">2</span>])</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (argc &gt; <span class="number">3</span>) &#123;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">exeFilePath</span><span class="params">(argv[<span class="number">3</span>])</span></span>;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">colorNum</span><span class="params">(argv[<span class="number">4</span>])</span></span>;</span><br><span class="line">        <span class="built_in">ostringstream</span> cmd;</span><br><span class="line">        <span class="comment">// https://github.com/lowleveldesign/process-governor</span></span><br><span class="line">        cmd &lt;&lt; <span class="string">"bin/procgov.exe --maxmem=1G --cpu=1 --timeout=10m -r \""</span> &lt;&lt; exeFilePath &lt;&lt; <span class="string">"\" \""</span></span><br><span class="line">            &lt;&lt; inputFilePath &lt;&lt; <span class="string">"\" \""</span> &lt;&lt; outputFilePath &lt;&lt; <span class="string">"\" "</span> &lt;&lt; colorNum &lt;&lt; <span class="string">" "</span> &lt;&lt; genSeed();</span><br><span class="line"></span><br><span class="line">        chrono::steady_clock::time_point begin = chrono::steady_clock::now();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; Repeat; ++i) &#123;</span><br><span class="line">            system(cmd.str().c_str());</span><br><span class="line">        &#125;</span><br><span class="line">        chrono::steady_clock::time_point end = chrono::steady_clock::now();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"time="</span> &lt;&lt; (chrono::duration_cast&lt;chrono::milliseconds&gt;(end - begin).count() / <span class="number">10000.0</span>) &lt;&lt; <span class="string">"s "</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Edge</span> &#123;</span></span><br><span class="line">        <span class="keyword">int</span> src;</span><br><span class="line">        <span class="keyword">int</span> dst;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> c;</span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">    <span class="keyword">int</span> nodeNum, edgeNum;</span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&gt; edges;</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">ifstream <span class="title">inputFile</span><span class="params">(inputFilePath)</span></span>;</span><br><span class="line"></span><br><span class="line">        edges.resize(edgeNum);</span><br><span class="line">        <span class="keyword">while</span> (inputFile &gt;&gt; c) &#123;</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="string">'c'</span>) &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">            inputFile.ignore(MaxLineLen, <span class="string">'\n'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        inputFile &gt;&gt; c &gt;&gt; s &gt;&gt; nodeNum &gt;&gt; edgeNum;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> e = <span class="number">0</span>; e &lt; edgeNum; ++e) &#123;</span><br><span class="line">            inputFile &gt;&gt; c &gt;&gt; edges[e].src &gt;&gt; edges[e].dst;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> conflictNum = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; nodeColors;</span><br><span class="line">    <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; colors;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">ifstream <span class="title">outputFile</span><span class="params">(outputFilePath)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; nodeNum; ++n) &#123;</span><br><span class="line">            <span class="keyword">int</span> node, color;</span><br><span class="line">            outputFile &gt;&gt; node &gt;&gt; color;</span><br><span class="line">            nodeColors[node] = color;</span><br><span class="line">            colors.insert(color);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> e = edges.begin(); e != edges.end(); ++e) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nodeColors[e-&gt;src] == nodeColors[e-&gt;dst]) &#123; ++conflictNum; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"instance="</span> &lt;&lt; argv[<span class="number">1</span>] &lt;&lt; <span class="string">"color="</span> &lt;&lt; colors.size() &lt;&lt; <span class="string">" conflict="</span> &lt;&lt; conflictNum &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -80,9 +80,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -138,9 +138,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -169,9 +169,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -200,9 +200,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -297,9 +297,9 @@
             
             <tag> 建模 </tag>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
         </tags>
       
@@ -355,9 +355,9 @@
       
         <tags>
             
-            <tag> 优化 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 优化 </tag>
             
             <tag> 高中 </tag>
             
@@ -438,9 +438,9 @@
       
         <tags>
             
-            <tag> 日常 </tag>
-            
             <tag> 技术 </tag>
+            
+            <tag> 日常 </tag>
             
             <tag> 面试 </tag>
             
@@ -471,11 +471,11 @@
             
             <tag> 技术 </tag>
             
-            <tag> Bug </tag>
-            
             <tag> 博客 </tag>
             
             <tag> Hexo </tag>
+            
+            <tag> Bug </tag>
             
             <tag> 数学公式 </tag>
             
@@ -506,13 +506,13 @@
       
         <tags>
             
+            <tag> Bug </tag>
+            
             <tag> 异想天开 </tag>
             
             <tag> 电影 </tag>
             
             <tag> 黑客帝国 </tag>
-            
-            <tag> Bug </tag>
             
         </tags>
       
@@ -539,8 +539,6 @@
             
             <tag> 技术 </tag>
             
-            <tag> Bug </tag>
-            
             <tag> 博客 </tag>
             
             <tag> Hexo </tag>
@@ -548,6 +546,8 @@
             <tag> 主题 </tag>
             
             <tag> 缓存 </tag>
+            
+            <tag> Bug </tag>
             
         </tags>
       
