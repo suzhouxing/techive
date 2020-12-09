@@ -6,7 +6,7 @@
   <link href="/techive/atom.xml" rel="self"/>
   
   <link href="http://suzhouxing.github.io/techive/"/>
-  <updated>2019-10-17T09:06:06.683Z</updated>
+  <updated>2020-12-09T02:52:16.328Z</updated>
   <id>http://suzhouxing.github.io/techive/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SmartLab Challenge 2020 - Graph Coloring</title>
+    <link href="http://suzhouxing.github.io/techive/2020/12/09/Contest-2020GraphColoring/"/>
+    <id>http://suzhouxing.github.io/techive/2020/12/09/Contest-2020GraphColoring/</id>
+    <published>2020-12-09T02:28:35.000Z</published>
+    <updated>2020-12-09T02:52:16.328Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="图着色算法训练">图着色算法训练</h1><h2 id="命令行参数">命令行参数</h2><p>请大家编写程序时支持三个命令行参数, 分别为算例文件路径, 输出解文件路径和随机种子. 后续我们可能会通过在控制台运行 <code>你的算法.exe 输入算例路径 输出解文件路径 随机种子</code> 测试大家提交的算法, 例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcp.exe ../DSJC500.5.col dsjc500.5.txt 123456</span><br></pre></td></tr></table></figure></p><ul><li>随机种子设置.<ul><li>使用 C 语言随机数生成器请用 <code>srand</code>.</li><li>使用 C++ 随机数生成器 (如 <code>mt19937</code>) 请在构造时传参.</li></ul></li><li>测试时可能会修改算例文件名，请勿针对文件名做特殊处理.</li></ul><h2 id="输出的解文件格式">输出的解文件格式</h2><p>对于 N 个节点的算例, 输出 N 行. 每一行输出用空格分隔的两个数字, 分别表示算例中的节点编号以及为该节点分配的颜色.</p><p>颜色可以取 <code>int</code> 范围内任意整数, 检查程序自动统计不同的整数的数量.</p><p>例如, 以下解文件表示 1 号节点染颜色 0, 2 号节点染颜色 2, 3 号节点染颜色 1: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 0 </span><br><span class="line">2 2 </span><br><span class="line">3 1</span><br></pre></td></tr></table></figure></p><h2 id="提交要求">提交要求</h2><ul><li>发送至邮箱 <a href="mailto:su.zhouxing@qq.com" target="_blank" rel="noopener">su.zhouxing@qq.com</a>.</li><li>邮件标题格式为 &quot;Challenge2020GCP-姓名-班级&quot;.</li><li>邮件附件为单个压缩包, 文件名为 &quot;姓名-班级&quot;, 其内包含下列文件.<ul><li>算法的可执行文件.</li><li>算法源码.</li><li>算法在各算例上的运行情况, 至少包括以下几项信息.<ul><li>算例名.</li><li>颜色数.</li><li>计算耗时.</li></ul></li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;图着色算法训练&quot;&gt;图着色算法训练&lt;/h1&gt;
+&lt;h2 id=&quot;命令行参数&quot;&gt;命令行参数&lt;/h2&gt;
+&lt;p&gt;请大家编写程序时支持三个命令行参数, 分别为算例文件路径, 输出解文件路径和随机种子. 后续我们可能会通过在控制台运行 &lt;code&gt;你的算法.exe 输入算例
+      
+    
+    </summary>
+    
+      <category term="算法挑战" scheme="http://suzhouxing.github.io/techive/categories/%E7%AE%97%E6%B3%95%E6%8C%91%E6%88%98/"/>
+    
+    
+      <category term="算法挑战" scheme="http://suzhouxing.github.io/techive/tags/%E7%AE%97%E6%B3%95%E6%8C%91%E6%88%98/"/>
+    
+      <category term="组合优化" scheme="http://suzhouxing.github.io/techive/tags/%E7%BB%84%E5%90%88%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>用 Gitea 搭建自己的 Git 服务器</title>
@@ -70,9 +99,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -128,9 +157,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -159,9 +188,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -190,9 +219,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -290,9 +319,9 @@
     
       <category term="建模" scheme="http://suzhouxing.github.io/techive/tags/%E5%BB%BA%E6%A8%A1/"/>
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
   </entry>
   
@@ -349,9 +378,9 @@
       <category term="数学" scheme="http://suzhouxing.github.io/techive/categories/%E6%95%B0%E5%AD%A6/"/>
     
     
-      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
-    
       <category term="优化" scheme="http://suzhouxing.github.io/techive/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="数学" scheme="http://suzhouxing.github.io/techive/tags/%E6%95%B0%E5%AD%A6/"/>
     
       <category term="高中" scheme="http://suzhouxing.github.io/techive/tags/%E9%AB%98%E4%B8%AD/"/>
     
@@ -436,9 +465,9 @@
       <category term="日常" scheme="http://suzhouxing.github.io/techive/categories/%E6%97%A5%E5%B8%B8/"/>
     
     
-      <category term="技术" scheme="http://suzhouxing.github.io/techive/tags/%E6%8A%80%E6%9C%AF/"/>
-    
       <category term="日常" scheme="http://suzhouxing.github.io/techive/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+      <category term="技术" scheme="http://suzhouxing.github.io/techive/tags/%E6%8A%80%E6%9C%AF/"/>
     
       <category term="面试" scheme="http://suzhouxing.github.io/techive/tags/%E9%9D%A2%E8%AF%95/"/>
     
