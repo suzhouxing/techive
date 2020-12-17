@@ -56,110 +56,133 @@ gcp.exe ../DSJC500.5.col dsjc500.5.txt 48 123456
 - 邮件附件为单个压缩包, 文件名为 "姓名-班级", 其内包含下列文件.
   - 算法的可执行文件.
   - 算法源码.
-  - 算法在各算例上的运行情况, 至少包括以下几项信息.
+  - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
     - 算例名.
     - 颜色数.
     - 计算耗时.
+  - 算法在各算例上求得的颜色数最少的解文件.
 
 
 ## 检查程序
 
-我们可能会使用以下程序检查大家提交的算法和结果 (仅供参考).
+我们可能会使用以下 c# 程序检查大家提交的算法和结果 (仅供参考).
 
-```cpp
-#include <iostream>
-#include <fstream>
-#include <chrono>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <set>
-#include <map>
-#include <random>
-#include <cstdlib>
+```cs
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Diagnostics;
 
 
-using namespace std;
+namespace GcpBenchmark {
+    class Program {
+        static void Main(string[] args) {
 
+            string inputFilePath = args[0]; // instance file.
+            string outputFilePath = args[1]; // solution file.
 
-static int genSeed() { return static_cast<int>(random_device()() & 0xffff); }
-
-static void check(string inputFilePath, string outputFilePath) {
-    enum { MaxLineLen = 1024 };
-
-    struct Edge {
-        int src;
-        int dst;
-    };
-
-    int nodeNum, edgeNum;
-    vector<Edge> edges;
-    {
-        char c;
-        string s;
-        ifstream inputFile(inputFilePath);
-
-        while (inputFile >> c) {
-            if (c != 'c') { break; }
-            inputFile.ignore(MaxLineLen, '\n');
-        }
-        inputFile >> c >> s >> nodeNum >> edgeNum;
-
-        edges.resize(edgeNum);
-        for (int e = 0; e < edgeNum; ++e) {
-            inputFile >> c >> edges[e].src >> edges[e].dst;
-        }
-    }
-
-    int conflictNum = 0;
-    set<int> colors;
-    {
-        map<int, int> nodeColors;
-        ifstream outputFile(outputFilePath);
-
-        for (int n = 0; n < nodeNum; ++n) {
-            int node, color;
-            outputFile >> node >> color;
-            nodeColors[node] = color;
-            colors.insert(color);
+            if (args.Length > 3) {
+                string exeFilePath = args[2]; // algorithm executable file.
+                string colorNum = args[3];
+                benchmark(inputFilePath, outputFilePath, exeFilePath, colorNum);
+            } else {
+                check(inputFilePath, outputFilePath);
+            }
         }
 
-        for (auto e = edges.begin(); e != edges.end(); ++e) {
-            if (nodeColors[e->src] == nodeColors[e->dst]) { ++conflictNum; }
+        struct Edge {
+            public string src;
+            public string dst;
+        };
+
+        static void check(string inputFilePath, string outputFilePath) {
+            int nodeNum = 0;
+            int edgeNum = 0;
+            List<Edge> edges = new List<Edge>();
+            {
+                string[] lines = File.ReadAllLines(inputFilePath);
+
+                foreach (string line in lines) {
+                    if (line.Length <= 0) { continue; }
+                    if (line[0] == 'c') { continue; }
+
+                    string[] cells = line.Split(' ');
+                    if (line[0] == 'p') {
+                        nodeNum = int.Parse(cells[2]);
+                        edgeNum = int.Parse(cells[3]);
+                        edges.Capacity = edgeNum;
+                    } else if (line[0] == 'e') {
+                        edges.Add(new Edge { src = cells[1], dst = cells[2] });
+                    }
+                }
+            }
+
+            HashSet<string> colors = new HashSet<string>();
+            Dictionary<string, string> nodeColors = new Dictionary<string, string>();
+            {
+                string[] lines = File.ReadAllLines(outputFilePath);
+
+                foreach (string line in lines) {
+                    string[] cells = line.Split(' ');
+                    nodeColors[cells[0]] = cells[1];
+                    colors.Add(cells[1]);
+                }
+            }
+
+            int conflictNum = 0;
+            foreach (Edge edge in edges) {
+                if (nodeColors[edge.src] == nodeColors[edge.dst]) { ++conflictNum; }
+            }
+
+            Console.Write("instance=");
+            Console.Write(Path.GetFileName(inputFilePath));
+
+            Console.Write(" color=");
+            Console.Write(colors.Count);
+
+            Console.Write(" conflict=");
+            Console.WriteLine(conflictNum);
         }
-    }
 
-    cout << "instance=" << inputFilePath << "color=" << colors.size()
-        << " conflict=" << conflictNum << endl;
-}
+        static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string colorNum) {
+            const int Repeat = 10;
+            const int MillisecondTimeLimit = 10 * 60 * 1000;
+            IntPtr ByteMemoryLimit = new IntPtr(1024 * 1024 * 1024);
 
-int main(int argc, char *argv[]) {
-    enum { Repeat = 10 };
+            for (int i = 0; i < Repeat; ++i) {
+                int seed = genSeed();
+                StringBuilder cmdArgs = new StringBuilder();
+                cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath).Append(" ")
+                    .Append(colorNum).Append(" ").Append(seed);
 
-    string inputFilePath(argv[1]); // instance file.
-    string outputFilePath(argv[2]); // solution file.
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.FileName = exeFilePath;
+                psi.WorkingDirectory = Environment.CurrentDirectory;
+                psi.Arguments = cmdArgs.ToString();
+                Process p = Process.Start(psi);
+                p.MaxWorkingSet = ByteMemoryLimit;
+                if (!p.WaitForExit(MillisecondTimeLimit)) {
+                    try { p.Kill(); } catch (Exception) { }
+                }
+                sw.Stop();
 
-    if (argc > 3) {
-        string exeFilePath(argv[3]); // algorithm executable file.
-        string colorNum(argv[4]);
+                Console.Write("time=");
+                Console.Write(sw.ElapsedMilliseconds / 1000.0);
+                Console.Write("s seed=");
+                Console.Write(seed);
+                Console.Write(" ");
 
-        ostringstream cmd; // https://github.com/lowleveldesign/process-governor
-        cmd << "bin/procgov.exe --maxmem=1G --cpu=1 --timeout=10m -r \""
-            << exeFilePath << "\" \"" << inputFilePath << "\" \""
-            << outputFilePath << "\" " << colorNum << " " << genSeed();
-
-        for (int i = 0; i < Repeat; ++i) {
-            chrono::steady_clock::time_point begin = chrono::steady_clock::now();
-            system(cmd.str().c_str());
-            chrono::steady_clock::time_point end = chrono::steady_clock::now();
-
-            auto duration = chrono::duration_cast<chrono::milliseconds>(end - begin);
-            cout << "time=" << (duration.count() / 1000.0) << "s ";
-
-            check(inputFilePath, outputFilePath);
+                check(inputFilePath, outputFilePath);
+            }
         }
-    } else {
-        check(inputFilePath, outputFilePath);
+
+        static int genSeed() {
+            return (int)(DateTime.Now.Ticks & 0xffff);
+        }
     }
 }
 ```
