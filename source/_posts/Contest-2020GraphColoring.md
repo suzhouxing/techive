@@ -34,6 +34,12 @@ gcp.exe ../DSJC500.5.col dsjc500.5.txt 48 123456
 - 测试时可能会修改算例文件名，请勿针对文件名做特殊处理.
 
 
+## 输入的算例文件格式
+
+DIMACS 图着色算例格式.
+建议读取算例时不要根据开头给出的边数进行相关数据的初始化, 而是根据是否已经读到文件末尾自动判断.
+
+
 ## 输出的解文件格式
 
 对于 N 个节点的算例, 输出 N 行.
@@ -79,7 +85,6 @@ using System.Diagnostics;
 namespace GcpBenchmark {
     class Program {
         static void Main(string[] args) {
-
             string inputFilePath = args[0]; // instance file.
             string outputFilePath = args[1]; // solution file.
 
@@ -154,8 +159,8 @@ namespace GcpBenchmark {
             for (int i = 0; i < Repeat; ++i) {
                 int seed = genSeed();
                 StringBuilder cmdArgs = new StringBuilder();
-                cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath).Append(" ")
-                    .Append(colorNum).Append(" ").Append(seed);
+                cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
+                    .Append(" ").Append(colorNum).Append(" ").Append(seed);
 
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
