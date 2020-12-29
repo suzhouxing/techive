@@ -153,35 +153,41 @@ namespace GcpBenchmark {
 
         static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string colorNum) {
             const int Repeat = 10;
-            const int MillisecondTimeLimit = 10 * 60 * 1000;
+            const int MillisecondTimeLimit = 20 * 60 * 1000;
             IntPtr ByteMemoryLimit = new IntPtr(1024 * 1024 * 1024);
 
             for (int i = 0; i < Repeat; ++i) {
-                int seed = genSeed();
-                StringBuilder cmdArgs = new StringBuilder();
-                cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
-                    .Append(" ").Append(colorNum).Append(" ").Append(seed);
+                try {
+                    int seed = genSeed();
+                    StringBuilder cmdArgs = new StringBuilder();
+                    cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
+                        .Append(" ").Append(colorNum).Append(" ").Append(seed);
 
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.FileName = exeFilePath;
-                psi.WorkingDirectory = Environment.CurrentDirectory;
-                psi.Arguments = cmdArgs.ToString();
-                Process p = Process.Start(psi);
-                p.MaxWorkingSet = ByteMemoryLimit;
-                if (!p.WaitForExit(MillisecondTimeLimit)) {
-                    try { p.Kill(); } catch (Exception) { }
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                    ProcessStartInfo psi = new ProcessStartInfo();
+                    psi.FileName = exeFilePath;
+                    psi.WorkingDirectory = Environment.CurrentDirectory;
+                    psi.Arguments = cmdArgs.ToString();
+                    Process p = Process.Start(psi);
+                    p.MaxWorkingSet = ByteMemoryLimit;
+                    if (!p.WaitForExit(MillisecondTimeLimit)) {
+                        try { p.Kill(); } catch (Exception) { }
+                    }
+                    sw.Stop();
+
+                    Console.Write("solver=");
+                    Console.Write(Path.GetDirectoryName(exeFilePath));
+                    Console.Write(" time=");
+                    Console.Write(sw.ElapsedMilliseconds / 1000.0);
+                    Console.Write("s seed=");
+                    Console.Write(seed);
+                    Console.Write(" ");
+
+                    check(inputFilePath, outputFilePath);
+                } catch (Exception e) {
+                    //Console.WriteLine(e);
                 }
-                sw.Stop();
-
-                Console.Write("time=");
-                Console.Write(sw.ElapsedMilliseconds / 1000.0);
-                Console.Write("s seed=");
-                Console.Write(seed);
-                Console.Write(" ");
-
-                check(inputFilePath, outputFilePath);
             }
         }
 

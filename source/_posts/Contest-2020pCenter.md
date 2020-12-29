@@ -35,31 +35,36 @@ uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
 ## 输入的算例文件格式
 
 所有算例均已根据给定覆盖半径转换为判定问题, 处理为一系列固定集合数的单一成本集合覆盖算例.
-所有算例的元素和集合均从 0 开始连续编号.
+转换后每个节点都可以覆盖若干节点, 同时也对称地被若干节点覆盖, 故转换后的单一成本集合覆盖算例中集合数等于元素数.
 
-第一行给出两个由空格分隔的整数 N 和 P, 分别表示节点数 (也是集合数和元素数) 和中心数 (也是挑选出的集合数).
+所有算例的元素和集合分别从 0 开始连续编号.
+
+第一行给出两个由空格分隔的整数 N 和 P, 分别表示节点数和中心数 (从集合覆盖的角度来看, N 既是集合数又是元素数, P 为可挑选出的集合数).
 
 接下来每两行一组, 连续 N 组给出每个集合的覆盖范围.
-每组中第一行为该集合能覆盖的节点数 C, 第二行为空格分隔的 C 个数字, 分别表示该集合能覆盖的元素的编号.
+每组中第一行为该集合能覆盖的元素数量 C, 第二行为空格分隔的 C 个数字, 分别表示该集合能覆盖的元素的编号.
 
-例如, 以下算例文件表示有 4 个节点 ( 个集合和元素), 要求挑选出 2 个节点 (集合) 作为中心服务 (覆盖) 其他节点,
-其中集合 0 可以覆盖元素 0 和 3, 集合 1 可以覆盖元素 1 和 2, 集合 2 可以覆盖元素 1 和 3, 集合 3 可以覆盖元素 0, 2, 3:
+例如, 以下算例文件表示集合和元素的数量均为 4, 要求挑选出 2 个集合覆盖所有元素; 其中,  
+集合 0 可以覆盖 2 个元素, 分别为元素 0 和 3;  
+集合 1 可以覆盖 2 个元素, 分别为元素 1 和 2;  
+集合 2 可以覆盖 3 个元素, 分别为元素 1, 2 和 3;  
+集合 3 可以覆盖 2 个元素, 分别为元素 0 和 2:
 ```
 4 2
 2
 0 3
 2
 1 2
-2
-1 3
 3
-0 2 3
+1 2 3
+2
+0 2
 ```
 
 
 ## 输出的解文件格式
 
-输出一行输出用空格分隔的 P 个数字, 分别表示挑选出的 P 个中心 (集合).
+输出一行用空格分隔的 P 个数字, 分别表示挑选出的 P 个中心 (集合).
 
 例如, 以下解文件表示选择节点 0 和 2 作为中心 (集合):
 ```
@@ -96,6 +101,9 @@ using System.Diagnostics;
 
 namespace UscpBenchmark {
     class Program {
+        static readonly char[] InlineDelimiters = new char[] { ' ', '\t' };
+        static readonly char[] WhiteSpaceChars = new char[] { ' ', '\t', '\r', '\n' };
+
         static void Main(string[] args) {
             string inputFilePath = args[0]; // instance file.
             string outputFilePath = args[1]; // solution file.
@@ -116,13 +124,13 @@ namespace UscpBenchmark {
             {
                 string[] lines = File.ReadAllLines(inputFilePath);
 
-                string[] cells = lines[0].Split(' ');
+                string[] cells = lines[0].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
                 nodeNum = int.Parse(cells[0]);
                 centerNum = int.Parse(cells[1]);
                 sets.Capacity = nodeNum;
                 for (int l = 1; l < lines.Length; ++l) {
                     int coveredItemNum = int.Parse(lines[l]);
-                    cells = lines[++l].Split(' ');
+                    cells = lines[++l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
                     List<int> set = new List<int>(coveredItemNum);
                     foreach (var cell in cells) { set.Add(int.Parse(cell)); }
                     sets.Add(set);
@@ -131,7 +139,7 @@ namespace UscpBenchmark {
 
             List<int> pickedSets = new List<int>(centerNum);
             {
-                string[] cells = File.ReadAllText(outputFilePath).Split(' ');
+                string[] cells = File.ReadAllText(outputFilePath).Split(WhiteSpaceChars, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string cell in cells) { pickedSets.Add(int.Parse(cell)); }
             }
 
@@ -157,35 +165,43 @@ namespace UscpBenchmark {
 
         static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string secTimeout) {
             const int Repeat = 10;
-            const int MillisecondTimeLimit = 10 * 60 * 1000;
-            IntPtr ByteMemoryLimit = new IntPtr(1024 * 1024 * 1024);
+
+            int millisecondTimeLimit = int.Parse(secTimeout) * 1000;
+            IntPtr byteMemoryLimit = new IntPtr(1024 * 1024 * 1024);
 
             for (int i = 0; i < Repeat; ++i) {
-                int seed = genSeed();
-                StringBuilder cmdArgs = new StringBuilder();
-                cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
-                    .Append(" ").Append(secTimeout).Append(" ").Append(seed);
+                try {
+                    int seed = genSeed();
+                    StringBuilder cmdArgs = new StringBuilder();
+                    cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
+                        .Append(" ").Append(secTimeout).Append(" ").Append(seed);
 
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.FileName = exeFilePath;
-                psi.WorkingDirectory = Environment.CurrentDirectory;
-                psi.Arguments = cmdArgs.ToString();
-                Process p = Process.Start(psi);
-                p.MaxWorkingSet = ByteMemoryLimit;
-                if (!p.WaitForExit(MillisecondTimeLimit)) {
-                    try { p.Kill(); } catch (Exception) { }
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                    ProcessStartInfo psi = new ProcessStartInfo();
+                    psi.FileName = exeFilePath;
+                    psi.WorkingDirectory = Environment.CurrentDirectory;
+                    psi.Arguments = cmdArgs.ToString();
+                    Process p = Process.Start(psi);
+                    p.MaxWorkingSet = byteMemoryLimit;
+                    if (!p.WaitForExit(millisecondTimeLimit)) {
+                        try { p.Kill(); } catch (Exception) { }
+                    }
+                    sw.Stop();
+
+                    Console.Write("solver=");
+                    Console.Write(Path.GetDirectoryName(exeFilePath));
+                    Console.Write("time=");
+                    Console.Write(sw.ElapsedMilliseconds / 1000.0);
+                    Console.Write("s seed=");
+                    Console.Write(seed);
+                    Console.Write(" ");
+
+                    check(inputFilePath, outputFilePath);
+                } catch (Exception e) {
+                    //Console.WriteLine();
+                    Console.WriteLine(e);
                 }
-                sw.Stop();
-
-                Console.Write("time=");
-                Console.Write(sw.ElapsedMilliseconds / 1000.0);
-                Console.Write("s seed=");
-                Console.Write(seed);
-                Console.Write(" ");
-
-                check(inputFilePath, outputFilePath);
             }
         }
 
