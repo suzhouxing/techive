@@ -75,15 +75,18 @@ uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
 ## 提交要求
 
 - 发送至邮箱 [su.zhouxing@qq.com](mailto:su.zhouxing@qq.com).
-- 邮件标题格式为 "Challenge2020USCP-姓名-班级-学号".
-- 邮件附件为单个压缩包, 文件名为 "姓名-班级", 其内包含下列文件.
-  - 算法的可执行文件.
+- 邮件标题格式为 "**Challenge2020USCP-姓名-班级**".
+- 邮件附件为单个压缩包, 文件名为 "**姓名-班级**", 其内包含下列文件.
+  - 算法的可执行文件 (Windows 平台).
+    - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
+    - 用 visual studio 2017 以上版本的同学编译时请静态链接, 即添加 `\MT` 编译选项.
+    - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
   - 算法源码.
   - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
     - 算例名.
     - 剩余未覆盖元素数.
     - 计算耗时.
-  - 算法在各算例上求得的完全覆盖的解文件.
+  - 算法在各算例上求得的完全覆盖的解文件 (仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
 
 
 ## 检查程序
@@ -121,7 +124,7 @@ namespace UscpBenchmark {
             int nodeNum = 0;
             int centerNum = 0;
             List<List<int>> sets = new List<List<int>>();
-            {
+            try {
                 string[] lines = File.ReadAllLines(inputFilePath);
 
                 string[] cells = lines[0].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
@@ -135,23 +138,25 @@ namespace UscpBenchmark {
                     foreach (var cell in cells) { set.Add(int.Parse(cell)); }
                     sets.Add(set);
                 }
-            }
+            } catch (Exception) { }
 
             List<int> pickedSets = new List<int>(centerNum);
-            {
+            try {
                 string[] cells = File.ReadAllText(outputFilePath).Split(WhiteSpaceChars, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string cell in cells) { pickedSets.Add(int.Parse(cell)); }
-            }
+            } catch (Exception) { }
 
             int uncoveredItemNum = nodeNum;
-            List<bool> isItemCovered = new List<bool>(Enumerable.Repeat(false, nodeNum));
-            foreach (var s in pickedSets) {
-                foreach (var item in sets[s]) {
-                    if (isItemCovered[item]) { continue; }
-                    isItemCovered[item] = true;
-                    --uncoveredItemNum;
+            try {
+                List<bool> isItemCovered = new List<bool>(Enumerable.Repeat(false, nodeNum));
+                foreach (var s in pickedSets) {
+                    foreach (var item in sets[s]) {
+                        if (isItemCovered[item]) { continue; }
+                        isItemCovered[item] = true;
+                        --uncoveredItemNum;
+                    }
                 }
-            }
+            } catch (Exception) { }
 
             Console.Write("instance=");
             Console.Write(Path.GetFileName(inputFilePath));
@@ -170,6 +175,7 @@ namespace UscpBenchmark {
             IntPtr byteMemoryLimit = new IntPtr(1024 * 1024 * 1024);
 
             for (int i = 0; i < Repeat; ++i) {
+                try { File.Delete(outputFilePath); } catch (Exception) { }
                 try {
                     int seed = genSeed();
                     StringBuilder cmdArgs = new StringBuilder();
@@ -191,16 +197,19 @@ namespace UscpBenchmark {
 
                     Console.Write("solver=");
                     Console.Write(Path.GetDirectoryName(exeFilePath));
-                    Console.Write("time=");
+
+                    Console.Write(" time=");
                     Console.Write(sw.ElapsedMilliseconds / 1000.0);
+
                     Console.Write("s seed=");
                     Console.Write(seed);
                     Console.Write(" ");
 
                     check(inputFilePath, outputFilePath);
+                    File.Delete(outputFilePath);
                 } catch (Exception e) {
-                    //Console.WriteLine();
-                    Console.WriteLine(e);
+                    Console.WriteLine();
+                    //Console.WriteLine(e);
                 }
             }
         }

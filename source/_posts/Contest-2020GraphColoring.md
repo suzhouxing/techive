@@ -58,18 +58,21 @@ DIMACS 图着色算例格式.
 ## 提交要求
 
 - 发送至邮箱 [su.zhouxing@qq.com](mailto:su.zhouxing@qq.com).
-- 邮件标题格式为 "Challenge2020GCP-姓名-班级".
-- 邮件附件为单个压缩包, 文件名为 "姓名-班级", 其内包含下列文件.
-  - 算法的可执行文件.
+- 邮件标题格式为 "**Challenge2020GCP-姓名-班级**".
+- 邮件附件为单个压缩包, 文件名为 "**姓名-班级**", 其内包含下列文件.
+  - 算法的可执行文件 (Windows 平台).
+    - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
+    - 用 visual studio 2017 以上版本的同学编译时请静态链接, 即添加 `\MT` 编译选项.
+    - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
   - 算法源码.
   - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
     - 算例名.
     - 颜色数.
     - 计算耗时.
-  - 算法在各算例上求得的颜色数最少的解文件.
+  - 算法在各算例上求得的颜色数最少的解文件 (仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
 
 
-## 检查程序
+## 测试与检查程序
 
 我们可能会使用以下 c# 程序检查大家提交的算法和结果 (仅供参考).
 
@@ -106,7 +109,7 @@ namespace GcpBenchmark {
             int nodeNum = 0;
             int edgeNum = 0;
             List<Edge> edges = new List<Edge>();
-            {
+            try {
                 string[] lines = File.ReadAllLines(inputFilePath);
 
                 foreach (string line in lines) {
@@ -122,11 +125,11 @@ namespace GcpBenchmark {
                         edges.Add(new Edge { src = cells[1], dst = cells[2] });
                     }
                 }
-            }
+            } catch (Exception) { }
 
             HashSet<string> colors = new HashSet<string>();
             Dictionary<string, string> nodeColors = new Dictionary<string, string>();
-            {
+            try {
                 string[] lines = File.ReadAllLines(outputFilePath);
 
                 foreach (string line in lines) {
@@ -134,12 +137,14 @@ namespace GcpBenchmark {
                     nodeColors[cells[0]] = cells[1];
                     colors.Add(cells[1]);
                 }
-            }
+            } catch (Exception) { }
 
             int conflictNum = 0;
-            foreach (Edge edge in edges) {
-                if (nodeColors[edge.src] == nodeColors[edge.dst]) { ++conflictNum; }
-            }
+            try {
+                foreach (Edge edge in edges) {
+                    if (nodeColors[edge.src] == nodeColors[edge.dst]) { ++conflictNum; }
+                }
+            } catch (Exception) { }
 
             Console.Write("instance=");
             Console.Write(Path.GetFileName(inputFilePath));
@@ -157,6 +162,7 @@ namespace GcpBenchmark {
             IntPtr ByteMemoryLimit = new IntPtr(1024 * 1024 * 1024);
 
             for (int i = 0; i < Repeat; ++i) {
+                try { File.Delete(outputFilePath); } catch (Exception) { }
                 try {
                     int seed = genSeed();
                     StringBuilder cmdArgs = new StringBuilder();
@@ -178,14 +184,17 @@ namespace GcpBenchmark {
 
                     Console.Write("solver=");
                     Console.Write(Path.GetDirectoryName(exeFilePath));
+
                     Console.Write(" time=");
                     Console.Write(sw.ElapsedMilliseconds / 1000.0);
+
                     Console.Write("s seed=");
                     Console.Write(seed);
                     Console.Write(" ");
 
                     check(inputFilePath, outputFilePath);
                 } catch (Exception e) {
+                    Console.WriteLine();
                     //Console.WriteLine(e);
                 }
             }
