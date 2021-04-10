@@ -86,7 +86,7 @@ uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
     - 算例名.
     - 剩余未覆盖元素数.
     - 计算耗时.
-  - 算法在各算例上求得的完全覆盖的解文件 (仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
+  - 算法在各算例上求得的完全覆盖的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
 
 
 ## 检查程序
@@ -170,9 +170,10 @@ namespace UscpBenchmark {
 
         static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string secTimeout) {
             const int Repeat = 10;
+            const int millisecondCheckInterval = 1000;
 
-            int millisecondTimeLimit = int.Parse(secTimeout) * 1000;
-            IntPtr byteMemoryLimit = new IntPtr(1024 * 1024 * 1024);
+            long millisecondTimeLimit = int.Parse(secTimeout) * 1000;
+            long byteMemoryLimit = 1024 * 1024 * 1024;
 
             for (int i = 0; i < Repeat; ++i) {
                 try { File.Delete(outputFilePath); } catch (Exception) { }
@@ -189,10 +190,10 @@ namespace UscpBenchmark {
                     psi.WorkingDirectory = Environment.CurrentDirectory;
                     psi.Arguments = cmdArgs.ToString();
                     Process p = Process.Start(psi);
-                    p.MaxWorkingSet = byteMemoryLimit;
-                    if (!p.WaitForExit(millisecondTimeLimit)) {
-                        try { p.Kill(); } catch (Exception) { }
-                    }
+                    while (!p.WaitForExit(millisecondCheckInterval)
+                        && (sw.ElapsedMilliseconds < millisecondTimeLimit)
+                        && (p.PrivateMemorySize64 < byteMemoryLimit)) { }
+                    try { p.Kill(); } catch (Exception) { }
                     sw.Stop();
 
                     Console.Write("solver=");
@@ -206,7 +207,6 @@ namespace UscpBenchmark {
                     Console.Write(" ");
 
                     check(inputFilePath, outputFilePath);
-                    File.Delete(outputFilePath);
                 } catch (Exception e) {
                     Console.WriteLine();
                     //Console.WriteLine(e);
@@ -225,6 +225,8 @@ namespace UscpBenchmark {
 ## 算例清单
 
 算例规模从小到大依次为 (求解难度不一定随规模增加, 但除 pcb3038* 以外的算例应该都很容易求解):
+
+[下载全部](pcenter.data.7z)
 
 pmed1.n100p5  
 pmed2.n100p10  

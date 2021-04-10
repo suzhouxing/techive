@@ -1,0 +1,805 @@
+---
+title: SmartLab Challenge 2020 - Flexible Job Shop Scheduling
+date: 2021-01-14 10:05:34
+categories:
+- 算法挑战
+tags:
+- 算法挑战
+- 组合优化
+---
+柔性作业车间调度问题是智能制造与高性能计算等领域中的重要问题, 具有广泛应用场景.
+柔性作业车间调度问题主要研究如何调度有限的资源依次执行多项任务, 使得完成所有任务的完工时间最短的问题.
+比如芯片代工厂生产芯片时, 每块晶圆需要在不同机台依次完成光刻与蚀刻等多道工序.
+比如在某些大规模并行计算场景中, 计算任务间存在依赖关系, 后继任务的输入为前驱任务的输出.
+高效的柔性作业车间调度问题的求解算法具有及其重要的理论与应用价值.
+
+
+
+# 柔性作业车间调度算法训练
+
+## 命令行参数
+
+请大家编写程序时支持四个命令行参数, 依次为算例文件路径, 输出解文件路径, 运行时间上限 (单位为秒) 和随机种子 (0-65535).
+例如, 在控制台运行以下命令表示调用可执行文件 `fjsp.exe` 求解路径为 `../data/jsp.FT06.m6j6c1.txt` 的算例, 解文件输出至 `jsp.FT06.m6j6c1.txt`, 限时 1000 秒, 随机种子为 12345:
+```
+fjsp.exe ../data/jsp.FT06.m6j6c1.txt jsp.FT06.m6j6c1.txt 1000 12345
+```
+
+- 运行时间上限.
+  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已保存解文件 (最好还能自行正常退出).
+    - 可以每次迭代时检查是否超时, 也可以每次更新最优解后保存一次.
+- 随机种子设置.
+  - 使用 C 语言随机数生成器请用 `srand`.
+  - 使用 C++ 随机数生成器 (如 `mt19937`) 请在构造时传参或调用 `seed()` 方法设置.
+- 测试时可能会修改算例文件名，请勿针对文件名做特殊处理.
+
+
+## 输入的算例文件格式
+
+所有算例的任务和机器分别从 0 开始连续编号.
+
+第一行给出三个由空白字符 (空格或 `\t`) 分隔的整数, 分别表示任务数 N, 机器数 M, 以及所有任务所有工序的最大的候选机器数 C (若 C = 1 说明该算例为 JSP 算例).
+接下来连续 N 行, 第 i 行表示第 i 个任务的信息.
+每行第一个整数表示第 i 个任务的工序数 K, 随后连续 K 组由空白字符分隔的数据, 第 j 组数据表示该任务的第 j 道工序的信息.
+每组数据第一个整数表示可执行该工序的候选机器数 S, 随后连续 S 个由空白字符分隔的二元组, 二元组 (G, D) 表示该工序可由机器 G 执行且加工时长为 D.
+
+例如, 以下算例文件表示有 2 个任务和 4 台机器, 每个任务至多 2 台候选机器; 其中,  
+任务 0 由 4 道工序构成,  
+  其工序 0 可由机器 1 花费时长 654 完成,  
+  其工序 1 可由机器 2 花费时长 147 完成,  
+  其工序 2 可由机器 3 花费时长 345 完成,  
+  其工序 3 可由机器 0 花费时长 447 完成;  
+任务 1 由 3 道工序构成,  
+  其工序 0 可由机器 1 花费时长 321 完成或由机器 0 花费时长 321 完成,  
+  其工序 1 可由机器 2 花费时长 520 完成,  
+  其工序 2 可由机器 3 花费时长 789 完成:
+```
+2 4 2
+4    1  1 654    1  2 147   1  3 345    1  0 447
+3    2  1 321  0 321    1  2 520    1  3 789
+```
+
+上述算例内数据的分组情况可以更加直观地表示成下面的情况:
+```
+2 4 2
+4 [1 (1 654)] [1 (2 147)] [1 (3 345)] [1 (0 447)]
+3 [2 (1 321) (0 321)] [1 (2 520)] [1 (3 789)]
+```
+
+为了使算例的数据分组更加直观, 输出算例时可能会按照如下约定: 使用 4 个空格分隔每行的 K 组数据, 使用 2 个空格分隔 S 个二元组.
+
+
+## 输出的解文件格式
+
+输出 M 行整数表示 M 台机器的任务分配与排序情况, 第 i 行表示机器 i 上执行的工序的有序列表.
+每一行第一个整数表示第 i 台机器加工的工序数 E, 随后连续 E 个由空格分隔的二元组, 二元组 (J, O) 表示加工了任务 J 的工序 O, 二元组的出现顺序表示机器 i 的加工顺序.
+
+例如, 以下解文件表示 2 台机器上的任务分配与排序情况; 其中,  
+机器 0 执行了 3 道工序, 依次为任务 1 的工序 1, 任务 0 的工序 0, 任务 2 的工序 0;  
+机器 1 加工了 2 道工序, 依次为任务 0 的工序 1, 任务 1 的工序 0:
+```
+3    1 1  0 0  2 0
+2    0 1  1 0
+```
+
+注意上述调度方案存在死锁, 不是可行的调度方案.
+
+
+## 提交要求
+
+- 发送至邮箱 [su.zhouxing@qq.com](mailto:su.zhouxing@qq.com).
+- 邮件标题格式为 "**Challenge2020FJSP-姓名**".
+- 邮件附件为单个压缩包, 文件名为 "**姓名**", 其内包含下列文件.
+  - 算法的可执行文件 (Windows 平台).
+    - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
+    - 用 visual studio 2017 以上版本的同学编译时请静态链接, 即添加 `\MT` 编译选项.
+    - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
+  - 算法源码.
+  - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
+    - 算例名.
+    - 所有任务的完工时间.
+    - 计算耗时.
+  - 算法在各算例上求得的完全覆盖的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
+
+例如:
+```
+苏宙行.zip
+|   fjsp.exe
+|   results.csv
+|
++---src
+|       main.cpp
+|       algorithm.cpp
+|       algorithm.h
+|
++---results
+        fjsp.barnes.mt10c1.m11j10c2.txt
+        fjsp.barnes.mt10cc.m12j10c2.txt
+        ...
+```
+
+
+## 检查程序
+
+我们可能会使用以下 c# 程序检查大家提交的算法和结果 (仅供参考).
+
+```cs
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Diagnostics;
+
+
+namespace FjspBenchmark {
+    static class Ext {
+        public static void pop<T>(this List<T> l) { l.RemoveAt(l.Count - 1); }
+    }
+
+    class Program {
+        static readonly char[] InlineDelimiters = new char[] { ' ', '\t' };
+        static readonly char[] WhiteSpaceChars = new char[] { ' ', '\t', '\r', '\n' };
+
+        static void Main(string[] args) {
+            string inputFilePath = args[0]; // instance file.
+            string outputFilePath = args[1]; // solution file.
+
+            if (args.Length > 3) {
+                string exeFilePath = args[2]; // algorithm executable file.
+                string secTimeout = args[3]; // timeout in second.
+                benchmark(inputFilePath, outputFilePath, exeFilePath, secTimeout);
+            } else {
+                check(inputFilePath, outputFilePath);
+            }
+        }
+
+        // name mapping:
+        // ---------------------------------------
+        //  job shop scheduling | task scheduling
+        // ---------------------+-----------------
+        //  job                 | batch
+        //  operation           | job
+        //  machine             | worker
+        // ---------------------+-----------------
+        class Job {
+            // `succeedingJobs[j]` is the jobs which can only begin after job `j` finishes.
+            public List<int> succeedingJobs = new List<int>();
+
+            // `candidateWorkers[w]` is the processing time of this job by worker `w`.
+            public Dictionary<int, int> candidateWorkers = new Dictionary<int, int>();
+        }
+
+        static void check(string inputFilePath, string outputFilePath) {
+            int batchNum = 0;
+            int workerNum = 0;
+            int maxCandidateWorkerNum = 0;
+            List<Job> jobs = new List<Job>();
+            List<List<int>> jobIdMap = new List<List<int>>(); // `jobIdMap[b][k]` is the `k`_th job (operation) in batch `b`.
+            try { // load instance.
+                string[] lines = File.ReadAllLines(inputFilePath);
+                string[] cells = lines[0].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
+                batchNum = int.Parse(cells[0]);
+                workerNum = int.Parse(cells[1]);
+                maxCandidateWorkerNum = int.Parse(cells[2]);
+                for (int l = 1; l < lines.Length; ++l) { // for each batch.
+                    cells = lines[l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
+                    int opNum = int.Parse(cells[0]);
+                    List<int> idMap = new List<int>(opNum);
+                    for (int c = 1; c < cells.Length; ++c) { // for each job in the batch.
+                        Job job = new Job();
+                        int candidateWorkerNum = int.Parse(cells[c]);
+                        for (int w = 0; w < candidateWorkerNum; ++w) { // for each candidate worker.
+                            int worker = int.Parse(cells[++c]);
+                            int duration = int.Parse(cells[++c]);
+                            job.candidateWorkers.Add(worker, duration);
+                        }
+                        idMap.Add(jobs.Count);
+                        jobs.Add(job);
+                        job.succeedingJobs.Add(jobs.Count); // succeeding job of the same batch.
+                    }
+                    jobs.Last().succeedingJobs.pop();
+                    jobIdMap.Add(idMap);
+                }
+            } catch (Exception) { }
+
+            List<List<int>> jobsOnWorkers = new List<List<int>>(workerNum);
+            try { // load solution.
+                string[] lines = File.ReadAllLines(outputFilePath);
+                for (int l = 0; l < lines.Length; ++l) {
+                    string[] cells = lines[l].Split(WhiteSpaceChars, StringSplitOptions.RemoveEmptyEntries);
+                    int jobNumOnWorker = int.Parse(cells[0]);
+                    List<int> jobsOnWorker = new List<int>(jobNumOnWorker);
+                    for (int c = 1; c < cells.Length; ++c) {
+                        int batch = int.Parse(cells[c]);
+                        int job = int.Parse(cells[++c]);
+                        jobsOnWorker.Add(jobIdMap[batch][job]);
+                    }
+                    jobsOnWorkers.Add(jobsOnWorker);
+                }
+            } catch (Exception) { }
+
+            int makespan = 99999999;
+            int restJobNum = jobs.Count;
+            try { // check.
+                List<int> jobExeDurations = new List<int>(Enumerable.Repeat(0, jobs.Count));
+                for (int w = 0; w < workerNum; ++w) {
+                    if (jobsOnWorkers[w].Count <= 0) { continue; }
+                    int prevJob = jobsOnWorkers[w][0];
+                    jobExeDurations[prevJob] = jobs[prevJob].candidateWorkers[w];
+                    for (int j = 1; j < jobsOnWorkers[w].Count; ++j) {
+                        int thisJob = jobsOnWorkers[w][j];
+                        jobs[prevJob].succeedingJobs.Add(thisJob); // succeeding job on the same worker.
+                        jobExeDurations[thisJob] = jobs[thisJob].candidateWorkers[w];
+                        prevJob = thisJob;
+                    }
+                }
+                List<int> preceedingJobNums = new List<int>(Enumerable.Repeat(0, jobs.Count));
+                foreach (var job in jobs) {
+                    foreach (var succeedingJob in job.succeedingJobs) {
+                        ++preceedingJobNums[succeedingJob];
+                    }
+                }
+
+                Queue<int> freeJobs = new Queue<int>(jobs.Count);
+                List<int> earliestFinishTimes = new List<int>(Enumerable.Repeat(0, jobs.Count));
+                for (int j = 0; j < jobs.Count; ++j) {
+                    if (preceedingJobNums[j] > 0) { continue; }
+                    freeJobs.Enqueue(j);
+                    earliestFinishTimes[j] = jobExeDurations[j];
+                }
+                for (; freeJobs.Count > 0; --restJobNum) {
+                    int j = freeJobs.Dequeue();
+                    foreach (var succeedingJob in jobs[j].succeedingJobs) {
+                        int newFinishTime = earliestFinishTimes[j] + jobExeDurations[succeedingJob];
+                        if (earliestFinishTimes[succeedingJob] < newFinishTime) { earliestFinishTimes[succeedingJob] = newFinishTime; }
+                        if (--preceedingJobNums[succeedingJob] <= 0) { freeJobs.Enqueue(succeedingJob); }
+                    }
+                }
+
+                makespan = earliestFinishTimes.Max();
+            } catch (Exception) { }
+
+            Console.Write("instance=");
+            Console.Write(Path.GetFileName(inputFilePath));
+
+            Console.Write(" makespan=");
+            Console.Write(makespan);
+
+            Console.Write(" remaining=");
+            Console.WriteLine(restJobNum);
+        }
+
+        static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string secTimeout) {
+            const int Repeat = 10;
+            const int millisecondCheckInterval = 1000;
+
+            long millisecondTimeLimit = int.Parse(secTimeout) * 1000;
+            long byteMemoryLimit = 1024 * 1024 * 1024;
+
+            for (int i = 0; i < Repeat; ++i) {
+                try { File.Delete(outputFilePath); } catch (Exception) { }
+                try {
+                    int seed = genSeed();
+                    StringBuilder cmdArgs = new StringBuilder();
+                    cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
+                        .Append(" ").Append(secTimeout).Append(" ").Append(seed);
+
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                    ProcessStartInfo psi = new ProcessStartInfo();
+                    psi.FileName = exeFilePath;
+                    psi.WorkingDirectory = Environment.CurrentDirectory;
+                    psi.Arguments = cmdArgs.ToString();
+                    Process p = Process.Start(psi);
+                    while (!p.WaitForExit(millisecondCheckInterval)
+                        && (sw.ElapsedMilliseconds < millisecondTimeLimit)
+                        && (p.PrivateMemorySize64 < byteMemoryLimit)) { }
+                    try { p.Kill(); } catch (Exception) { }
+                    sw.Stop();
+
+                    Console.Write("solver=");
+                    Console.Write(Path.GetDirectoryName(exeFilePath));
+
+                    Console.Write(" time=");
+                    Console.Write(sw.ElapsedMilliseconds / 1000.0);
+
+                    Console.Write("s seed=");
+                    Console.Write(seed);
+                    Console.Write(" ");
+
+                    check(inputFilePath, outputFilePath);
+                } catch (Exception e) {
+                    Console.WriteLine();
+                    //Console.WriteLine(e);
+                }
+            }
+        }
+
+        static int genSeed() {
+            return (int)(DateTime.Now.Ticks & 0xffff);
+        }
+    }
+}
+```
+
+
+## 算例清单
+
+[下载全部](fjsp.data.7z)
+
+fjsp.barnes.mt10c1.m11j10c2  
+fjsp.barnes.mt10cc.m12j10c2  
+fjsp.barnes.mt10x.m11j10c2  
+fjsp.barnes.mt10xx.m12j10c3  
+fjsp.barnes.mt10xxx.m13j10c4  
+fjsp.barnes.mt10xy.m12j10c2  
+fjsp.barnes.mt10xyz.m13j10c2  
+fjsp.barnes.setb4c9.m11j15c2  
+fjsp.barnes.setb4cc.m12j15c2  
+fjsp.barnes.setb4x.m11j15c2  
+fjsp.barnes.setb4xx.m12j15c3  
+fjsp.barnes.setb4xxx.m13j15c4  
+fjsp.barnes.setb4xy.m12j15c2  
+fjsp.barnes.setb4xyz.m13j15c2  
+fjsp.barnes.seti5c12.m16j15c2  
+fjsp.barnes.seti5cc.m17j15c2  
+fjsp.barnes.seti5x.m16j15c2  
+fjsp.barnes.seti5xx.m17j15c3  
+fjsp.barnes.seti5xxx.m18j15c4  
+fjsp.barnes.seti5xy.m17j15c2  
+fjsp.barnes.seti5xyz.m18j15c2  
+fjsp.brandimarte.Mk01.m6j10c3  
+fjsp.brandimarte.Mk02.m6j10c6  
+fjsp.brandimarte.Mk03.m8j15c5  
+fjsp.brandimarte.Mk04.m8j15c3  
+fjsp.brandimarte.Mk05.m4j15c2  
+fjsp.brandimarte.Mk06.m15j10c5  
+fjsp.brandimarte.Mk07.m5j20c5  
+fjsp.brandimarte.Mk08.m10j20c2  
+fjsp.brandimarte.Mk09.m10j20c5  
+fjsp.brandimarte.Mk10.m15j20c5  
+fjsp.dauzere.01a.m5j10c3  
+fjsp.dauzere.02a.m5j10c4  
+fjsp.dauzere.03a.m5j10c5  
+fjsp.dauzere.04a.m5j10c3  
+fjsp.dauzere.05a.m5j10c4  
+fjsp.dauzere.06a.m5j10c5  
+fjsp.dauzere.07a.m8j15c4  
+fjsp.dauzere.08a.m8j15c6  
+fjsp.dauzere.09a.m8j15c8  
+fjsp.dauzere.10a.m8j15c4  
+fjsp.dauzere.11a.m8j15c6  
+fjsp.dauzere.12a.m8j15c8  
+fjsp.dauzere.13a.m10j20c4  
+fjsp.dauzere.14a.m10j20c7  
+fjsp.dauzere.15a.m10j20c10  
+fjsp.dauzere.16a.m10j20c4  
+fjsp.dauzere.17a.m10j20c7  
+fjsp.dauzere.18a.m10j20c10  
+fjsp.hurink.edata-abz5.m10j10c2  
+fjsp.hurink.edata-abz6.m10j10c2  
+fjsp.hurink.edata-abz7.m15j20c3  
+fjsp.hurink.edata-abz8.m15j20c3  
+fjsp.hurink.edata-abz9.m15j20c3  
+fjsp.hurink.edata-car1.m5j11c2  
+fjsp.hurink.edata-car2.m4j13c2  
+fjsp.hurink.edata-car3.m5j12c2  
+fjsp.hurink.edata-car4.m4j14c2  
+fjsp.hurink.edata-car5.m6j10c2  
+fjsp.hurink.edata-car6.m9j8c2  
+fjsp.hurink.edata-car7.m7j7c2  
+fjsp.hurink.edata-car8.m8j8c2  
+fjsp.hurink.edata-la01.m5j10c2  
+fjsp.hurink.edata-la02.m5j10c2  
+fjsp.hurink.edata-la03.m5j10c2  
+fjsp.hurink.edata-la04.m5j10c2  
+fjsp.hurink.edata-la05.m5j10c2  
+fjsp.hurink.edata-la06.m5j15c2  
+fjsp.hurink.edata-la07.m5j15c2  
+fjsp.hurink.edata-la08.m5j15c2  
+fjsp.hurink.edata-la09.m5j15c2  
+fjsp.hurink.edata-la10.m5j15c2  
+fjsp.hurink.edata-la11.m5j20c2  
+fjsp.hurink.edata-la12.m5j20c2  
+fjsp.hurink.edata-la13.m5j20c2  
+fjsp.hurink.edata-la14.m5j20c2  
+fjsp.hurink.edata-la15.m5j20c2  
+fjsp.hurink.edata-la16.m10j10c2  
+fjsp.hurink.edata-la17.m10j10c2  
+fjsp.hurink.edata-la18.m10j10c2  
+fjsp.hurink.edata-la19.m10j10c2  
+fjsp.hurink.edata-la20.m10j10c2  
+fjsp.hurink.edata-la21.m10j15c3  
+fjsp.hurink.edata-la22.m10j15c3  
+fjsp.hurink.edata-la23.m10j15c2  
+fjsp.hurink.edata-la24.m10j15c3  
+fjsp.hurink.edata-la25.m10j15c3  
+fjsp.hurink.edata-la26.m10j20c3  
+fjsp.hurink.edata-la27.m10j20c3  
+fjsp.hurink.edata-la28.m10j20c3  
+fjsp.hurink.edata-la29.m10j20c3  
+fjsp.hurink.edata-la30.m10j20c3  
+fjsp.hurink.edata-la31.m10j30c3  
+fjsp.hurink.edata-la32.m10j30c3  
+fjsp.hurink.edata-la33.m10j30c2  
+fjsp.hurink.edata-la34.m10j30c3  
+fjsp.hurink.edata-la35.m10j30c2  
+fjsp.hurink.edata-la36.m15j15c3  
+fjsp.hurink.edata-la37.m15j15c3  
+fjsp.hurink.edata-la38.m15j15c3  
+fjsp.hurink.edata-la39.m15j15c3  
+fjsp.hurink.edata-la40.m15j15c3  
+fjsp.hurink.edata-mt06.m6j6c2  
+fjsp.hurink.edata-mt10.m10j10c2  
+fjsp.hurink.edata-mt20.m5j20c2  
+fjsp.hurink.edata-orb1.m10j10c2  
+fjsp.hurink.edata-orb2.m10j10c2  
+fjsp.hurink.edata-orb3.m10j10c2  
+fjsp.hurink.edata-orb4.m10j10c2  
+fjsp.hurink.edata-orb5.m10j10c2  
+fjsp.hurink.edata-orb6.m10j10c2  
+fjsp.hurink.edata-orb7.m10j10c2  
+fjsp.hurink.edata-orb8.m10j10c2  
+fjsp.hurink.edata-orb9.m10j10c2  
+fjsp.hurink.edata-orb10.m10j10c2  
+fjsp.hurink.rdata-abz5.m10j10c3  
+fjsp.hurink.rdata-abz6.m10j10c3  
+fjsp.hurink.rdata-abz7.m15j20c3  
+fjsp.hurink.rdata-abz8.m15j20c3  
+fjsp.hurink.rdata-abz9.m15j20c3  
+fjsp.hurink.rdata-car1.m5j11c3  
+fjsp.hurink.rdata-car2.m4j13c3  
+fjsp.hurink.rdata-car3.m5j12c3  
+fjsp.hurink.rdata-car4.m4j14c3  
+fjsp.hurink.rdata-car5.m6j10c3  
+fjsp.hurink.rdata-car6.m9j8c3  
+fjsp.hurink.rdata-car7.m7j7c3  
+fjsp.hurink.rdata-car8.m8j8c3  
+fjsp.hurink.rdata-la01.m5j10c3  
+fjsp.hurink.rdata-la02.m5j10c3  
+fjsp.hurink.rdata-la03.m5j10c3  
+fjsp.hurink.rdata-la04.m5j10c3  
+fjsp.hurink.rdata-la05.m5j10c3  
+fjsp.hurink.rdata-la06.m5j15c3  
+fjsp.hurink.rdata-la07.m5j15c3  
+fjsp.hurink.rdata-la08.m5j15c3  
+fjsp.hurink.rdata-la09.m5j15c3  
+fjsp.hurink.rdata-la10.m5j15c3  
+fjsp.hurink.rdata-la11.m5j20c3  
+fjsp.hurink.rdata-la12.m5j20c3  
+fjsp.hurink.rdata-la13.m5j20c3  
+fjsp.hurink.rdata-la14.m5j20c3  
+fjsp.hurink.rdata-la15.m5j20c3  
+fjsp.hurink.rdata-la16.m10j10c3  
+fjsp.hurink.rdata-la17.m10j10c3  
+fjsp.hurink.rdata-la18.m10j10c3  
+fjsp.hurink.rdata-la19.m10j10c3  
+fjsp.hurink.rdata-la20.m10j10c3  
+fjsp.hurink.rdata-la21.m10j15c3  
+fjsp.hurink.rdata-la22.m10j15c3  
+fjsp.hurink.rdata-la23.m10j15c3  
+fjsp.hurink.rdata-la24.m10j15c3  
+fjsp.hurink.rdata-la25.m10j15c3  
+fjsp.hurink.rdata-la26.m10j20c3  
+fjsp.hurink.rdata-la27.m10j20c3  
+fjsp.hurink.rdata-la28.m10j20c3  
+fjsp.hurink.rdata-la29.m10j20c3  
+fjsp.hurink.rdata-la30.m10j20c3  
+fjsp.hurink.rdata-la31.m10j30c3  
+fjsp.hurink.rdata-la32.m10j30c3  
+fjsp.hurink.rdata-la33.m10j30c3  
+fjsp.hurink.rdata-la34.m10j30c3  
+fjsp.hurink.rdata-la35.m10j30c3  
+fjsp.hurink.rdata-la36.m15j15c3  
+fjsp.hurink.rdata-la37.m15j15c3  
+fjsp.hurink.rdata-la38.m15j15c3  
+fjsp.hurink.rdata-la39.m15j15c3  
+fjsp.hurink.rdata-la40.m15j15c3  
+fjsp.hurink.rdata-mt06.m6j6c3  
+fjsp.hurink.rdata-mt10.m10j10c3  
+fjsp.hurink.rdata-mt20.m5j20c3  
+fjsp.hurink.rdata-orb1.m10j10c3  
+fjsp.hurink.rdata-orb2.m10j10c3  
+fjsp.hurink.rdata-orb3.m10j10c3  
+fjsp.hurink.rdata-orb4.m10j10c3  
+fjsp.hurink.rdata-orb5.m10j10c3  
+fjsp.hurink.rdata-orb6.m10j10c3  
+fjsp.hurink.rdata-orb7.m10j10c3  
+fjsp.hurink.rdata-orb8.m10j10c3  
+fjsp.hurink.rdata-orb9.m10j10c3  
+fjsp.hurink.rdata-orb10.m10j10c3  
+fjsp.hurink.sdata-abz5.m10j10c1  
+fjsp.hurink.sdata-abz6.m10j10c1  
+fjsp.hurink.sdata-abz7.m15j20c1  
+fjsp.hurink.sdata-abz8.m15j20c1  
+fjsp.hurink.sdata-abz9.m15j20c1  
+fjsp.hurink.sdata-car1.m5j11c1  
+fjsp.hurink.sdata-car2.m4j13c1  
+fjsp.hurink.sdata-car3.m5j12c1  
+fjsp.hurink.sdata-car4.m4j14c1  
+fjsp.hurink.sdata-car5.m6j10c1  
+fjsp.hurink.sdata-car6.m9j8c1  
+fjsp.hurink.sdata-car7.m7j7c1  
+fjsp.hurink.sdata-car8.m8j8c1  
+fjsp.hurink.sdata-la01.m5j10c1  
+fjsp.hurink.sdata-la02.m5j10c1  
+fjsp.hurink.sdata-la03.m5j10c1  
+fjsp.hurink.sdata-la04.m5j10c1  
+fjsp.hurink.sdata-la05.m5j10c1  
+fjsp.hurink.sdata-la06.m5j15c1  
+fjsp.hurink.sdata-la07.m5j15c1  
+fjsp.hurink.sdata-la08.m5j15c1  
+fjsp.hurink.sdata-la09.m5j15c1  
+fjsp.hurink.sdata-la10.m5j15c1  
+fjsp.hurink.sdata-la11.m5j20c1  
+fjsp.hurink.sdata-la12.m5j20c1  
+fjsp.hurink.sdata-la13.m5j20c1  
+fjsp.hurink.sdata-la14.m5j20c1  
+fjsp.hurink.sdata-la15.m5j20c1  
+fjsp.hurink.sdata-la16.m10j10c1  
+fjsp.hurink.sdata-la17.m10j10c1  
+fjsp.hurink.sdata-la18.m10j10c1  
+fjsp.hurink.sdata-la19.m10j10c1  
+fjsp.hurink.sdata-la20.m10j10c1  
+fjsp.hurink.sdata-la21.m10j15c1  
+fjsp.hurink.sdata-la22.m10j15c1  
+fjsp.hurink.sdata-la23.m10j15c1  
+fjsp.hurink.sdata-la24.m10j15c1  
+fjsp.hurink.sdata-la25.m10j15c1  
+fjsp.hurink.sdata-la26.m10j20c1  
+fjsp.hurink.sdata-la27.m10j20c1  
+fjsp.hurink.sdata-la28.m10j20c1  
+fjsp.hurink.sdata-la29.m10j20c1  
+fjsp.hurink.sdata-la30.m10j20c1  
+fjsp.hurink.sdata-la31.m10j30c1  
+fjsp.hurink.sdata-la32.m10j30c1  
+fjsp.hurink.sdata-la33.m10j30c1  
+fjsp.hurink.sdata-la34.m10j30c1  
+fjsp.hurink.sdata-la35.m10j30c1  
+fjsp.hurink.sdata-la36.m15j15c1  
+fjsp.hurink.sdata-la37.m15j15c1  
+fjsp.hurink.sdata-la38.m15j15c1  
+fjsp.hurink.sdata-la39.m15j15c1  
+fjsp.hurink.sdata-la40.m15j15c1  
+fjsp.hurink.sdata-mt06.m6j6c1  
+fjsp.hurink.sdata-mt10.m10j10c1  
+fjsp.hurink.sdata-mt20.m5j20c1  
+fjsp.hurink.sdata-orb1.m10j10c1  
+fjsp.hurink.sdata-orb2.m10j10c1  
+fjsp.hurink.sdata-orb3.m10j10c1  
+fjsp.hurink.sdata-orb4.m10j10c1  
+fjsp.hurink.sdata-orb5.m10j10c1  
+fjsp.hurink.sdata-orb6.m10j10c1  
+fjsp.hurink.sdata-orb7.m10j10c1  
+fjsp.hurink.sdata-orb8.m10j10c1  
+fjsp.hurink.sdata-orb9.m10j10c1  
+fjsp.hurink.sdata-orb10.m10j10c1  
+fjsp.hurink.vdata-abz5.m10j10c9  
+fjsp.hurink.vdata-abz6.m10j10c8  
+fjsp.hurink.vdata-abz7.m15j20c11  
+fjsp.hurink.vdata-abz8.m15j20c13  
+fjsp.hurink.vdata-abz9.m15j20c12  
+fjsp.hurink.vdata-car1.m5j11c5  
+fjsp.hurink.vdata-car2.m4j13c4  
+fjsp.hurink.vdata-car3.m5j12c4  
+fjsp.hurink.vdata-car4.m4j14c3  
+fjsp.hurink.vdata-car5.m6j10c5  
+fjsp.hurink.vdata-car6.m9j8c7  
+fjsp.hurink.vdata-car7.m7j7c6  
+fjsp.hurink.vdata-car8.m8j8c7  
+fjsp.hurink.vdata-la01.m5j10c5  
+fjsp.hurink.vdata-la02.m5j10c5  
+fjsp.hurink.vdata-la03.m5j10c5  
+fjsp.hurink.vdata-la04.m5j10c4  
+fjsp.hurink.vdata-la05.m5j10c5  
+fjsp.hurink.vdata-la06.m5j15c5  
+fjsp.hurink.vdata-la07.m5j15c5  
+fjsp.hurink.vdata-la08.m5j15c5  
+fjsp.hurink.vdata-la09.m5j15c5  
+fjsp.hurink.vdata-la10.m5j15c5  
+fjsp.hurink.vdata-la11.m5j20c5  
+fjsp.hurink.vdata-la12.m5j20c5  
+fjsp.hurink.vdata-la13.m5j20c4  
+fjsp.hurink.vdata-la14.m5j20c5  
+fjsp.hurink.vdata-la15.m5j20c5  
+fjsp.hurink.vdata-la16.m10j10c8  
+fjsp.hurink.vdata-la17.m10j10c9  
+fjsp.hurink.vdata-la18.m10j10c9  
+fjsp.hurink.vdata-la19.m10j10c8  
+fjsp.hurink.vdata-la20.m10j10c8  
+fjsp.hurink.vdata-la21.m10j15c8  
+fjsp.hurink.vdata-la22.m10j15c8  
+fjsp.hurink.vdata-la23.m10j15c8  
+fjsp.hurink.vdata-la24.m10j15c8  
+fjsp.hurink.vdata-la25.m10j15c9  
+fjsp.hurink.vdata-la26.m10j20c9  
+fjsp.hurink.vdata-la27.m10j20c9  
+fjsp.hurink.vdata-la28.m10j20c9  
+fjsp.hurink.vdata-la29.m10j20c9  
+fjsp.hurink.vdata-la30.m10j20c9  
+fjsp.hurink.vdata-la31.m10j30c9  
+fjsp.hurink.vdata-la32.m10j30c9  
+fjsp.hurink.vdata-la33.m10j30c8  
+fjsp.hurink.vdata-la34.m10j30c9  
+fjsp.hurink.vdata-la35.m10j30c9  
+fjsp.hurink.vdata-la36.m15j15c12  
+fjsp.hurink.vdata-la37.m15j15c12  
+fjsp.hurink.vdata-la38.m15j15c12  
+fjsp.hurink.vdata-la39.m15j15c11  
+fjsp.hurink.vdata-la40.m15j15c11  
+fjsp.hurink.vdata-mt06.m6j6c5  
+fjsp.hurink.vdata-mt10.m10j10c8  
+fjsp.hurink.vdata-mt20.m5j20c5  
+fjsp.hurink.vdata-orb1.m10j10c8  
+fjsp.hurink.vdata-orb2.m10j10c8  
+fjsp.hurink.vdata-orb3.m10j10c8  
+fjsp.hurink.vdata-orb4.m10j10c9  
+fjsp.hurink.vdata-orb5.m10j10c8  
+fjsp.hurink.vdata-orb6.m10j10c8  
+fjsp.hurink.vdata-orb7.m10j10c8  
+fjsp.hurink.vdata-orb8.m10j10c8  
+fjsp.hurink.vdata-orb9.m10j10c8  
+fjsp.hurink.vdata-orb10.m10j10c8  
+jsp.ABZ05.m10j10c1  
+jsp.ABZ06.m10j10c1  
+jsp.ABZ07.m15j20c1  
+jsp.ABZ08.m15j20c1  
+jsp.ABZ09.m15j20c1  
+jsp.DMU01.m15j20c1  
+jsp.DMU02.m15j20c1  
+jsp.DMU03.m15j20c1  
+jsp.DMU04.m15j20c1  
+jsp.DMU05.m15j20c1  
+jsp.DMU06.m20j20c1  
+jsp.DMU07.m20j20c1  
+jsp.DMU08.m20j20c1  
+jsp.DMU09.m20j20c1  
+jsp.DMU10.m20j20c1  
+jsp.DMU11.m15j30c1  
+jsp.DMU12.m15j30c1  
+jsp.DMU13.m15j30c1  
+jsp.DMU14.m15j30c1  
+jsp.DMU15.m15j30c1  
+jsp.DMU16.m20j30c1  
+jsp.DMU17.m20j30c1  
+jsp.DMU18.m20j30c1  
+jsp.DMU19.m20j30c1  
+jsp.DMU20.m20j30c1  
+jsp.DMU21.m15j40c1  
+jsp.DMU22.m15j40c1  
+jsp.DMU23.m15j40c1  
+jsp.DMU24.m15j40c1  
+jsp.DMU25.m15j40c1  
+jsp.DMU26.m20j40c1  
+jsp.DMU27.m20j40c1  
+jsp.DMU28.m20j40c1  
+jsp.DMU29.m20j40c1  
+jsp.DMU30.m20j40c1  
+jsp.DMU31.m15j50c1  
+jsp.DMU32.m15j50c1  
+jsp.DMU33.m15j50c1  
+jsp.DMU34.m15j50c1  
+jsp.DMU35.m15j50c1  
+jsp.DMU36.m20j50c1  
+jsp.DMU37.m20j50c1  
+jsp.DMU38.m20j50c1  
+jsp.DMU39.m20j50c1  
+jsp.DMU40.m20j50c1  
+jsp.DMU41.m15j20c1  
+jsp.DMU42.m15j20c1  
+jsp.DMU43.m15j20c1  
+jsp.DMU44.m15j20c1  
+jsp.DMU45.m15j20c1  
+jsp.DMU46.m20j20c1  
+jsp.DMU47.m20j20c1  
+jsp.DMU48.m20j20c1  
+jsp.DMU49.m20j20c1  
+jsp.DMU50.m20j20c1  
+jsp.DMU51.m15j30c1  
+jsp.DMU52.m15j30c1  
+jsp.DMU53.m15j30c1  
+jsp.DMU54.m15j30c1  
+jsp.DMU55.m15j30c1  
+jsp.DMU56.m20j30c1  
+jsp.DMU57.m20j30c1  
+jsp.DMU58.m20j30c1  
+jsp.DMU59.m20j30c1  
+jsp.DMU60.m20j30c1  
+jsp.DMU61.m15j40c1  
+jsp.DMU62.m15j40c1  
+jsp.DMU63.m15j40c1  
+jsp.DMU64.m15j40c1  
+jsp.DMU65.m15j40c1  
+jsp.DMU66.m20j40c1  
+jsp.DMU67.m20j40c1  
+jsp.DMU68.m20j40c1  
+jsp.DMU69.m20j40c1  
+jsp.DMU70.m20j40c1  
+jsp.DMU71.m15j50c1  
+jsp.DMU72.m15j50c1  
+jsp.DMU73.m15j50c1  
+jsp.DMU74.m15j50c1  
+jsp.DMU75.m15j50c1  
+jsp.DMU76.m20j50c1  
+jsp.DMU77.m20j50c1  
+jsp.DMU78.m20j50c1  
+jsp.DMU79.m20j50c1  
+jsp.DMU80.m20j50c1  
+jsp.FT06.m6j6c1  
+jsp.FT10.m10j10c1  
+jsp.FT20.m5j20c1  
+jsp.LA01.m5j10c1  
+jsp.LA02.m5j10c1  
+jsp.LA03.m5j10c1  
+jsp.LA04.m5j10c1  
+jsp.LA05.m5j10c1  
+jsp.LA06.m5j15c1  
+jsp.LA07.m5j15c1  
+jsp.LA08.m5j15c1  
+jsp.LA09.m5j15c1  
+jsp.LA10.m5j15c1  
+jsp.LA11.m5j20c1  
+jsp.LA12.m5j20c1  
+jsp.LA13.m5j20c1  
+jsp.LA14.m5j20c1  
+jsp.LA15.m5j20c1  
+jsp.LA16.m10j10c1  
+jsp.LA17.m10j10c1  
+jsp.LA18.m10j10c1  
+jsp.LA19.m10j10c1  
+jsp.LA20.m10j10c1  
+jsp.LA21.m10j15c1  
+jsp.LA22.m10j15c1  
+jsp.LA23.m10j15c1  
+jsp.LA24.m10j15c1  
+jsp.LA25.m10j15c1  
+jsp.LA26.m10j20c1  
+jsp.LA27.m10j20c1  
+jsp.LA28.m10j20c1  
+jsp.LA29.m10j20c1  
+jsp.LA30.m10j20c1  
+jsp.LA31.m10j30c1  
+jsp.LA32.m10j30c1  
+jsp.LA33.m10j30c1  
+jsp.LA34.m10j30c1  
+jsp.LA35.m10j30c1  
+jsp.LA36.m15j15c1  
+jsp.LA37.m15j15c1  
+jsp.LA38.m15j15c1  
+jsp.LA39.m15j15c1  
+jsp.LA40.m15j15c1  
+jsp.ORB01.m10j10c1  
+jsp.ORB02.m10j10c1  
+jsp.ORB03.m10j10c1  
+jsp.ORB04.m10j10c1  
+jsp.ORB05.m10j10c1  
+jsp.ORB06.m10j10c1  
+jsp.ORB07.m10j10c1  
+jsp.ORB08.m10j10c1  
+jsp.ORB09.m10j10c1  
+jsp.ORB10.m10j10c1  
+jsp.SWV01.m10j20c1  
+jsp.SWV02.m10j20c1  
+jsp.SWV03.m10j20c1  
+jsp.SWV04.m10j20c1  
+jsp.SWV05.m10j20c1  
+jsp.SWV06.m15j20c1  
+jsp.SWV07.m15j20c1  
+jsp.SWV08.m15j20c1  
+jsp.SWV09.m15j20c1  
+jsp.SWV10.m15j20c1  
+jsp.SWV11.m10j50c1  
+jsp.SWV12.m10j50c1  
+jsp.SWV13.m10j50c1  
+jsp.SWV14.m10j50c1  
+jsp.SWV15.m10j50c1  
+jsp.SWV16.m10j50c1  
+jsp.SWV17.m10j50c1  
+jsp.SWV18.m10j50c1  
+jsp.SWV19.m10j50c1  
+jsp.SWV20.m10j50c1  
+jsp.YN01.m20j20c1  
+jsp.YN02.m20j20c1  
+jsp.YN03.m20j20c1  
+jsp.YN04.m20j20c1  

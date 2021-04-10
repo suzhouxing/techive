@@ -78,7 +78,11 @@ theme: maupassant
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
+- type: git
+  repo: https://gitee.com/suzhouxing/techive.git
+  branch: gh-pages
+  message: update
+- type: git
   repo: https://github.com/suzhouxing/techive.git
   branch: gh-pages
   message: update

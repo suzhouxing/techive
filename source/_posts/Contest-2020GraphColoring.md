@@ -69,7 +69,7 @@ DIMACS 图着色算例格式.
     - 算例名.
     - 颜色数.
     - 计算耗时.
-  - 算法在各算例上求得的颜色数最少的解文件 (仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
+  - 算法在各算例上求得的颜色数最少的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
 
 
 ## 测试与检查程序
@@ -158,8 +158,10 @@ namespace GcpBenchmark {
 
         static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string colorNum) {
             const int Repeat = 10;
-            const int MillisecondTimeLimit = 20 * 60 * 1000;
-            IntPtr ByteMemoryLimit = new IntPtr(1024 * 1024 * 1024);
+            const int millisecondCheckInterval = 1000;
+
+            int millisecondTimeLimit = 20 * 60 * 1000;
+            long byteMemoryLimit = 1024 * 1024 * 1024;
 
             for (int i = 0; i < Repeat; ++i) {
                 try { File.Delete(outputFilePath); } catch (Exception) { }
@@ -176,10 +178,10 @@ namespace GcpBenchmark {
                     psi.WorkingDirectory = Environment.CurrentDirectory;
                     psi.Arguments = cmdArgs.ToString();
                     Process p = Process.Start(psi);
-                    p.MaxWorkingSet = ByteMemoryLimit;
-                    if (!p.WaitForExit(MillisecondTimeLimit)) {
-                        try { p.Kill(); } catch (Exception) { }
-                    }
+                    while (!p.WaitForExit(millisecondCheckInterval)
+                        && (sw.ElapsedMilliseconds < millisecondTimeLimit)
+                        && (p.PrivateMemorySize64 < byteMemoryLimit)) { }
+                    try { p.Kill(); } catch (Exception) { }
                     sw.Stop();
 
                     Console.Write("solver=");
@@ -206,3 +208,23 @@ namespace GcpBenchmark {
     }
 }
 ```
+
+
+## 算例清单
+
+算例规模从小到大依次为 (求解难度不一定随规模增加, 但 DSJC500.5 以前的算例应该都很容易求解):
+
+[下载全部](coloring.data.7z)
+
+DSJC125.1
+DSJC125.5
+DSJC125.9
+DSJC250.1
+DSJC250.5
+DSJC250.9
+DSJC500.1
+DSJC500.5
+DSJC500.9
+DSJC1000.1
+DSJC1000.5
+DSJC1000.9
