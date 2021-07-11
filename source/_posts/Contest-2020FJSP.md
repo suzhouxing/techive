@@ -11,11 +11,27 @@ tags:
 柔性作业车间调度问题主要研究如何调度有限的资源依次执行多项任务, 使得完成所有任务的完工时间最短的问题.
 比如芯片代工厂生产芯片时, 每块晶圆需要在不同机台依次完成光刻与蚀刻等多道工序.
 比如在某些大规模并行计算场景中, 计算任务间存在依赖关系, 后继任务的输入为前驱任务的输出.
-高效的柔性作业车间调度问题的求解算法具有及其重要的理论与应用价值.
+高效的柔性作业车间调度问题的求解算法具有极其重要的理论与应用价值.
 
 
 
 # 柔性作业车间调度算法训练
+
+## 问题概述
+
+给定若干任务, 每个任务可由若干给定的机器中的任意一台花费给定的时间完成.
+每个任务的全部前序任务完工后才能开工, 在不同机器间转移不消耗时间.
+每台机器同一时间仅能执行一个任务且不可抢占, 即完成一个任务后才能开始下一个任务.
+请确定每个任务何时在哪台机器上开工, 使得最后一个完工的任务最早完工.
+
+柔性作业车间调度问题为上述任务调度问题的特例, 任务依赖拓扑为若干条单链.
+即给定若干工件, 每个工件由一系列必须依次完成的工序组成.
+
+- 参考文献.
+  - [1] J. Ding, Z. Lü, C. M. Li, L. Shen, L. Xu, and F. Glover, “A two-individual based evolutionary algorithm for the flexible job shop scheduling problem,” in Proceedings of the AAAI Conference on Artificial Intelligence, Jul. 2019, vol. 33, pp. 2262–2271. doi: 10.1609/aaai.v33i01.33012262.
+  - [2] C. Zhang, P. Li, Z. Guan, and Y. Rao, “A tabu search algorithm with a new neighborhood structure for the job shop scheduling problem,” Computers & Operations Research, vol. 34, no. 11, pp. 3229–3242, 2007, doi: 10.1016/j.cor.2005.12.002.
+  - [3] M. A. González, C. R. Vela, and R. Varela, “Scatter search with path relinking for the flexible job shop scheduling problem,” European Journal of Operational Research, vol. 245, no. 1, Art. no. 1, Aug. 2015, doi: 10.1016/j.ejor.2015.02.052.
+
 
 ## 命令行参数
 
@@ -38,10 +54,10 @@ fjsp.exe ../data/jsp.FT06.m6j6c1.txt jsp.FT06.m6j6c1.txt 1000 12345
 
 所有算例的任务和机器分别从 0 开始连续编号.
 
-第一行给出三个由空白字符 (空格或 `\t`) 分隔的整数, 分别表示任务数 N, 机器数 M, 以及所有任务所有工序的最大的候选机器数 C (若 C = 1 说明该算例为 JSP 算例).
+第一行给出三个由空格分隔的整数, 分别表示任务数 N, 机器数 M, 以及所有任务所有工序的最大的候选机器数 C (若 C = 1 说明该算例为 JSP 算例).
 接下来连续 N 行, 第 i 行表示第 i 个任务的信息.
-每行第一个整数表示第 i 个任务的工序数 K, 随后连续 K 组由空白字符分隔的数据, 第 j 组数据表示该任务的第 j 道工序的信息.
-每组数据第一个整数表示可执行该工序的候选机器数 S, 随后连续 S 个由空白字符分隔的二元组, 二元组 (G, D) 表示该工序可由机器 G 执行且加工时长为 D.
+每行第一个整数表示第 i 个任务的工序数 K, 随后连续 K 组由空格分隔的数据, 第 j 组数据表示该任务的第 j 道工序的信息.
+每组数据第一个整数表示可执行该工序的候选机器数 S, 随后连续 S 个由空格分隔的二元组, 二元组 (G, D) 表示该工序可由机器 G 执行且加工时长为 D.
 
 例如, 以下算例文件表示有 2 个任务和 4 台机器, 每个任务至多 2 台候选机器; 其中,  
 任务 0 由 4 道工序构成,  
@@ -88,22 +104,21 @@ fjsp.exe ../data/jsp.FT06.m6j6c1.txt jsp.FT06.m6j6c1.txt 1000 12345
 ## 提交要求
 
 - 发送至邮箱 [su.zhouxing@qq.com](mailto:su.zhouxing@qq.com).
-- 邮件标题格式为 "**Challenge2020FJSP-姓名**".
-- 邮件附件为单个压缩包, 文件名为 "**姓名**", 其内包含下列文件.
+- 邮件标题格式为 "**Challenge2020FJSP-姓名-学校-专业**".
+- 邮件附件为单个压缩包, 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
   - 算法的可执行文件 (Windows 平台).
     - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
-    - 用 visual studio 2017 以上版本的同学编译时请静态链接, 即添加 `\MT` 编译选项.
     - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
   - 算法源码.
   - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
     - 算例名.
     - 所有任务的完工时间.
     - 计算耗时.
-  - 算法在各算例上求得的完全覆盖的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
+  - 算法在各算例上求得的完工时间最短的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
 
 例如:
 ```
-苏宙行.zip
+苏宙行-华科大-计科.zip
 |   fjsp.exe
 |   results.csv
 |
@@ -326,7 +341,7 @@ namespace FjspBenchmark {
 
 ## 算例清单
 
-[下载全部](fjsp.data.7z)
+[下载全部](https://gitee.com/suzhouxing/techive/attach_files/675266/download/fjsp.7z)
 
 fjsp.barnes.mt10c1.m11j10c2  
 fjsp.barnes.mt10cc.m12j10c2  

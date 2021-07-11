@@ -10,11 +10,20 @@ tags:
 中心选址问题是通信与物流等领域中的重要问题, 其背后的单一成本集合覆盖问题更是用途广泛.
 中心选址问题和单一成本集合覆盖问题主要研究如何使用有限的资源提供尽可能高质量的服务的问题.
 例如, 移动基站, 消防站, 物流仓库, 数据中心等众多设施的选址都可以建模为中心选址问题.
-高效的中心选址或单一成本集合覆盖问题的求解算法具有及其重要的理论与应用价值.
+高效的中心选址或单一成本集合覆盖问题的求解算法具有极其重要的理论与应用价值.
 
 
 
 # 中心选址与单一成本集合覆盖算法训练
+
+## 问题概述
+
+给定一系列元素与若干子集, 请选择给定数量的子集, 使其并集等于所有元素的全集.
+
+- 参考文献.
+  - [1] Z. Su, Q. Zhang, Z. Lü, C.-M. Li, W. Lin, and F. Ma, “Weighting-based Variable Neighborhood Search for Optimal Camera Placement,” Proceedings of the AAAI Conference on Artificial Intelligence, vol. 35, no. 14, pp. 12400–12408, 2021.
+  - [2] Q. Zhang, Z. Lü, Z. Su, C. Li, Y. Fang, and F. Ma, “Vertex Weighting-Based Tabu Search for p-Center Problem,” in Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, IJCAI-20, 2020, pp. 1481–1487. doi: 10.24963/ijcai.2020/206.
+
 
 ## 命令行参数
 
@@ -64,7 +73,7 @@ uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
 
 ## 输出的解文件格式
 
-输出一行用空格分隔的 P 个数字, 分别表示挑选出的 P 个中心 (集合).
+输出一行用空格分隔的 P 个整数, 分别表示挑选出的 P 个中心 (集合).
 
 例如, 以下解文件表示选择节点 0 和 2 作为中心 (集合):
 ```
@@ -75,11 +84,10 @@ uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
 ## 提交要求
 
 - 发送至邮箱 [su.zhouxing@qq.com](mailto:su.zhouxing@qq.com).
-- 邮件标题格式为 "**Challenge2020USCP-姓名-班级**".
-- 邮件附件为单个压缩包, 文件名为 "**姓名-班级**", 其内包含下列文件.
+- 邮件标题格式为 "**Challenge2020USCP-姓名-学校-专业**".
+- 邮件附件为单个压缩包, 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
   - 算法的可执行文件 (Windows 平台).
     - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
-    - 用 visual studio 2017 以上版本的同学编译时请静态链接, 即添加 `\MT` 编译选项.
     - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
   - 算法源码.
   - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
@@ -87,6 +95,23 @@ uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
     - 剩余未覆盖元素数.
     - 计算耗时.
   - 算法在各算例上求得的完全覆盖的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
+
+例如:
+```
+苏宙行-华科大-计科.zip
+|   pcenter.exe
+|   results.csv
+|
++---src
+|       main.cpp
+|       algorithm.cpp
+|       algorithm.h
+|
++---results
+        pmed1.n100p5.txt
+        pmed2.n100p10.txt
+        ...
+```
 
 
 ## 检查程序
@@ -226,7 +251,7 @@ namespace UscpBenchmark {
 
 算例规模从小到大依次为 (求解难度不一定随规模增加, 但除 pcb3038* 以外的算例应该都很容易求解):
 
-[下载全部](pcenter.data.7z)
+[下载全部](https://gitee.com/suzhouxing/techive/attach_files/675269/download/pcenter.7z)
 
 pmed1.n100p5  
 pmed2.n100p10  
