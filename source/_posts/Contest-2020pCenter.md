@@ -18,7 +18,12 @@ tags:
 
 ## 问题概述
 
-给定一系列元素与若干子集, 请选择给定数量的子集, 使其并集等于所有元素的全集.
+给定一系列节点, 从中选出若干节点作为中心为其他节点提供服务.
+若一个节点由某个中心服务, 则认为其间存在一条服务边.
+在确保每个节点至少由一个中心服务的前提下, 使最长的服务边最短.
+
+若固定服务半径 (服务边的最大长度), 该问题等价于集合覆盖问题.
+即给定一系列元素与若干子集, 请选择给定数量的子集, 使其并集等于所有元素的全集.
 
 - 参考文献.
   - [1] Z. Su, Q. Zhang, Z. Lü, C.-M. Li, W. Lin, and F. Ma, “Weighting-based Variable Neighborhood Search for Optimal Camera Placement,” Proceedings of the AAAI Conference on Artificial Intelligence, vol. 35, no. 14, pp. 12400–12408, 2021.
