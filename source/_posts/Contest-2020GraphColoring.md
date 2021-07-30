@@ -22,7 +22,7 @@ tags:
 
 ## 问题概述
 
-给定一个无向图与若干种颜色, 请为每个节点染一种颜色, 使任意一条无向边两端的节点颜色不同.
+给定一个无向图, 请为每个节点染一种颜色, 在任意一条无向边两端的节点颜色不同的情况下, 最小化使用的颜色数.
 
 - 参考文献.
   - [1] Z. Lü and J.-K. Hao, “A memetic algorithm for graph coloring,” European Journal of Operational Research, vol. 203, no. 1, pp. 241–250, 2010, doi: 10.1016/j.ejor.2009.07.016.
@@ -31,12 +31,14 @@ tags:
 
 ## 命令行参数
 
-请大家编写程序时支持四个命令行参数, 分别为算例文件路径, 输出解文件路径, 颜色数和随机种子.
-后续我们可能会通过在控制台运行 `你的算法.exe 输入算例路径 输出解文件路径 颜色数 随机种子` 测试大家提交的算法, 例如:
+请大家编写程序时支持五个命令行参数, 依次为算例文件路径, 输出解文件路径, 运行时间上限 (单位为秒) 和随机种子 (0-65535), 参考颜色数.
+例如, 在控制台运行以下命令表示调用可执行文件 `gcp.exe` 求解路径为 `../data/DSJC500.5.col` 的算例, 解文件输出至 `sln.dsjc500.5.txt`, 限时 600 秒, 随机种子为 12345, 参考颜色数为 48:
 ```
-gcp.exe ../DSJC500.5.col dsjc500.5.txt 48 123456
+gcp.exe ../DSJC500.5.col sln.dsjc500.5.txt 600 123456 48
 ```
 
+- 运行时间上限.
+  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已保存解文件 (最好还能自行正常退出).
 - 随机种子设置.
   - 使用 C 语言随机数生成器请用 `srand`.
   - 使用 C++ 随机数生成器 (如 `mt19937`) 请在构造时传参或调用 `seed()` 方法设置.
@@ -52,7 +54,7 @@ DIMACS 图着色算例格式.
 ## 输出的解文件格式
 
 对于 N 个节点的算例, 输出 N 行.
-每一行输出用空格分隔的两个整数, 分别表示算例中的节点编号以及为该节点分配的颜色.
+每一行输出用空白字符分隔的两个整数, 分别表示算例中的节点编号以及为该节点分配的颜色.
 
 颜色可以取 `int` 范围内任意整数, 检查程序自动统计不同的整数的数量.
 
@@ -66,9 +68,9 @@ DIMACS 图着色算例格式.
 
 ## 提交要求
 
-- 发送至邮箱 [su.zhouxing@qq.com](mailto:su.zhouxing@qq.com).
+- 发送至邮箱 [zhouxing.su@qq.com](mailto:zhouxing.su@qq.com).
 - 邮件标题格式为 "**Challenge2020GCP-姓名-学校-专业**".
-- 邮件附件为单个压缩包, 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
+- 邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
   - 算法的可执行文件 (Windows 平台).
     - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
     - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
@@ -112,14 +114,18 @@ using System.Diagnostics;
 
 namespace GcpBenchmark {
     class Program {
+        static readonly char[] InlineDelimiters = new char[] { ' ', '\t' };
+        static readonly char[] WhiteSpaceChars = new char[] { ' ', '\t', '\r', '\n' };
+
         static void Main(string[] args) {
             string inputFilePath = args[0]; // instance file.
             string outputFilePath = args[1]; // solution file.
 
             if (args.Length > 3) {
                 string exeFilePath = args[2]; // algorithm executable file.
-                string colorNum = args[3];
-                benchmark(inputFilePath, outputFilePath, exeFilePath, colorNum);
+                string secTimeout = args[3]; // timeout in second.
+                string colorNum = args[4];
+                benchmark(inputFilePath, outputFilePath, exeFilePath, secTimeout, colorNum);
             } else {
                 check(inputFilePath, outputFilePath);
             }
@@ -141,7 +147,7 @@ namespace GcpBenchmark {
                     if (line.Length <= 0) { continue; }
                     if (line[0] == 'c') { continue; }
 
-                    string[] cells = line.Split(' ');
+                    string[] cells = line.Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
                     if (line[0] == 'p') {
                         nodeNum = int.Parse(cells[2]);
                         edgeNum = int.Parse(cells[3]);
@@ -158,7 +164,7 @@ namespace GcpBenchmark {
                 string[] lines = File.ReadAllLines(outputFilePath);
 
                 foreach (string line in lines) {
-                    string[] cells = line.Split(' ');
+                    string[] cells = line.Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
                     nodeColors[cells[0]] = cells[1];
                     colors.Add(cells[1]);
                 }
@@ -181,11 +187,11 @@ namespace GcpBenchmark {
             Console.WriteLine(conflictNum);
         }
 
-        static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string colorNum) {
+        static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string secTimeout, string colorNum) {
             const int Repeat = 10;
             const int millisecondCheckInterval = 1000;
 
-            int millisecondTimeLimit = 20 * 60 * 1000;
+            long millisecondTimeLimit = int.Parse(secTimeout) * 1000;
             long byteMemoryLimit = 1024 * 1024 * 1024;
 
             for (int i = 0; i < Repeat; ++i) {
@@ -193,8 +199,8 @@ namespace GcpBenchmark {
                 try {
                     int seed = genSeed();
                     StringBuilder cmdArgs = new StringBuilder();
-                    cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
-                        .Append(" ").Append(colorNum).Append(" ").Append(seed);
+                    cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath).Append(" ")
+                        .Append(secTimeout).Append(" ").Append(seed).Append(" ").Append(colorNum);
 
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
@@ -232,6 +238,7 @@ namespace GcpBenchmark {
         }
     }
 }
+
 ```
 
 

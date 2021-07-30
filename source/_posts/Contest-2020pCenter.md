@@ -28,9 +28,9 @@ tags:
 ## 命令行参数
 
 请大家编写程序时支持四个命令行参数, 依次为算例文件路径, 输出解文件路径, 运行时间上限 (单位为秒) 和随机种子 (0-65535).
-例如, 在控制台运行以下命令表示调用可执行文件 `uscp.exe` 求解路径为 `../data/pmed1.n100p5.txt` 的算例, 解文件输出至 `pmed1.n100p5.txt`, 限时 1000 秒, 随机种子为 12345:
+例如, 在控制台运行以下命令表示调用可执行文件 `uscp.exe` 求解路径为 `../data/pmed1.n100p5.txt` 的算例, 解文件输出至 `sln.pmed1.n100p5.txt`, 限时 1000 秒, 随机种子为 12345:
 ```
-uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
+uscp.exe ../data/pmed1.n100p5.txt sln.pmed1.n100p5.txt 1000 12345
 ```
 
 - 运行时间上限.
@@ -43,21 +43,30 @@ uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
 
 ## 输入的算例文件格式
 
-所有算例均已根据给定覆盖半径转换为判定问题, 处理为一系列固定集合数的单一成本集合覆盖算例.
+所有算例均已根据给定覆盖半径转换为判定问题, 处理为一系列固定集合数的单一成本集合覆盖算例, 并附有逐步缩小半径时新增的无法覆盖的节点的信息.
 转换后每个节点都可以覆盖若干节点, 同时也对称地被若干节点覆盖, 故转换后的单一成本集合覆盖算例中集合数等于元素数.
 
 所有算例的元素和集合分别从 0 开始连续编号.
 
-第一行给出两个由空格分隔的整数 N 和 P, 分别表示节点数和中心数 (从集合覆盖的角度来看, N 既是集合数又是元素数, P 为可挑选出的集合数).
+第一行给出两个由空白字符分隔的整数 N 和 P, 分别表示节点数和中心数 (从集合覆盖的角度来看, N 既是集合数又是元素数, P 为可挑选出的集合数).
 
 接下来每两行一组, 连续 N 组给出每个集合的覆盖范围.
-每组中第一行为该集合能覆盖的元素数量 C, 第二行为空格分隔的 C 个数字, 分别表示该集合能覆盖的元素的编号.
+每组中第一行为该集合能覆盖的元素数量 C, 第二行为空白字符分隔的 C 个数字, 分别表示该集合能覆盖的元素的编号.
+
+然后给出两个由空白字符整数 U 和 L, 分别表示覆盖半径边长序号的上界和下界 (其中上界即前面给出的判定问题对应的覆盖半径的边长序号, 下界为估计值).
+
+接下来连续 U - L 行给出每缩小一次覆盖半径新增的无法覆盖的元素的信息 (若 U = L = 0, 说明前面给出的判定问题对应的覆盖半径已经为最优半径, 缩小半径后已不存在可行解).
+每行第一个整数 K 表示本次缩小半径将导致 K 个元素不再被某个集合覆盖, 随后连续 K 个由空白字符分隔的整数 S 表示集合 S 将新增一个无法覆盖的元素 (同一个集合可能重复出现多次).
+注意, 在前面给出的判定问题数据中, 每个集合可覆盖的元素已按从近到远的顺序排序, 即每次只用将集合 S 可覆盖元素列表末尾的一个元素删除即可.
 
 例如, 以下算例文件表示集合和元素的数量均为 4, 要求挑选出 2 个集合覆盖所有元素; 其中,  
 集合 0 可以覆盖 2 个元素, 分别为元素 0 和 3;  
 集合 1 可以覆盖 2 个元素, 分别为元素 1 和 2;  
 集合 2 可以覆盖 3 个元素, 分别为元素 1, 2 和 3;  
-集合 3 可以覆盖 2 个元素, 分别为元素 0 和 2:
+集合 3 可以覆盖 2 个元素, 分别为元素 0 和 2;  
+覆盖半径边长序号的上界为 5 下界为 3; 其中,  
+半径缩小为第 4 短的边时, 集合 2 无法再覆盖最远的元素 3, 集合 3 无法再覆盖最远的元素 2;  
+半径缩小为第 3 短的边时, 集合 1 无法再覆盖最远的元素 2, 集合 2 无法再覆盖最远的元素 1:
 ```
 4 2
 2
@@ -68,12 +77,15 @@ uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
 1 2 3
 2
 0 2
+5 3
+2	2 3
+2	1 2
 ```
 
 
 ## 输出的解文件格式
 
-输出一行用空格分隔的 P 个整数, 分别表示挑选出的 P 个中心 (集合).
+输出一行用空白字符分隔的 P 个整数, 分别表示挑选出的 P 个中心 (集合).
 
 例如, 以下解文件表示选择节点 0 和 2 作为中心 (集合):
 ```
@@ -83,9 +95,9 @@ uscp.exe ../data/pmed1.n100p5.txt pmed1.n100p5.txt 1000 12345
 
 ## 提交要求
 
-- 发送至邮箱 [su.zhouxing@qq.com](mailto:su.zhouxing@qq.com).
+- 发送至邮箱 [zhouxing.su@qq.com](mailto:zhouxing.su@qq.com).
 - 邮件标题格式为 "**Challenge2020USCP-姓名-学校-专业**".
-- 邮件附件为单个压缩包, 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
+- 邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
   - 算法的可执行文件 (Windows 平台).
     - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
     - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
@@ -148,37 +160,65 @@ namespace UscpBenchmark {
         static void check(string inputFilePath, string outputFilePath) {
             int nodeNum = 0;
             int centerNum = 0;
+            int maxRank = 0;
+            int minRank = 0;
             List<List<int>> sets = new List<List<int>>();
-            try {
+            List<List<int>> setsWithdrops = new List<List<int>>();
+            try { // load instance.
                 string[] lines = File.ReadAllLines(inputFilePath);
 
                 string[] cells = lines[0].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
                 nodeNum = int.Parse(cells[0]);
                 centerNum = int.Parse(cells[1]);
-                sets.Capacity = nodeNum;
-                for (int l = 1; l < lines.Length; ++l) {
+                int l = 1;
+                for (sets.Capacity = nodeNum; (l < lines.Length) && (sets.Count < nodeNum); ++l) {
                     int coveredItemNum = int.Parse(lines[l]);
                     cells = lines[++l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
                     List<int> set = new List<int>(coveredItemNum);
                     foreach (var cell in cells) { set.Add(int.Parse(cell)); }
                     sets.Add(set);
                 }
+
+                cells = lines[l++].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
+                maxRank = int.Parse(cells[0]);
+                minRank = int.Parse(cells[1]);
+                for (setsWithdrops.Capacity = maxRank - minRank; l < lines.Length; ++l) {
+                    cells = lines[l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
+                    List<int> setsWithdrop = new List<int>(cells.Length - 1);
+                    for (int c = 1; c < cells.Length; ++c) { setsWithdrop.Add(int.Parse(cells[c])); }
+                    setsWithdrops.Add(setsWithdrop);
+                } // TODO[szx][0]: handle empty lines.
             } catch (Exception) { }
 
             List<int> pickedSets = new List<int>(centerNum);
-            try {
+            List<bool> notPickedSet = new List<bool>(Enumerable.Repeat(true, nodeNum));
+            try { // load solution.
                 string[] cells = File.ReadAllText(outputFilePath).Split(WhiteSpaceChars, StringSplitOptions.RemoveEmptyEntries);
-                foreach (string cell in cells) { pickedSets.Add(int.Parse(cell)); }
+                foreach (string cell in cells) {
+                    int s = int.Parse(cell);
+                    pickedSets.Add(s);
+                    notPickedSet[s] = false;
+                }
             } catch (Exception) { }
 
             int uncoveredItemNum = nodeNum;
-            try {
-                List<bool> isItemCovered = new List<bool>(Enumerable.Repeat(false, nodeNum));
+            int rank = maxRank + 1;
+            try { // check.
+                List<int> coveringSetNumOfItems = new List<int>(Enumerable.Repeat(0, nodeNum));
                 foreach (var s in pickedSets) {
                     foreach (var item in sets[s]) {
-                        if (isItemCovered[item]) { continue; }
-                        isItemCovered[item] = true;
-                        --uncoveredItemNum;
+                        if (coveringSetNumOfItems[item]++ < 1) { --uncoveredItemNum; }
+                    }
+                }
+
+                if (uncoveredItemNum == 0) {
+                    for (int r = 0; (r < setsWithdrops.Count) && (rank > maxRank); ++r) {
+                        foreach (var s in setsWithdrops[r]) {
+                            if (notPickedSet[s]) { continue; }
+                            int dropItem = sets[s].Last();
+                            if (--coveringSetNumOfItems[dropItem] < 1) { rank = maxRank - r; break; }
+                            sets[s].RemoveAt(sets[s].Count - 1);
+                        }
                     }
                 }
             } catch (Exception) { }
@@ -190,7 +230,10 @@ namespace UscpBenchmark {
             Console.Write(pickedSets.Count);
 
             Console.Write(" uncovered=");
-            Console.WriteLine(uncoveredItemNum);
+            Console.Write(uncoveredItemNum);
+
+            Console.Write(" rank=");
+            Console.WriteLine(rank);
         }
 
         static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string secTimeout) {
@@ -244,6 +287,7 @@ namespace UscpBenchmark {
         }
     }
 }
+
 ```
 
 
@@ -251,17 +295,17 @@ namespace UscpBenchmark {
 
 算例规模从小到大依次为 (求解难度不一定随规模增加, 但除 pcb3038* 以外的算例应该都很容易求解):
 
-[下载全部](https://gitee.com/suzhouxing/techive/attach_files/675269/download/pcenter.7z)
+[下载全部](https://gitee.com/suzhouxing/techive/attach_files/787061/download/pcenter.7z)
 
-pmed1.n100p5  
-pmed2.n100p10  
-pmed3.n100p10  
-pmed4.n100p20  
-pmed5.n100p33  
-pmed6.n200p5  
-pmed7.n200p10  
-pmed8.n200p20  
-pmed9.n200p40  
+pmed01.n100p5  
+pmed02.n100p10  
+pmed03.n100p10  
+pmed04.n100p20  
+pmed05.n100p33  
+pmed06.n200p5  
+pmed07.n200p10  
+pmed08.n200p20  
+pmed09.n200p40  
 pmed10.n200p67  
 pmed11.n300p5  
 pmed12.n300p10  
@@ -293,65 +337,57 @@ pmed37.n800p80
 pmed38.n900p5  
 pmed39.n900p10  
 pmed40.n900p90  
-u1060p10r2273.08  
-u1060p20r1580.80  
-u1060p30r1207.77  
-u1060p40r1020.56  
-u1060p50r904.92  
-u1060p60r781.17  
-u1060p70r710.75  
-u1060p80r652.16  
-u1060p90r607.87  
+u1060p010r2273.08  
+u1060p020r1580.80  
+u1060p030r1207.77  
+u1060p040r1020.56  
+u1060p050r904.92  
+u1060p060r781.17  
+u1060p070r710.75  
+u1060p080r652.16  
+u1060p090r607.87  
 u1060p100r570.01  
 u1060p110r538.84  
 u1060p120r510.27  
 u1060p130r499.65  
 u1060p140r452.46  
 u1060p150r447.01  
-rl1323p10r3077.30  
-rl1323p20r2016.40  
-rl1323p30r1631.50  
-rl1323p40r1352.36  
-rl1323p50r1187.27  
-rl1323p60r1063.01  
-rl1323p70r971.93  
-rl1323p80r895.06  
-rl1323p90r832.00  
+rl1323p010r3077.30  
+rl1323p020r2016.40  
+rl1323p030r1631.50  
+rl1323p040r1352.36  
+rl1323p050r1187.27  
+rl1323p060r1063.01  
+rl1323p070r971.93  
+rl1323p080r895.06  
+rl1323p090r832.00  
 rl1323p100r789.70  
-u1817p10r457.91  
-u1817p20r309.01  
-u1817p30r240.99  
-u1817p40r209.45  
-u1817p50r184.91  
-u1817p60r162.64  
-u1817p70r148.11  
-u1817p80r136.77  
-u1817p90r129.51  
+u1817p010r457.91  
+u1817p020r309.01  
+u1817p030r240.99  
+u1817p040r209.45  
+u1817p050r184.91  
+u1817p060r162.64  
+u1817p070r148.11  
+u1817p080r136.77  
+u1817p090r129.51  
 u1817p100r126.99  
 u1817p110r109.25  
 u1817p120r107.76  
 u1817p130r104.73  
 u1817p140r101.60  
 u1817p150r91.60  
-pcb3038p10r728.54  
-pcb3038p20r493.04  
-pcb3038p30r393.50  
-pcb3038p40r336.42  
-pcb3038p50r297.83  
-pcb3038p50r298.04  
-pcb3038p50r298.10  
-pcb3038p100r206.6  
-pcb3038p100r206.31  
-pcb3038p100r206.63  
-pcb3038p150r164.40  
-pcb3038p150r164.55  
-pcb3038p150r164.77  
-pcb3038p200r140.06  
-pcb3038p200r140.09  
-pcb3038p200r140.90  
-pcb3038p250r122.25  
-pcb3038p300r115.00  
-pcb3038p350r104.68  
-pcb3038p400r96.88  
-pcb3038p450r88.55  
-pcb3038p500r84.58  
+pcb3038p010r729  
+pcb3038p020r494  
+pcb3038p030r394  
+pcb3038p040r337  
+pcb3038p050r299  
+pcb3038p100r207  
+pcb3038p150r165  
+pcb3038p200r141  
+pcb3038p250r123  
+pcb3038p300r116  
+pcb3038p350r105  
+pcb3038p400r97  
+pcb3038p450r89  
+pcb3038p500r85  
