@@ -2,270 +2,246 @@
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">组合优化 (二) 数学建模基础</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">组合优化 (二) 数学建模基础</h1><div class="post-meta">Jan 13, 2019<span> | </span><span class="category"><a href="/techive/categories/技术/">技术</a></span></div><a data-disqus-identifier="2019/01/13/Opt-MathematicalProgramming/" href="/techive/2019/01/13/Opt-MathematicalProgramming/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>面对一个复杂的组合优化问题, 把它描述清楚本身就不是一个简单的问题. 常规开发往往允许模棱两可的描述, 需求修修补补虽然很烦, 但往往只是工作量的问题. 而算法研发由于其专用性, 细微的需求变化可能导致一个算法完全失效, 除非重新设计整个框架不然无法解决新的问题. 所以, 严谨的需求分析或问题描述对于算法研发格外重要. 对于一个组合优化问题, 我们一般使用数学规划的形式化语言对其进行无二义性的定义, 作为算法工程中的需求分析文档.</p>
-<h1 id="需求分析">需求分析</h1>
-<ul>
-<li>为什么要做需求分析
-<ul>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">组合优化 (二) 数学建模基础</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">组合优化 (二) 数学建模基础</h1><div class="post-meta">Jan 13, 2019<span> | </span><span class="category"><a href="/techive/categories/技术/">技术</a></span></div><a data-disqus-identifier="2019/01/13/Opt-MathematicalProgramming/" href="/techive/2019/01/13/Opt-MathematicalProgramming/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>面对一个复杂的组合优化问题, 把它描述清楚本身就不是一个简单的问题.<br>常规开发往往允许模棱两可的描述, 需求修修补补虽然很烦, 但往往只是工作量的问题.<br>而算法研发由于其专用性, 细微的需求变化可能导致一个算法完全失效, 除非重新设计整个框架不然无法解决新的问题.<br>所以, 严谨的需求分析或问题描述对于算法研发格外重要.<br>对于一个组合优化问题, 我们一般使用数学规划的形式化语言对其进行无二义性的定义, 作为算法工程中的需求分析文档.</p>
+<h1 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h1><ul>
+<li>为什么要做需求分析<ul>
 <li>研究一个课题的目的: 实现一个好的系统</li>
 <li>什么样的系统是好系统: 按事先制定的标准进行评价</li>
 <li>标准从哪里来: 需求分析</li>
-</ul></li>
-<li>如何评价一个系统的好坏
-<ul>
-<li>任务完成质量 (又快又好)
-<ul>
+</ul>
+</li>
+<li>如何评价一个系统的好坏<ul>
+<li>任务完成质量 (又快又好)<ul>
 <li>完成速度</li>
 <li>完成效果</li>
-</ul></li>
+</ul>
+</li>
 <li>建设成本</li>
 <li>运营成本</li>
-<li>安全性
-<ul>
+<li>安全性<ul>
 <li>不受外部因素干扰</li>
 <li>从错误中恢复</li>
-</ul></li>
-<li>稳定性 (今天好, 明天也好; 这组数据好, 那组也好)
-<ul>
+</ul>
+</li>
+<li>稳定性 (今天好, 明天也好; 这组数据好, 那组也好)<ul>
 <li>代码逻辑正确性</li>
-<li>算法对各种场景的兼容性
-<ul>
+<li>算法对各种场景的兼容性<ul>
 <li>静态多样性</li>
 <li>动态随机性</li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li>简化问题
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>简化问题</p>
 <ul>
 <li>优度和速度的平衡不仅可以在问题求解的过程中, 还可以在问题定义时</li>
 <li>简化问题会影响结果的正确性和优度</li>
-<li>举例
-<ul>
+<li>举例<ul>
 <li>宏观低速时使用经典力学而不是相对论</li>
 <li>同时处理多个业务简化为分多次每次处理一个业务</li>
 <li>减小负载和提升安全性转换为不重复经过节点</li>
-</ul></li>
-</ul></li>
-<li>组合优化问题的需求分析
+</ul>
+</li>
+</ul>
+</li>
+<li><p>组合优化问题的需求分析</p>
 <ul>
-<li>按形式化描述语言分类
-<ul>
-<li>数学规划 (Mathematical Programming)
-<ul>
+<li>按形式化描述语言分类<ul>
+<li>数学规划 (Mathematical Programming)<ul>
 <li>线性规划 (Linear Programming)</li>
 <li>混合整数规划 (Mixed-Integer Programming)</li>
 <li>QP, QCP, SOCP, LFP</li>
-</ul></li>
+</ul>
+</li>
 <li>约束编程 (Constraint Programming)</li>
-<li>布尔表达式可满足性问题 (Boolean Satisfiability Problem)
-<ul>
+<li>布尔表达式可满足性问题 (Boolean Satisfiability Problem)<ul>
 <li>SAT Encoding</li>
 <li>MAX-SAT Encoding</li>
-</ul></li>
-<li>规约 (Reduction)
-<ul>
-<li>Karp's 21 NP-complete problems</li>
-</ul></li>
+</ul>
+</li>
+<li>规约 (Reduction)<ul>
+<li>Karp’s 21 NP-complete problems</li>
+</ul>
+</li>
 <li>动态规划</li>
-</ul></li>
-<li>按应用场景分类
-<ul>
+</ul>
+</li>
+<li>按应用场景分类<ul>
 <li>静态模型</li>
 <li>随机规划 (Stochastic Programming)</li>
 <li>鲁棒优化 (Robust Optimization)</li>
-</ul></li>
-</ul></li>
 </ul>
-<h1 id="线性规划与混合整数规划">线性规划与混合整数规划</h1>
-<h2 id="思维方式">思维方式</h2>
-<h3 id="已知">已知</h3>
-<ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="线性规划与混合整数规划"><a href="#线性规划与混合整数规划" class="headerlink" title="线性规划与混合整数规划"></a>线性规划与混合整数规划</h1><h2 id="思维方式"><a href="#思维方式" class="headerlink" title="思维方式"></a>思维方式</h2><h3 id="已知"><a href="#已知" class="headerlink" title="已知"></a>已知</h3><ul>
 <li>约束和目标中的系数</li>
 </ul>
-<h3 id="决策">决策</h3>
-<ul>
-<li>确定哪些可控因素需要做决策
-<ul>
-<li>定义域
-<ul>
+<h3 id="决策"><a href="#决策" class="headerlink" title="决策"></a>决策</h3><ul>
+<li>确定哪些可控因素需要做决策<ul>
+<li>定义域<ul>
 <li>布尔 / 整数 / 实数</li>
 <li>上界 / 下界</li>
-</ul></li>
-</ul></li>
-<li>从最根本的需求开始
-<ul>
+</ul>
+</li>
+</ul>
+</li>
+<li>从最根本的需求开始<ul>
 <li>显示决策 (根本需求)</li>
 <li>隐式决策 (客户不关心但十分重要)</li>
 <li>辅助决策 (将非线性约束转化为线性约束)</li>
-</ul></li>
+</ul>
+</li>
 <li>不够用再返回来补充</li>
-<li>思考问题的角度影响决策变量的设置
-<ul>
-<li>图着色问题
-<ul>
+<li>思考问题的角度影响决策变量的设置<ul>
+<li>图着色问题<ul>
 <li>每个节点染什么颜色</li>
 <li>每种颜色的节点集合包含了哪些节点</li>
 <li>每两个节点是否染了相同的颜色</li>
-</ul></li>
-<li>旅行销售员问题
-<ul>
+</ul>
+</li>
+<li>旅行销售员问题<ul>
 <li>每个节点的第几个被访问</li>
 <li>第几个被访问的节点是哪个节点</li>
 <li>路径包含哪些边</li>
-</ul></li>
-<li>布尔表达式可满足性问题
-<ul>
+</ul>
+</li>
+<li>布尔表达式可满足性问题<ul>
 <li>保证每个布尔变量在所有子句中取值一致，最大化为真的子句数量</li>
 <li>保证每个子句均为真，最大化布尔变量的一致性</li>
-</ul></li>
-</ul></li>
 </ul>
-<h3 id="约束">约束</h3>
-<ul>
-<li>决策变量组成的表达式满足的关系
-<ul>
-<li>等式或不等式 <span class="math inline">\(f(x) ? g(x)\)</span></li>
-<li>下标的取值范围 <span class="math inline">\(\forall i \in V\)</span></li>
-</ul></li>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><ul>
+<li>决策变量组成的表达式满足的关系<ul>
+<li>等式或不等式 $f(x) ? g(x)$</li>
+<li>下标的取值范围 $\forall i \in V$</li>
+</ul>
+</li>
 <li>可以和目标对调顺序, 谁简单先考虑谁</li>
-<li>如何验证约束是否完备?
-<ul>
+<li>如何验证约束是否完备?<ul>
 <li>经验?</li>
 <li>详尽的测试?</li>
-<li>...</li>
-</ul></li>
+<li>…</li>
 </ul>
-<h3 id="目标">目标</h3>
-<ul>
+</li>
+</ul>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ul>
 <li>不同决策变量取值组合产生的后果的优劣度量</li>
 </ul>
-<h2 id="冗余约束-redundant-constraints">冗余约束 (Redundant Constraints)</h2>
-<h3 id="图着色问题的对称性消除-symmetric-breaking">图着色问题的对称性消除 (Symmetric Breaking)</h3>
-<ul>
+<h2 id="冗余约束-Redundant-Constraints"><a href="#冗余约束-Redundant-Constraints" class="headerlink" title="冗余约束 (Redundant Constraints)"></a>冗余约束 (Redundant Constraints)</h2><h3 id="图着色问题的对称性消除-Symmetric-Breaking"><a href="#图着色问题的对称性消除-Symmetric-Breaking" class="headerlink" title="图着色问题的对称性消除 (Symmetric Breaking)"></a>图着色问题的对称性消除 (Symmetric Breaking)</h3><ul>
 <li>参考文献: <a href="https://doi.org/10.1016/j.dam.2006.07.010" target="_blank" rel="noopener">A cutting plane algorithm for graph coloring</a></li>
-<li>优化版本
-<ul>
-<li>O1 一个颜色至少被一个节点使用时才会被选中 <span class="math display">\[
-y_{c} \le \sum_{n \in N} x_{nc}, \quad \forall c \in C
-\]</span></li>
-<li>O2 编号更小的颜色未被选中时禁止选中编号更大的颜色 <span class="math display">\[
-y_{c&#39;} \ge y_{c}, \quad \forall c, c&#39; \in C, c&#39; = c - 1
-\]</span></li>
-</ul></li>
-<li>判定版本
-<ul>
-<li>D1 使用编号更小的颜色的节点数不小于使用编号更大的颜色的节点数 (使用某种颜色的节点数随颜色编号的增长单调变化) <span class="math display">\[
-\sum_{n \in N} x_{nc&#39;} \ge \sum_{n \in N} x_{nc}, \quad \forall c, c&#39; \in C, c&#39; = c - 1
-\]</span>
-<ul>
-<li>D1 包含 O2</li>
-</ul></li>
-<li>D2 节点不允许使用比其编号更大的颜色 <span class="math display">\[
-x_{nc} = 0, \quad \forall n \in N, c \in C, n &lt; c
-\]</span></li>
-<li>D3 编号更小的颜色未被编号更小的节点使用时禁止使用编号更大的颜色 (使用某种颜色的节点集中最小的节点编号随颜色编号的增长单调变化) <span class="math display">\[
-\sum_{n&#39; \in [0, n)} x_{n&#39;c&#39;} \ge x_{nc}, \quad \forall n \in N, \forall c, c&#39; \in C, c&#39; = c - 1
-\]</span> 与 D2 配合使用时, 将固定为 0 的项代入可化简为 <span class="math display">\[
-\sum_{n&#39; \in [c&#39;, n)} x_{n&#39;c&#39;} \ge x_{nc}, \quad \forall n \in N, \forall c, c&#39; \in C, c&#39; = c - 1, n \ge c
-\]</span>
-<ul>
-<li>D3 与 D1 冲突</li>
-</ul></li>
-</ul></li>
+<li>优化版本<ul>
+<li>O1 一个颜色至少被一个节点使用时才会被选中<br>$$<br>y_{c} \le \sum_{n \in N} x_{nc}, \quad \forall c \in C<br>$$</li>
+<li>O2 编号更小的颜色未被选中时禁止选中编号更大的颜色<br>$$<br>y_{c’} \ge y_{c}, \quad \forall c, c’ \in C, c’ = c - 1<br>$$</li>
 </ul>
-<h2 id="编程实现">编程实现</h2>
-<h3 id="求解器选择">求解器选择</h3>
-<ul>
-<li><a href="http://www.gurobi.com/" target="_blank" rel="noopener">Gurobi</a>
-<ul>
+</li>
+<li>判定版本<ul>
+<li>D1 使用编号更小的颜色的节点数不小于使用编号更大的颜色的节点数 (使用某种颜色的节点数随颜色编号的增长单调变化)<br>$$<br>\sum_{n \in N} x_{nc’} \ge \sum_{n \in N} x_{nc}, \quad \forall c, c’ \in C, c’ = c - 1<br>$$<ul>
+<li>D1 包含 O2</li>
+</ul>
+</li>
+<li>D2 节点不允许使用比其编号更大的颜色<br>$$<br>x_{nc} = 0, \quad \forall n \in N, c \in C, n &lt; c<br>$$</li>
+<li>D3 编号更小的颜色未被编号更小的节点使用时禁止使用编号更大的颜色 (使用某种颜色的节点集中最小的节点编号随颜色编号的增长单调变化)<br>$$<br>\sum_{n’ \in [0, n)} x_{n’c’} \ge x_{nc}, \quad \forall n \in N, \forall c, c’ \in C, c’ = c - 1<br>$$<br>与 D2 配合使用时, 将固定为 0 的项代入可化简为<br>$$<br>\sum_{n’ \in [c’, n)} x_{n’c’} \ge x_{nc}, \quad \forall n \in N, \forall c, c’ \in C, c’ = c - 1, n \ge c<br>$$<ul>
+<li>D3 与 D1 冲突</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><h3 id="求解器选择"><a href="#求解器选择" class="headerlink" title="求解器选择"></a>求解器选择</h3><ul>
+<li><a href="http://www.gurobi.com/" target="_blank" rel="noopener">Gurobi</a><ul>
 <li>目前最高效的线性规划/混合整数规划求解器</li>
 <li>支持免费学术许可证申请</li>
-</ul></li>
-<li><a href="https://www.ibm.com/software/commerce/optimization/cplex-optimizer/" target="_blank" rel="noopener">CPLEX</a>
-<ul>
-<li>IBM旗下的 "行业标准"</li>
-</ul></li>
-<li><a href="http://scip.zib.de/" target="_blank" rel="noopener">SCIP</a>
-<ul>
+</ul>
+</li>
+<li><a href="https://www.ibm.com/software/commerce/optimization/cplex-optimizer/" target="_blank" rel="noopener">CPLEX</a><ul>
+<li>IBM旗下的 “行业标准”</li>
+</ul>
+</li>
+<li><a href="http://scip.zib.de/" target="_blank" rel="noopener">SCIP</a><ul>
 <li>号称最快的开源求解器</li>
-</ul></li>
-<li><a href="https://projects.coin-or.org/Cbc" target="_blank" rel="noopener">COIN-OR</a>
-<ul>
+</ul>
+</li>
+<li><a href="https://projects.coin-or.org/Cbc" target="_blank" rel="noopener">COIN-OR</a><ul>
 <li>功能繁多的开源运筹学工具包</li>
-</ul></li>
-<li><a href="https://github.com/google/or-tools" target="_blank" rel="noopener">OR-Tools</a>
-<ul>
+</ul>
+</li>
+<li><a href="https://github.com/google/or-tools" target="_blank" rel="noopener">OR-Tools</a><ul>
 <li>开源经典组合优化算法库</li>
 <li>提供统一的接口调用各大常见求解器</li>
-</ul></li>
 </ul>
-<h3 id="接口选择">接口选择</h3>
-<ul>
-<li>编程语言接口
-<ul>
+</li>
+</ul>
+<h3 id="接口选择"><a href="#接口选择" class="headerlink" title="接口选择"></a>接口选择</h3><ul>
+<li>编程语言接口<ul>
 <li>开发中最常用的接口</li>
 <li>提供更高层次的抽象</li>
 <li>更快的模型构建速度</li>
 <li>C / C++ / Java / C# / Python / Matlab / R</li>
-</ul></li>
-<li>模型文件接口
-<ul>
+</ul>
+</li>
+<li>模型文件接口<ul>
 <li>需要自己将模型展开为线性规划的标准型</li>
 <li>文件 I/O 速度较慢</li>
-</ul></li>
-<li>交互式命令行接口 (Gurobi)
-<ul>
-<li>类似于解释型的脚本语言</li>
-</ul></li>
-<li>OPLIDE (CPLEX)
-<ul>
-<li>介于命令式语言与建模语言之间</li>
-</ul></li>
-<li>Excel 插件</li>
-<li>...</li>
 </ul>
-<h3 id="使用编程语言接口的求解过程-gurobi">使用编程语言接口的求解过程 (Gurobi)</h3>
-<p>参考自带的示例工程 diet, facility, mip1. 基本流程如下.</p>
+</li>
+<li>交互式命令行接口 (Gurobi)<ul>
+<li>类似于解释型的脚本语言</li>
+</ul>
+</li>
+<li>OPLIDE (CPLEX)<ul>
+<li>介于命令式语言与建模语言之间</li>
+</ul>
+</li>
+<li>Excel 插件</li>
+<li>…</li>
+</ul>
+<h3 id="使用编程语言接口的求解过程-Gurobi"><a href="#使用编程语言接口的求解过程-Gurobi" class="headerlink" title="使用编程语言接口的求解过程 (Gurobi)"></a>使用编程语言接口的求解过程 (Gurobi)</h3><p>参考自带的示例工程 diet, facility, mip1.<br>基本流程如下.</p>
 <ul>
-<li>初始化环境 GRBEnv()
-<ul>
+<li>初始化环境 GRBEnv()<ul>
 <li>许可证检测</li>
 <li>其他全局参数与数据初始化</li>
-</ul></li>
+</ul>
+</li>
 <li>初始化模型 GRBModel()</li>
-<li>添加决策变量 GRBModel::addVar()
-<ul>
+<li>添加决策变量 GRBModel::addVar()<ul>
 <li>按照一定规律组织决策变量</li>
 <li>使用额外的数据结构将决策变量与用户变量绑定</li>
-</ul></li>
-<li>更新模型 GRBModel::update()
-<ul>
+</ul>
+</li>
+<li>更新模型 GRBModel::update()<ul>
 <li>惰性更新提升效率 (最新版已无需手动调用该函数)</li>
 <li>CPLEX 不需要此步骤</li>
-</ul></li>
+</ul>
+</li>
 <li>设置目标 GRBModel::setObjective()</li>
 <li>添加约束 GRBModel::addConstr()</li>
-<li>设置其他参数 GRBModel::set(), GRBEnv::set()
-<ul>
+<li>设置其他参数 GRBModel::set(), GRBEnv::set()<ul>
 <li>运行时间</li>
 <li>输出日志</li>
-</ul></li>
+</ul>
+</li>
 <li>求解 GRBModel::optimize()</li>
 <li>检查求解状态 GRBModel::get(GRB_IntAttr_Status)</li>
 <li>获取目标函数值 GRBModel::get(GRB_DoubleAttr_ObjVal)</li>
 <li>获取解向量 GRBVar::get()</li>
 </ul>
-<h3 id="使用模型文件接口的求解过程-gurobi">使用模型文件接口的求解过程 (Gurobi)</h3>
-<p>参考自带的示例工程 lp. 基本流程如下.</p>
+<h3 id="使用模型文件接口的求解过程-Gurobi"><a href="#使用模型文件接口的求解过程-Gurobi" class="headerlink" title="使用模型文件接口的求解过程 (Gurobi)"></a>使用模型文件接口的求解过程 (Gurobi)</h3><p>参考自带的示例工程 lp.<br>基本流程如下.</p>
 <ul>
-<li>准备好 .mps 或 .lp 等模型文件 GRBModel::write()
-<ul>
+<li>准备好 .mps 或 .lp 等模型文件 GRBModel::write()<ul>
 <li>一般由另外的程序输出</li>
-</ul></li>
+</ul>
+</li>
 <li>读取模型文件 GRBModel(), GRBModel::read()</li>
 <li>求解并输出</li>
 </ul>
-</div><div class="tags"><a href="/techive/tags/技术/">技术</a><a href="/techive/tags/建模/">建模</a><a href="/techive/tags/优化/">优化</a><a href="/techive/tags/数学/">数学</a></div><div class="post-nav"><a href="/techive/2019/01/13/Opt-AlgorithmDesign/" class="pre">组合优化 (三) 算法简介</a><a href="/techive/2019/01/13/Opt-CombinatorialOptimization/" class="next">组合优化 (一) 简介</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
+</div><div class="tags"><a href="/techive/tags/技术/">技术</a><a href="/techive/tags/建模/">建模</a><a href="/techive/tags/数学/">数学</a><a href="/techive/tags/优化/">优化</a></div><div class="post-nav"><a href="/techive/2019/01/13/Opt-AlgorithmDesign/" class="pre">组合优化 (三) 算法简介</a><a href="/techive/2019/01/13/Opt-CombinatorialOptimization/" class="next">组合优化 (一) 简介</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
 var disqus_identifier = '2019/01/13/Opt-MathematicalProgramming/';
 var disqus_title = '组合优化 (二) 数学建模基础';
 var disqus_url = 'http://suzhouxing.github.io/techive/2019/01/13/Opt-MathematicalProgramming/';
@@ -290,7 +266,7 @@ $.ajax({
   error: function() {
     $('.btn_click_load').css('display','block');
   }
-});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/运筹学/" style="font-size: 15px;">运筹学</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021VRP/">Contest-2021VRP</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2020/12/22/Contest-2020pCenter/">SmartLab Challenge 2020 - p-Center and Unicost Set Covering</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2020/12/09/Contest-2020GraphColoring/">SmartLab Challenge 2020 - Graph Coloring</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/10/17/SetupGitServerWithGitea/">用 Gitea 搭建自己的 Git 服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/">组合优化 (五) 数学规划进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-SoftwareEngineering/">组合优化 (四) 算法工程</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-AlgorithmDesign/">组合优化 (三) 算法简介</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/运筹学/" style="font-size: 15px;">运筹学</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021VRP/">Contest-2021VRP</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2020/12/22/Contest-2020pCenter/">SmartLab Challenge 2020 - p-Center and Unicost Set Covering</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2020/12/09/Contest-2020GraphColoring/">SmartLab Challenge 2020 - Graph Coloring</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/10/17/SetupGitServerWithGitea/">用 Gitea 搭建自己的 Git 服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/">组合优化 (五) 数学规划进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-SoftwareEngineering/">组合优化 (四) 算法工程</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2019/01/13/Opt-AlgorithmDesign/">组合优化 (三) 算法简介</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
