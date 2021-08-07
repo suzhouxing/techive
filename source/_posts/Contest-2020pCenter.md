@@ -32,18 +32,18 @@ tags:
 
 ## 命令行参数
 
-请大家编写程序时支持四个命令行参数, 依次为算例文件路径, 输出解文件路径, 运行时间上限 (单位为秒) 和随机种子 (0-65535).
-例如, 在控制台运行以下命令表示调用可执行文件 `uscp.exe` 求解路径为 `../data/pmed1.n100p5.txt` 的算例, 解文件输出至 `sln.pmed1.n100p5.txt`, 限时 1000 秒, 随机种子为 12345:
+请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).
+算例文件已重定向至标准输入 `stdin`/`cin`, 标准输出 `stdout`/`cout` 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 `stderr`/`cerr`).
+例如, 在控制台运行以下命令表示调用可执行文件 `pcenter.exe` 在限时 1000 秒, 随机种子为 12345 的情况下求解路径为 `../data/pmed1.n100p5.txt` 的算例, 解文件输出至 `sln.pmed1.n100p5.txt`:
 ```
-uscp.exe ../data/pmed1.n100p5.txt sln.pmed1.n100p5.txt 1000 12345
+pcenter.exe 1000 123456 <../data/pmed1.n100p5.txt >sln.pmed1.n100p5.txt
 ```
 
 - 运行时间上限.
-  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已保存解文件 (最好还能自行正常退出).
+  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已输出解 (最好还能自行正常退出).
 - 随机种子设置.
   - 使用 C 语言随机数生成器请用 `srand`.
   - 使用 C++ 随机数生成器 (如 `mt19937`) 请在构造时传参或调用 `seed()` 方法设置.
-- 测试时可能会修改算例文件名，请勿针对文件名做特殊处理.
 
 
 ## 输入的算例文件格式
@@ -90,32 +90,36 @@ uscp.exe ../data/pmed1.n100p5.txt sln.pmed1.n100p5.txt 1000 12345
 
 ## 输出的解文件格式
 
-输出一行用空白字符分隔的 P 个整数, 分别表示挑选出的 P 个中心 (集合).
+输出 P 个用空白字符 (建议使用换行符) 分隔的整数, 分别表示挑选出的 P 个中心 (集合).
 
 例如, 以下解文件表示选择节点 0 和 2 作为中心 (集合):
 ```
-0 2
+0
+2
+
 ```
 
 
 ## 提交要求
 
-- 发送至邮箱 [zhouxing.su@qq.com](mailto:zhouxing.su@qq.com).
-- 邮件标题格式为 "**Challenge2020USCP-姓名-学校-专业**".
+- 发送至邮箱 [szx@duhe.tech](mailto:szx@duhe.tech).
+- 邮件标题格式为 "**Challenge2020PCP-姓名-学校-专业**".
 - 邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
   - 算法的可执行文件 (Windows 平台).
+    - 建议基于官方 SDK 开发 ([https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.PCP](https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.PCP)).
     - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
-    - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
   - 算法源码.
-  - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
+  - 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
     - 算例名.
-    - 剩余未覆盖元素数.
+    - 服务半径.
     - 计算耗时.
-  - 算法在各算例上求得的完全覆盖的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
+  - 算法在各算例上求得的完全覆盖的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
+- 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
+  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark/tree/data](https://gitee.com/suzhouxing/npbenchmark/tree/data)).
 
 例如:
 ```
-苏宙行-华科大-计科.zip
+苏宙行-华科-计科.zip
 |   pcenter.exe
 |   results.csv
 |
@@ -131,257 +135,92 @@ uscp.exe ../data/pmed1.n100p5.txt sln.pmed1.n100p5.txt 1000 12345
 ```
 
 
-## 检查程序
-
-我们可能会使用以下 c# 程序检查大家提交的算法和结果 (仅供参考).
-
-```cs
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-
-
-namespace UscpBenchmark {
-    class Program {
-        static readonly char[] InlineDelimiters = new char[] { ' ', '\t' };
-        static readonly char[] WhiteSpaceChars = new char[] { ' ', '\t', '\r', '\n' };
-
-        static void Main(string[] args) {
-            string inputFilePath = args[0]; // instance file.
-            string outputFilePath = args[1]; // solution file.
-
-            if (args.Length > 3) {
-                string exeFilePath = args[2]; // algorithm executable file.
-                string secTimeout = args[3]; // timeout in second.
-                benchmark(inputFilePath, outputFilePath, exeFilePath, secTimeout);
-            } else {
-                check(inputFilePath, outputFilePath);
-            }
-        }
-
-        static void check(string inputFilePath, string outputFilePath) {
-            int nodeNum = 0;
-            int centerNum = 0;
-            int maxRank = 0;
-            int minRank = 0;
-            List<List<int>> sets = new List<List<int>>();
-            List<List<int>> setsWithdrops = new List<List<int>>();
-            try { // load instance.
-                string[] lines = File.ReadAllLines(inputFilePath);
-
-                string[] cells = lines[0].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                nodeNum = int.Parse(cells[0]);
-                centerNum = int.Parse(cells[1]);
-                int l = 1;
-                for (sets.Capacity = nodeNum; (l < lines.Length) && (sets.Count < nodeNum); ++l) {
-                    int coveredItemNum = int.Parse(lines[l]);
-                    cells = lines[++l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                    List<int> set = new List<int>(coveredItemNum);
-                    foreach (var cell in cells) { set.Add(int.Parse(cell)); }
-                    sets.Add(set);
-                }
-
-                cells = lines[l++].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                maxRank = int.Parse(cells[0]);
-                minRank = int.Parse(cells[1]);
-                for (setsWithdrops.Capacity = maxRank - minRank; l < lines.Length; ++l) {
-                    cells = lines[l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                    List<int> setsWithdrop = new List<int>(cells.Length - 1);
-                    for (int c = 1; c < cells.Length; ++c) { setsWithdrop.Add(int.Parse(cells[c])); }
-                    setsWithdrops.Add(setsWithdrop);
-                } // TODO[szx][0]: handle empty lines.
-            } catch (Exception) { }
-
-            List<int> pickedSets = new List<int>(centerNum);
-            List<bool> notPickedSet = new List<bool>(Enumerable.Repeat(true, nodeNum));
-            try { // load solution.
-                string[] cells = File.ReadAllText(outputFilePath).Split(WhiteSpaceChars, StringSplitOptions.RemoveEmptyEntries);
-                foreach (string cell in cells) {
-                    int s = int.Parse(cell);
-                    pickedSets.Add(s);
-                    notPickedSet[s] = false;
-                }
-            } catch (Exception) { }
-
-            int uncoveredItemNum = nodeNum;
-            int rank = maxRank + 1;
-            try { // check.
-                List<int> coveringSetNumOfItems = new List<int>(Enumerable.Repeat(0, nodeNum));
-                foreach (var s in pickedSets) {
-                    foreach (var item in sets[s]) {
-                        if (coveringSetNumOfItems[item]++ < 1) { --uncoveredItemNum; }
-                    }
-                }
-
-                if (uncoveredItemNum == 0) {
-                    for (int r = 0; (r < setsWithdrops.Count) && (rank > maxRank); ++r) {
-                        foreach (var s in setsWithdrops[r]) {
-                            if (notPickedSet[s]) { continue; }
-                            int dropItem = sets[s].Last();
-                            if (--coveringSetNumOfItems[dropItem] < 1) { rank = maxRank - r; break; }
-                            sets[s].RemoveAt(sets[s].Count - 1);
-                        }
-                    }
-                }
-            } catch (Exception) { }
-
-            Console.Write("instance=");
-            Console.Write(Path.GetFileName(inputFilePath));
-
-            Console.Write(" center=");
-            Console.Write(pickedSets.Count);
-
-            Console.Write(" uncovered=");
-            Console.Write(uncoveredItemNum);
-
-            Console.Write(" rank=");
-            Console.WriteLine(rank);
-        }
-
-        static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string secTimeout) {
-            const int Repeat = 10;
-            const int millisecondCheckInterval = 1000;
-
-            long millisecondTimeLimit = int.Parse(secTimeout) * 1000;
-            long byteMemoryLimit = 1024 * 1024 * 1024;
-
-            for (int i = 0; i < Repeat; ++i) {
-                try { File.Delete(outputFilePath); } catch (Exception) { }
-                try {
-                    int seed = genSeed();
-                    StringBuilder cmdArgs = new StringBuilder();
-                    cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
-                        .Append(" ").Append(secTimeout).Append(" ").Append(seed);
-
-                    Stopwatch sw = new Stopwatch();
-                    sw.Start();
-                    ProcessStartInfo psi = new ProcessStartInfo();
-                    psi.FileName = exeFilePath;
-                    psi.WorkingDirectory = Environment.CurrentDirectory;
-                    psi.Arguments = cmdArgs.ToString();
-                    Process p = Process.Start(psi);
-                    while (!p.WaitForExit(millisecondCheckInterval)
-                        && (sw.ElapsedMilliseconds < millisecondTimeLimit)
-                        && (p.PrivateMemorySize64 < byteMemoryLimit)) { }
-                    try { p.Kill(); } catch (Exception) { }
-                    sw.Stop();
-
-                    Console.Write("solver=");
-                    Console.Write(Path.GetDirectoryName(exeFilePath));
-
-                    Console.Write(" time=");
-                    Console.Write(sw.ElapsedMilliseconds / 1000.0);
-
-                    Console.Write("s seed=");
-                    Console.Write(seed);
-                    Console.Write(" ");
-
-                    check(inputFilePath, outputFilePath);
-                } catch (Exception e) {
-                    Console.WriteLine();
-                    //Console.WriteLine(e);
-                }
-            }
-        }
-
-        static int genSeed() {
-            return (int)(DateTime.Now.Ticks & 0xffff);
-        }
-    }
-}
-
-```
-
-
 ## 算例清单
+
+下载地址: [https://gitee.com/suzhouxing/npbenchmark/tree/data/PCP/Instance](https://gitee.com/suzhouxing/npbenchmark/tree/data/PCP/Instance)
 
 算例规模从小到大依次为 (求解难度不一定随规模增加, 但除 pcb3038* 以外的算例应该都很容易求解):
 
-[下载全部](https://gitee.com/suzhouxing/techive/attach_files/787061/download/pcenter.7z)
-
-pmed01.n100p5  
-pmed02.n100p10  
-pmed03.n100p10  
-pmed04.n100p20  
-pmed05.n100p33  
-pmed06.n200p5  
-pmed07.n200p10  
-pmed08.n200p20  
-pmed09.n200p40  
-pmed10.n200p67  
-pmed11.n300p5  
-pmed12.n300p10  
-pmed13.n300p30  
-pmed14.n300p60  
+pmed01.n100p005  
+pmed02.n100p010  
+pmed03.n100p010  
+pmed04.n100p020  
+pmed05.n100p033  
+pmed06.n200p005  
+pmed07.n200p010  
+pmed08.n200p020  
+pmed09.n200p040  
+pmed10.n200p067  
+pmed11.n300p005  
+pmed12.n300p010  
+pmed13.n300p030  
+pmed14.n300p060  
 pmed15.n300p100  
-pmed16.n400p5  
-pmed17.n400p10  
-pmed18.n400p40  
-pmed19.n400p80  
+pmed16.n400p005  
+pmed17.n400p010  
+pmed18.n400p040  
+pmed19.n400p080  
 pmed20.n400p133  
-pmed21.n500p5  
-pmed22.n500p10  
-pmed23.n500p50  
+pmed21.n500p005  
+pmed22.n500p010  
+pmed23.n500p050  
 pmed24.n500p100  
 pmed25.n500p167  
-pmed26.n600p5  
-pmed27.n600p10  
-pmed28.n600p60  
+pmed26.n600p005  
+pmed27.n600p010  
+pmed28.n600p060  
 pmed29.n600p120  
 pmed30.n600p200  
-pmed31.n700p5  
-pmed32.n700p10  
-pmed33.n700p70  
+pmed31.n700p005  
+pmed32.n700p010  
+pmed33.n700p070  
 pmed34.n700p140  
-pmed35.n800p5  
-pmed36.n800p10  
-pmed37.n800p80  
-pmed38.n900p5  
-pmed39.n900p10  
-pmed40.n900p90  
-u1060p010r2273.08  
-u1060p020r1580.80  
-u1060p030r1207.77  
-u1060p040r1020.56  
-u1060p050r904.92  
-u1060p060r781.17  
-u1060p070r710.75  
-u1060p080r652.16  
-u1060p090r607.87  
-u1060p100r570.01  
-u1060p110r538.84  
-u1060p120r510.27  
-u1060p130r499.65  
-u1060p140r452.46  
-u1060p150r447.01  
-rl1323p010r3077.30  
-rl1323p020r2016.40  
-rl1323p030r1631.50  
-rl1323p040r1352.36  
-rl1323p050r1187.27  
-rl1323p060r1063.01  
-rl1323p070r971.93  
-rl1323p080r895.06  
-rl1323p090r832.00  
-rl1323p100r789.70  
-u1817p010r457.91  
-u1817p020r309.01  
-u1817p030r240.99  
-u1817p040r209.45  
-u1817p050r184.91  
-u1817p060r162.64  
-u1817p070r148.11  
-u1817p080r136.77  
-u1817p090r129.51  
-u1817p100r126.99  
-u1817p110r109.25  
-u1817p120r107.76  
-u1817p130r104.73  
-u1817p140r101.60  
-u1817p150r91.60  
+pmed35.n800p005  
+pmed36.n800p010  
+pmed37.n800p080  
+pmed38.n900p005  
+pmed39.n900p010  
+pmed40.n900p090  
+u1060p010  
+u1060p020  
+u1060p030  
+u1060p040  
+u1060p050  
+u1060p060  
+u1060p070  
+u1060p080  
+u1060p090  
+u1060p100  
+u1060p110  
+u1060p120  
+u1060p130  
+u1060p140  
+u1060p150  
+rl1323p010  
+rl1323p020  
+rl1323p030  
+rl1323p040  
+rl1323p050  
+rl1323p060  
+rl1323p070  
+rl1323p080  
+rl1323p090  
+rl1323p100  
+u1817p010  
+u1817p020  
+u1817p030  
+u1817p040  
+u1817p050  
+u1817p060  
+u1817p070  
+u1817p080  
+u1817p090  
+u1817p100  
+u1817p110  
+u1817p120  
+u1817p130  
+u1817p140  
+u1817p150  
 pcb3038p010r729  
 pcb3038p020r494  
 pcb3038p030r394  

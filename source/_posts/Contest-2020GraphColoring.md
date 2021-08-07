@@ -31,59 +31,73 @@ tags:
 
 ## 命令行参数
 
-请大家编写程序时支持五个命令行参数, 依次为算例文件路径, 输出解文件路径, 运行时间上限 (单位为秒) 和随机种子 (0-65535), 参考颜色数.
-例如, 在控制台运行以下命令表示调用可执行文件 `gcp.exe` 求解路径为 `../data/DSJC500.5.col` 的算例, 解文件输出至 `sln.dsjc500.5.txt`, 限时 600 秒, 随机种子为 12345, 参考颜色数为 48:
+请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).
+算例文件已重定向至标准输入 `stdin`/`cin`, 标准输出 `stdout`/`cout` 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 `stderr`/`cerr`).
+例如, 在控制台运行以下命令表示调用可执行文件 `gcp.exe` 在限时 600 秒, 随机种子为 12345 的情况下求解路径为 `../data/DSJC500.5.txt` 的算例, 解文件输出至 `sln.dsjc500.5.txt`:
 ```
-gcp.exe ../DSJC500.5.col sln.dsjc500.5.txt 600 123456 48
+gcp.exe 600 123456 <../data/DSJC500.5.txt >sln.dsjc500.5.txt
 ```
 
 - 运行时间上限.
-  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已保存解文件 (最好还能自行正常退出).
+  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已输出解 (最好还能自行正常退出).
 - 随机种子设置.
   - 使用 C 语言随机数生成器请用 `srand`.
   - 使用 C++ 随机数生成器 (如 `mt19937`) 请在构造时传参或调用 `seed()` 方法设置.
-- 测试时可能会修改算例文件名，请勿针对文件名做特殊处理.
 
 
 ## 输入的算例文件格式
 
-DIMACS 图着色算例格式.
-建议读取算例时不要根据开头给出的边数进行相关数据的初始化, 而是根据是否已经读到文件末尾自动判断.
+所有算例的节点从 0 开始连续编号.
+
+第一行给出三个由空白字符分隔的整数, 分别表示节点数 N, 无向边数 E (有向边数为 2E), 以及参考颜色数 C (相对容易求得可行解, 非最优颜色数).
+接下来连续 E 行, 每行包含两个由空白字符分隔的整数, 表示一条无向边的两个端点.
+
+例如, 以下算例文件表示节点数为 4, 无向边数为 3, 参考颜色数为 2; 其中:  
+节点 0 分别与 1, 2, 3 相邻.
+```
+4 3 2
+0 1
+0 2
+3 0
+```
 
 
 ## 输出的解文件格式
 
-对于 N 个节点的算例, 输出 N 行.
-每一行输出用空白字符分隔的两个整数, 分别表示算例中的节点编号以及为该节点分配的颜色.
+输出 N 个用空白字符 (建议使用换行符) 分隔整数表示 N 个节点的染色情况, 第 i 个整数表示第 i 个节点的颜色.
 
-颜色可以取 `int` 范围内任意整数, 检查程序自动统计不同的整数的数量.
+颜色可以取 `int` 范围内任意非负整数, 检查程序自动统计不同的非负整数的数量.
 
-例如, 以下解文件表示 1 号节点染颜色 0, 2 号节点染颜色 2, 3 号节点染颜色 1:
+例如, 以下解文件表示节点 0 染颜色 0, 节点 1 染颜色 1, 节点 2 染颜色 1, 节点 3 染颜色 1:
 ```
-1 0 
-2 2 
-3 1
+0
+1
+1
+1
+
 ```
 
 
 ## 提交要求
 
-- 发送至邮箱 [zhouxing.su@qq.com](mailto:zhouxing.su@qq.com).
+- 发送至邮箱 [szx@duhe.tech](mailto:szx@duhe.tech).
 - 邮件标题格式为 "**Challenge2020GCP-姓名-学校-专业**".
 - 邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
   - 算法的可执行文件 (Windows 平台).
-    - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
-    - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
+    - 建议基于官方 SDK 开发 ([https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.GCP](https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.GCP)).
+    - 用 g++ 的同学编译时建议静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
   - 算法源码.
-  - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
+  - 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
     - 算例名.
     - 颜色数.
     - 计算耗时.
-  - 算法在各算例上求得的颜色数最少的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
+  - 算法在各算例上求得的颜色数最少的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
+- 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
+  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark/tree/data](https://gitee.com/suzhouxing/npbenchmark/tree/data)).
 
 例如:
 ```
-苏宙行-华科大-计科.zip
+苏宙行-华科-计科.zip
 |   gc.exe
 |   results.csv
 |
@@ -99,164 +113,21 @@ DIMACS 图着色算例格式.
 ```
 
 
-## 测试与检查程序
-
-我们可能会使用以下 c# 程序检查大家提交的算法和结果 (仅供参考).
-
-```cs
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-
-
-namespace GcpBenchmark {
-    class Program {
-        static readonly char[] InlineDelimiters = new char[] { ' ', '\t' };
-        static readonly char[] WhiteSpaceChars = new char[] { ' ', '\t', '\r', '\n' };
-
-        static void Main(string[] args) {
-            string inputFilePath = args[0]; // instance file.
-            string outputFilePath = args[1]; // solution file.
-
-            if (args.Length > 3) {
-                string exeFilePath = args[2]; // algorithm executable file.
-                string secTimeout = args[3]; // timeout in second.
-                string colorNum = args[4];
-                benchmark(inputFilePath, outputFilePath, exeFilePath, secTimeout, colorNum);
-            } else {
-                check(inputFilePath, outputFilePath);
-            }
-        }
-
-        struct Edge {
-            public string src;
-            public string dst;
-        };
-
-        static void check(string inputFilePath, string outputFilePath) {
-            int nodeNum = 0;
-            int edgeNum = 0;
-            List<Edge> edges = new List<Edge>();
-            try {
-                string[] lines = File.ReadAllLines(inputFilePath);
-
-                foreach (string line in lines) {
-                    if (line.Length <= 0) { continue; }
-                    if (line[0] == 'c') { continue; }
-
-                    string[] cells = line.Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                    if (line[0] == 'p') {
-                        nodeNum = int.Parse(cells[2]);
-                        edgeNum = int.Parse(cells[3]);
-                        edges.Capacity = edgeNum;
-                    } else if (line[0] == 'e') {
-                        edges.Add(new Edge { src = cells[1], dst = cells[2] });
-                    }
-                }
-            } catch (Exception) { }
-
-            HashSet<string> colors = new HashSet<string>();
-            Dictionary<string, string> nodeColors = new Dictionary<string, string>();
-            try {
-                string[] lines = File.ReadAllLines(outputFilePath);
-
-                foreach (string line in lines) {
-                    string[] cells = line.Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                    nodeColors[cells[0]] = cells[1];
-                    colors.Add(cells[1]);
-                }
-            } catch (Exception) { }
-
-            int conflictNum = 0;
-            try {
-                foreach (Edge edge in edges) {
-                    if (nodeColors[edge.src] == nodeColors[edge.dst]) { ++conflictNum; }
-                }
-            } catch (Exception) { }
-
-            Console.Write("instance=");
-            Console.Write(Path.GetFileName(inputFilePath));
-
-            Console.Write(" color=");
-            Console.Write(colors.Count);
-
-            Console.Write(" conflict=");
-            Console.WriteLine(conflictNum);
-        }
-
-        static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string secTimeout, string colorNum) {
-            const int Repeat = 10;
-            const int millisecondCheckInterval = 1000;
-
-            long millisecondTimeLimit = int.Parse(secTimeout) * 1000;
-            long byteMemoryLimit = 1024 * 1024 * 1024;
-
-            for (int i = 0; i < Repeat; ++i) {
-                try { File.Delete(outputFilePath); } catch (Exception) { }
-                try {
-                    int seed = genSeed();
-                    StringBuilder cmdArgs = new StringBuilder();
-                    cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath).Append(" ")
-                        .Append(secTimeout).Append(" ").Append(seed).Append(" ").Append(colorNum);
-
-                    Stopwatch sw = new Stopwatch();
-                    sw.Start();
-                    ProcessStartInfo psi = new ProcessStartInfo();
-                    psi.FileName = exeFilePath;
-                    psi.WorkingDirectory = Environment.CurrentDirectory;
-                    psi.Arguments = cmdArgs.ToString();
-                    Process p = Process.Start(psi);
-                    while (!p.WaitForExit(millisecondCheckInterval)
-                        && (sw.ElapsedMilliseconds < millisecondTimeLimit)
-                        && (p.PrivateMemorySize64 < byteMemoryLimit)) { }
-                    try { p.Kill(); } catch (Exception) { }
-                    sw.Stop();
-
-                    Console.Write("solver=");
-                    Console.Write(Path.GetDirectoryName(exeFilePath));
-
-                    Console.Write(" time=");
-                    Console.Write(sw.ElapsedMilliseconds / 1000.0);
-
-                    Console.Write("s seed=");
-                    Console.Write(seed);
-                    Console.Write(" ");
-
-                    check(inputFilePath, outputFilePath);
-                } catch (Exception e) {
-                    Console.WriteLine();
-                    //Console.WriteLine(e);
-                }
-            }
-        }
-
-        static int genSeed() {
-            return (int)(DateTime.Now.Ticks & 0xffff);
-        }
-    }
-}
-
-```
-
-
 ## 算例清单
+
+下载地址: [https://gitee.com/suzhouxing/npbenchmark/tree/data/GCP/Instance](https://gitee.com/suzhouxing/npbenchmark/tree/data/GCP/Instance)
 
 算例规模从小到大依次为 (求解难度不一定随规模增加, 但 DSJC500.5 以前的算例应该都很容易求解):
 
-[下载全部](https://gitee.com/suzhouxing/techive/attach_files/675268/download/coloring.7z)
-
-DSJC125.1
-DSJC125.5
-DSJC125.9
-DSJC250.1
-DSJC250.5
-DSJC250.9
-DSJC500.1
-DSJC500.5
-DSJC500.9
+DSJC0125.1
+DSJC0125.5
+DSJC0125.9
+DSJC0250.1
+DSJC0250.5
+DSJC0250.9
+DSJC0500.1
+DSJC0500.5
+DSJC0500.9
 DSJC1000.1
 DSJC1000.5
 DSJC1000.9

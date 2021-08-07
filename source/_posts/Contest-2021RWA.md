@@ -27,19 +27,18 @@ tags:
 
 ## 命令行参数
 
-请大家编写程序时支持四个命令行参数, 依次为算例文件路径, 输出解文件路径, 运行时间上限 (单位为秒) 和随机种子 (0-65535).
-例如, 在控制台运行以下命令表示调用可执行文件 `rwa.exe` 求解路径为 `../data/ATT.n90e274t359.txt` 的算例, 解文件输出至 `ATT.n90e274t359.txt`, 限时 300 秒, 随机种子为 12345:
+请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).
+算例文件已重定向至标准输入 `stdin`/`cin`, 标准输出 `stdout`/`cout` 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 `stderr`/`cerr`).
+例如, 在控制台运行以下命令表示调用可执行文件 `rwa.exe` 在限时 300 秒, 随机种子为 12345 的情况下求解路径为 `../data/ATT.n90e274t359.txt` 的算例, 解文件输出至 `sln.ATT.n90e274t359.txt`:
 ```
-rwa.exe ../data/ATT.n90e274t359.txt ATT.n90e274t359.txt 300 12345
+rwa.exe 300 123456 <../data/ATT.n90e274t359.txt >sln.ATT.n90e274t359.txt
 ```
 
 - 运行时间上限.
-  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已保存解文件 (最好还能自行正常退出).
-    - 可以每次迭代时检查是否超时, 也可以每次更新最优解后保存一次.
+  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已输出解 (最好还能自行正常退出).
 - 随机种子设置.
   - 使用 C 语言随机数生成器请用 `srand`.
   - 使用 C++ 随机数生成器 (如 `mt19937`) 请在构造时传参或调用 `seed()` 方法设置.
-- 测试时可能会修改算例文件名，请勿针对文件名做特殊处理.
 
 
 ## 输入的算例文件格式
@@ -71,7 +70,7 @@ rwa.exe ../data/ATT.n90e274t359.txt ATT.n90e274t359.txt 300 12345
 ## 输出的解文件格式
 
 输出 T 行整数表示 T 个通信业务的传输方案, 第 i 行表示第 i 个通信业务的波长分配和传输路径.
-每一行第一个整数表示第 i 个通信业务使用的波长, 第二个整数表示传输路径上的节点数, 随后连续 P 个由空白字符分隔的整数表示传输路径上依次经过的节点.
+每行第一个整数表示第 i 个通信业务使用的波长, 第二个整数表示传输路径上的节点数, 随后连续 P 个由空白字符分隔的整数表示传输路径上依次经过的节点.
 
 波长可以取 `int` 范围内任意整数, 检查程序自动统计不同的整数的数量.
 传输路径上的节点若不包含通信业务的起点和终点, 检查程序将自动将其添加至路径中.
@@ -84,27 +83,30 @@ rwa.exe ../data/ATT.n90e274t359.txt ATT.n90e274t359.txt 300 12345
 1 2 0 1
 1 0
 0 2 1 2
+
 ```
 
 
 ## 提交要求
 
-- 发送至邮箱 [zhouxing.su@qq.com](mailto:zhouxing.su@qq.com).
+- 发送至邮箱 [szx@duhe.tech](mailto:szx@duhe.tech).
 - 邮件标题格式为 "**Challenge2021RWA-姓名-学校-专业**".
 - 邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
   - 算法的可执行文件 (Windows 平台).
+    - 建议基于官方 SDK 开发 ([https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.RWA](https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.RWA)).
     - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
-    - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
   - 算法源码.
-  - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
+  - 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
     - 算例名.
     - 使用的波长数.
     - 计算耗时.
-  - 算法在各算例上求得的使用波长数最少的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
+  - 算法在各算例上求得的使用波长数最少的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
+- 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
+  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark/tree/data](https://gitee.com/suzhouxing/npbenchmark/tree/data)).
 
 例如:
 ```
-苏宙行-华科大-计科.zip
+苏宙行-华科-计科.zip
 |   rwa.exe
 |   results.csv
 |
@@ -120,155 +122,15 @@ rwa.exe ../data/ATT.n90e274t359.txt ATT.n90e274t359.txt 300 12345
 ```
 
 
-## 检查程序
-
-我们可能会使用以下 c# 程序检查大家提交的算法和结果 (仅供参考).
-
-```cs
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-
-
-namespace RwaBenchmark {
-    class Program {
-        static readonly char[] InlineDelimiters = new char[] { ' ', '\t' };
-        static readonly char[] WhiteSpaceChars = new char[] { ' ', '\t', '\r', '\n' };
-
-        static void Main(string[] args) {
-            string inputFilePath = args[0]; // instance file.
-            string outputFilePath = args[1]; // solution file.
-
-            if (args.Length > 3) {
-                string exeFilePath = args[2]; // algorithm executable file.
-                string secTimeout = args[3]; // timeout in second.
-                benchmark(inputFilePath, outputFilePath, exeFilePath, secTimeout);
-            } else {
-                check(inputFilePath, outputFilePath);
-            }
-        }
-
-        static void check(string inputFilePath, string outputFilePath) {
-            Dictionary<string, Dictionary<string, HashSet<string>>> edges = new Dictionary<string, Dictionary<string, HashSet<string>>>();
-            List<string[]> traffics = new List<string[]>();
-            try { // load instance.
-                string[] lines = File.ReadAllLines(inputFilePath);
-                string[] nums = lines[0].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                int nodeNum = int.Parse(nums[0]);
-                int edgeNum = int.Parse(nums[1]);
-                int trafficNum = int.Parse(nums[2]);
-                int l = 1;
-                for (int n = 0; (n < edgeNum) && (l < lines.Length); ++l, ++n) {
-                    string[] nodes = lines[l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                    edges.TryAdd(nodes[0], new Dictionary<string, HashSet<string>>());
-                    edges[nodes[0]].Add(nodes[1], new HashSet<string>());
-                }
-
-                traffics.Capacity = trafficNum;
-                for (int t = 0; (t < trafficNum) && (l < lines.Length); ++l, ++t) {
-                    traffics.Add(lines[l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries));
-                }
-            } catch (Exception) { }
-
-            int brokenPathNum = 0;
-            int conflictNum = 0;
-            HashSet<string> colors = new HashSet<string>();
-            try { // load solution and check.
-                string[] lines = File.ReadAllLines(outputFilePath);
-                for (int l = 0; l < lines.Length; ++l) {
-                    List<string> nums = lines[l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries).ToList();
-                    nums.Add(traffics[l][1]);
-                    string color = nums[0];
-                    colors.Add(color);
-                    string src = traffics[l][0];
-                    for (int i = 2; i < nums.Count; ++i) {
-                        string dst = nums[i];
-                        if (dst == src) { continue; }
-                        if (!edges.ContainsKey(src) || !edges[src].ContainsKey(dst)) { ++brokenPathNum; break; }
-                        if (edges[src][dst].Contains(color)) { ++conflictNum; }
-                        edges[src][dst].Add(color);
-                        src = nums[i];
-                    }
-                }
-            } catch (Exception) { }
-
-            Console.Write("instance=");
-            Console.Write(Path.GetFileName(inputFilePath));
-
-            Console.Write(" waveLenNum=");
-            Console.Write(colors.Count);
-
-            Console.Write(" brokenPathNum=");
-            Console.Write(brokenPathNum);
-
-            Console.Write(" conflictNum=");
-            Console.Write(conflictNum);
-        }
-
-        static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string secTimeout) {
-            const int Repeat = 10;
-            const int millisecondCheckInterval = 1000;
-
-            long millisecondTimeLimit = int.Parse(secTimeout) * 1000;
-            long byteMemoryLimit = 1024 * 1024 * 1024;
-
-            for (int i = 0; i < Repeat; ++i) {
-                try { File.Delete(outputFilePath); } catch (Exception) { }
-                try {
-                    int seed = genSeed();
-                    StringBuilder cmdArgs = new StringBuilder();
-                    cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
-                        .Append(" ").Append(secTimeout).Append(" ").Append(seed);
-
-                    Stopwatch sw = new Stopwatch();
-                    sw.Start();
-                    ProcessStartInfo psi = new ProcessStartInfo();
-                    psi.FileName = exeFilePath;
-                    psi.WorkingDirectory = Environment.CurrentDirectory;
-                    psi.Arguments = cmdArgs.ToString();
-                    Process p = Process.Start(psi);
-                    while (!p.WaitForExit(millisecondCheckInterval)
-                        && (sw.ElapsedMilliseconds < millisecondTimeLimit)
-                        && (p.PrivateMemorySize64 < byteMemoryLimit)) { }
-                    try { p.Kill(); } catch (Exception) { }
-                    sw.Stop();
-
-                    Console.Write("solver=");
-                    Console.Write(Path.GetDirectoryName(exeFilePath));
-
-                    Console.Write(" time=");
-                    Console.Write(sw.ElapsedMilliseconds / 1000.0);
-
-                    Console.Write("s seed=");
-                    Console.Write(seed);
-                    Console.Write(" ");
-
-                    check(inputFilePath, outputFilePath);
-                } catch (Exception e) {
-                    Console.WriteLine();
-                    //Console.WriteLine(e);
-                }
-            }
-        }
-
-        static int genSeed() {
-            return (int)(DateTime.Now.Ticks & 0xffff);
-        }
-    }
-}
-```
-
-
 ## 算例清单
 
-[下载全部](https://gitee.com/suzhouxing/techive/attach_files/767944/download/rwa.7z)
+下载地址: [https://gitee.com/suzhouxing/npbenchmark/tree/data/RWA/Instance](https://gitee.com/suzhouxing/npbenchmark/tree/data/RWA/Instance)
+
+算例规模从小到大依次为 (求解难度不一定随规模增加, 但除 Z* 以外的算例应该都很容易求解):
 
 ATT.n90e274t359  
 ATT2.n71e350t2918  
-brasil.n27e140t1370  
+Brasil.n27e140t1370  
 EON.n20e78t373  
 Finland.n31e102t930  
 NSF-01.n14e42t284  

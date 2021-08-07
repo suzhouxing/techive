@@ -35,19 +35,18 @@ tags:
 
 ## 命令行参数
 
-请大家编写程序时支持四个命令行参数, 依次为算例文件路径, 输出解文件路径, 运行时间上限 (单位为秒) 和随机种子 (0-65535).
-例如, 在控制台运行以下命令表示调用可执行文件 `fjsp.exe` 求解路径为 `../data/jsp.FT06.m6j6c1.txt` 的算例, 解文件输出至 `jsp.FT06.m6j6c1.txt`, 限时 1000 秒, 随机种子为 12345:
+请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).
+算例文件已重定向至标准输入 `stdin`/`cin`, 标准输出 `stdout`/`cout` 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 `stderr`/`cerr`).
+例如, 在控制台运行以下命令表示调用可执行文件 `fjsp.exe` 在限时 300 秒, 随机种子为 12345 的情况下求解路径为 `../data/jsp.FT06.m6j6c1.txt` 的算例, 解文件输出至 `sln.jsp.FT06.m6j6c1.txt`:
 ```
-fjsp.exe ../data/jsp.FT06.m6j6c1.txt jsp.FT06.m6j6c1.txt 1000 12345
+fjsp.exe 1000 123456 <../data/jsp.FT06.m6j6c1.txt >sln.jsp.FT06.m6j6c1.txt
 ```
 
 - 运行时间上限.
-  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已保存解文件 (最好还能自行正常退出).
-    - 可以每次迭代时检查是否超时, 也可以每次更新最优解后保存一次.
+  - 超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已输出解 (最好还能自行正常退出).
 - 随机种子设置.
   - 使用 C 语言随机数生成器请用 `srand`.
   - 使用 C++ 随机数生成器 (如 `mt19937`) 请在构造时传参或调用 `seed()` 方法设置.
-- 测试时可能会修改算例文件名，请勿针对文件名做特殊处理.
 
 
 ## 输入的算例文件格式
@@ -87,8 +86,8 @@ fjsp.exe ../data/jsp.FT06.m6j6c1.txt jsp.FT06.m6j6c1.txt 1000 12345
 
 ## 输出的解文件格式
 
-输出 M 行整数表示 M 台机器的任务分配与排序情况, 第 i 行表示机器 i 上执行的工序的有序列表.
-每一行第一个整数表示第 i 台机器加工的工序数 E, 随后连续 E 个由空白字符分隔的二元组, 二元组 (J, O) 表示加工了任务 J 的工序 O, 二元组的出现顺序表示机器 i 的加工顺序.
+输出 M 行整数表示 M 台机器的任务分配与排序情况, 第 i 行表示第 i 台机器上执行的工序的有序列表.
+每一行第一个整数表示第 i 台机器加工的工序数 E, 随后连续 E 个由空白字符分隔的二元组, 二元组 (J, O) 表示加工了任务 J 的工序 O, 二元组的出现顺序表示第 i 台机器的加工顺序.
 
 例如, 以下解文件表示 2 台机器上的任务分配与排序情况; 其中,  
 机器 0 执行了 3 道工序, 依次为任务 1 的工序 1, 任务 0 的工序 0, 任务 2 的工序 0;  
@@ -96,6 +95,7 @@ fjsp.exe ../data/jsp.FT06.m6j6c1.txt jsp.FT06.m6j6c1.txt 1000 12345
 ```
 3    1 1  0 0  2 0
 2    0 1  1 0
+
 ```
 
 注意上述调度方案存在死锁, 不是可行的调度方案.
@@ -103,22 +103,24 @@ fjsp.exe ../data/jsp.FT06.m6j6c1.txt jsp.FT06.m6j6c1.txt 1000 12345
 
 ## 提交要求
 
-- 发送至邮箱 [zhouxing.su@qq.com](mailto:zhouxing.su@qq.com).
+- 发送至邮箱 [szx@duhe.tech](mailto:szx@duhe.tech).
 - 邮件标题格式为 "**Challenge2020FJSP-姓名-学校-专业**".
 - 邮件附件为单个压缩包, 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
   - 算法的可执行文件 (Windows 平台).
+    - 建议基于官方 SDK 开发 ([https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.FJSP](https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.FJSP)).
     - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
-    - 勿读取键盘输入 (包括最后按任意键退出), 否则所有算例的运行时间全部自动记为运行时间上限.
   - 算法源码.
-  - 算法在各算例上的运行情况概要, 至少包括以下几项信息.
+  - 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
     - 算例名.
     - 所有任务的完工时间.
     - 计算耗时.
-  - 算法在各算例上求得的完工时间最短的解文件 (可选, 仅在自动测试程序无法成功调用算法输出可通过检查程序的解文件时作为参考).
+  - 算法在各算例上求得的完工时间最短的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
+- 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
+  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark/tree/data](https://gitee.com/suzhouxing/npbenchmark/tree/data)).
 
 例如:
 ```
-苏宙行-华科大-计科.zip
+苏宙行-华科-计科.zip
 |   fjsp.exe
 |   results.csv
 |
@@ -134,214 +136,9 @@ fjsp.exe ../data/jsp.FT06.m6j6c1.txt jsp.FT06.m6j6c1.txt 1000 12345
 ```
 
 
-## 检查程序
-
-我们可能会使用以下 c# 程序检查大家提交的算法和结果 (仅供参考).
-
-```cs
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-
-
-namespace FjspBenchmark {
-    static class Ext {
-        public static void pop<T>(this List<T> l) { l.RemoveAt(l.Count - 1); }
-    }
-
-    class Program {
-        static readonly char[] InlineDelimiters = new char[] { ' ', '\t' };
-        static readonly char[] WhiteSpaceChars = new char[] { ' ', '\t', '\r', '\n' };
-
-        static void Main(string[] args) {
-            string inputFilePath = args[0]; // instance file.
-            string outputFilePath = args[1]; // solution file.
-
-            if (args.Length > 3) {
-                string exeFilePath = args[2]; // algorithm executable file.
-                string secTimeout = args[3]; // timeout in second.
-                benchmark(inputFilePath, outputFilePath, exeFilePath, secTimeout);
-            } else {
-                check(inputFilePath, outputFilePath);
-            }
-        }
-
-        // name mapping:
-        // ---------------------------------------
-        //  job shop scheduling | task scheduling
-        // ---------------------+-----------------
-        //  job                 | batch
-        //  operation           | job
-        //  machine             | worker
-        // ---------------------+-----------------
-        class Job {
-            // `succeedingJobs[j]` is the jobs which can only begin after job `j` finishes.
-            public List<int> succeedingJobs = new List<int>();
-
-            // `candidateWorkers[w]` is the processing time of this job by worker `w`.
-            public Dictionary<int, int> candidateWorkers = new Dictionary<int, int>();
-        }
-
-        static void check(string inputFilePath, string outputFilePath) {
-            int batchNum = 0;
-            int workerNum = 0;
-            int maxCandidateWorkerNum = 0;
-            List<Job> jobs = new List<Job>();
-            List<List<int>> jobIdMap = new List<List<int>>(); // `jobIdMap[b][k]` is the `k`_th job (operation) in batch `b`.
-            try { // load instance.
-                string[] lines = File.ReadAllLines(inputFilePath);
-                string[] cells = lines[0].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                batchNum = int.Parse(cells[0]);
-                workerNum = int.Parse(cells[1]);
-                maxCandidateWorkerNum = int.Parse(cells[2]);
-                for (int l = 1; l < lines.Length; ++l) { // for each batch.
-                    cells = lines[l].Split(InlineDelimiters, StringSplitOptions.RemoveEmptyEntries);
-                    int opNum = int.Parse(cells[0]);
-                    List<int> idMap = new List<int>(opNum);
-                    for (int c = 1; c < cells.Length; ++c) { // for each job in the batch.
-                        Job job = new Job();
-                        int candidateWorkerNum = int.Parse(cells[c]);
-                        for (int w = 0; w < candidateWorkerNum; ++w) { // for each candidate worker.
-                            int worker = int.Parse(cells[++c]);
-                            int duration = int.Parse(cells[++c]);
-                            job.candidateWorkers.Add(worker, duration);
-                        }
-                        idMap.Add(jobs.Count);
-                        jobs.Add(job);
-                        job.succeedingJobs.Add(jobs.Count); // succeeding job of the same batch.
-                    }
-                    jobs.Last().succeedingJobs.pop();
-                    jobIdMap.Add(idMap);
-                }
-            } catch (Exception) { }
-
-            List<List<int>> jobsOnWorkers = new List<List<int>>(workerNum);
-            try { // load solution.
-                string[] lines = File.ReadAllLines(outputFilePath);
-                for (int l = 0; l < lines.Length; ++l) {
-                    string[] cells = lines[l].Split(WhiteSpaceChars, StringSplitOptions.RemoveEmptyEntries);
-                    int jobNumOnWorker = int.Parse(cells[0]);
-                    List<int> jobsOnWorker = new List<int>(jobNumOnWorker);
-                    for (int c = 1; c < cells.Length; ++c) {
-                        int batch = int.Parse(cells[c]);
-                        int job = int.Parse(cells[++c]);
-                        jobsOnWorker.Add(jobIdMap[batch][job]);
-                    }
-                    jobsOnWorkers.Add(jobsOnWorker);
-                }
-            } catch (Exception) { }
-
-            int makespan = 99999999;
-            int restJobNum = jobs.Count;
-            try { // check.
-                List<int> jobExeDurations = new List<int>(Enumerable.Repeat(0, jobs.Count));
-                for (int w = 0; w < workerNum; ++w) {
-                    if (jobsOnWorkers[w].Count <= 0) { continue; }
-                    int prevJob = jobsOnWorkers[w][0];
-                    jobExeDurations[prevJob] = jobs[prevJob].candidateWorkers[w];
-                    for (int j = 1; j < jobsOnWorkers[w].Count; ++j) {
-                        int thisJob = jobsOnWorkers[w][j];
-                        jobs[prevJob].succeedingJobs.Add(thisJob); // succeeding job on the same worker.
-                        jobExeDurations[thisJob] = jobs[thisJob].candidateWorkers[w];
-                        prevJob = thisJob;
-                    }
-                }
-                List<int> preceedingJobNums = new List<int>(Enumerable.Repeat(0, jobs.Count));
-                foreach (var job in jobs) {
-                    foreach (var succeedingJob in job.succeedingJobs) {
-                        ++preceedingJobNums[succeedingJob];
-                    }
-                }
-
-                Queue<int> freeJobs = new Queue<int>(jobs.Count);
-                List<int> earliestFinishTimes = new List<int>(Enumerable.Repeat(0, jobs.Count));
-                for (int j = 0; j < jobs.Count; ++j) {
-                    if (preceedingJobNums[j] > 0) { continue; }
-                    freeJobs.Enqueue(j);
-                    earliestFinishTimes[j] = jobExeDurations[j];
-                }
-                for (; freeJobs.Count > 0; --restJobNum) {
-                    int j = freeJobs.Dequeue();
-                    foreach (var succeedingJob in jobs[j].succeedingJobs) {
-                        int newFinishTime = earliestFinishTimes[j] + jobExeDurations[succeedingJob];
-                        if (earliestFinishTimes[succeedingJob] < newFinishTime) { earliestFinishTimes[succeedingJob] = newFinishTime; }
-                        if (--preceedingJobNums[succeedingJob] <= 0) { freeJobs.Enqueue(succeedingJob); }
-                    }
-                }
-
-                makespan = earliestFinishTimes.Max();
-            } catch (Exception) { }
-
-            Console.Write("instance=");
-            Console.Write(Path.GetFileName(inputFilePath));
-
-            Console.Write(" makespan=");
-            Console.Write(makespan);
-
-            Console.Write(" remaining=");
-            Console.WriteLine(restJobNum);
-        }
-
-        static void benchmark(string inputFilePath, string outputFilePath, string exeFilePath, string secTimeout) {
-            const int Repeat = 10;
-            const int millisecondCheckInterval = 1000;
-
-            long millisecondTimeLimit = int.Parse(secTimeout) * 1000;
-            long byteMemoryLimit = 1024 * 1024 * 1024;
-
-            for (int i = 0; i < Repeat; ++i) {
-                try { File.Delete(outputFilePath); } catch (Exception) { }
-                try {
-                    int seed = genSeed();
-                    StringBuilder cmdArgs = new StringBuilder();
-                    cmdArgs.Append(inputFilePath).Append(" ").Append(outputFilePath)
-                        .Append(" ").Append(secTimeout).Append(" ").Append(seed);
-
-                    Stopwatch sw = new Stopwatch();
-                    sw.Start();
-                    ProcessStartInfo psi = new ProcessStartInfo();
-                    psi.FileName = exeFilePath;
-                    psi.WorkingDirectory = Environment.CurrentDirectory;
-                    psi.Arguments = cmdArgs.ToString();
-                    Process p = Process.Start(psi);
-                    while (!p.WaitForExit(millisecondCheckInterval)
-                        && (sw.ElapsedMilliseconds < millisecondTimeLimit)
-                        && (p.PrivateMemorySize64 < byteMemoryLimit)) { }
-                    try { p.Kill(); } catch (Exception) { }
-                    sw.Stop();
-
-                    Console.Write("solver=");
-                    Console.Write(Path.GetDirectoryName(exeFilePath));
-
-                    Console.Write(" time=");
-                    Console.Write(sw.ElapsedMilliseconds / 1000.0);
-
-                    Console.Write("s seed=");
-                    Console.Write(seed);
-                    Console.Write(" ");
-
-                    check(inputFilePath, outputFilePath);
-                } catch (Exception e) {
-                    Console.WriteLine();
-                    //Console.WriteLine(e);
-                }
-            }
-        }
-
-        static int genSeed() {
-            return (int)(DateTime.Now.Ticks & 0xffff);
-        }
-    }
-}
-```
-
-
 ## 算例清单
 
-[下载全部](https://gitee.com/suzhouxing/techive/attach_files/675266/download/fjsp.7z)
+下载地址: [https://gitee.com/suzhouxing/npbenchmark/tree/data/FJSP/Instance](https://gitee.com/suzhouxing/npbenchmark/tree/data/FJSP/Instance)
 
 fjsp.barnes.mt10c1.m11j10c2  
 fjsp.barnes.mt10cc.m12j10c2  
