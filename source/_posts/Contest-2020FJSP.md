@@ -81,7 +81,7 @@ fjsp.exe 1000 123456 <../data/jsp.FT06.m6j6c1.txt >sln.jsp.FT06.m6j6c1.txt
 3 [2 (1 321) (0 321)] [1 (2 520)] [1 (3 789)]
 ```
 
-为了使算例的数据分组更加直观, 输出算例时可能会按照如下约定: 使用 4 个空格分隔每行的 K 组数据, 使用 2 个空格分隔 S 个二元组.
+为了使算例的数据分组更加直观, 给出的算例可能会按照如下约定: 使用 4 个空格分隔每行的 K 组数据, 使用 2 个空格分隔 S 个二元组.
 
 
 ## 输出的解文件格式
@@ -245,15 +245,15 @@ fjsp.hurink.edata-la40.m15j15c3
 fjsp.hurink.edata-mt06.m6j6c2  
 fjsp.hurink.edata-mt10.m10j10c2  
 fjsp.hurink.edata-mt20.m5j20c2  
-fjsp.hurink.edata-orb1.m10j10c2  
-fjsp.hurink.edata-orb2.m10j10c2  
-fjsp.hurink.edata-orb3.m10j10c2  
-fjsp.hurink.edata-orb4.m10j10c2  
-fjsp.hurink.edata-orb5.m10j10c2  
-fjsp.hurink.edata-orb6.m10j10c2  
-fjsp.hurink.edata-orb7.m10j10c2  
-fjsp.hurink.edata-orb8.m10j10c2  
-fjsp.hurink.edata-orb9.m10j10c2  
+fjsp.hurink.edata-orb01.m10j10c2  
+fjsp.hurink.edata-orb02.m10j10c2  
+fjsp.hurink.edata-orb03.m10j10c2  
+fjsp.hurink.edata-orb04.m10j10c2  
+fjsp.hurink.edata-orb05.m10j10c2  
+fjsp.hurink.edata-orb06.m10j10c2  
+fjsp.hurink.edata-orb07.m10j10c2  
+fjsp.hurink.edata-orb08.m10j10c2  
+fjsp.hurink.edata-orb09.m10j10c2  
 fjsp.hurink.edata-orb10.m10j10c2  
 fjsp.hurink.rdata-abz5.m10j10c3  
 fjsp.hurink.rdata-abz6.m10j10c3  
@@ -311,21 +311,21 @@ fjsp.hurink.rdata-la40.m15j15c3
 fjsp.hurink.rdata-mt06.m6j6c3  
 fjsp.hurink.rdata-mt10.m10j10c3  
 fjsp.hurink.rdata-mt20.m5j20c3  
-fjsp.hurink.rdata-orb1.m10j10c3  
-fjsp.hurink.rdata-orb2.m10j10c3  
-fjsp.hurink.rdata-orb3.m10j10c3  
-fjsp.hurink.rdata-orb4.m10j10c3  
-fjsp.hurink.rdata-orb5.m10j10c3  
-fjsp.hurink.rdata-orb6.m10j10c3  
-fjsp.hurink.rdata-orb7.m10j10c3  
-fjsp.hurink.rdata-orb8.m10j10c3  
-fjsp.hurink.rdata-orb9.m10j10c3  
+fjsp.hurink.rdata-orb01.m10j10c3  
+fjsp.hurink.rdata-orb02.m10j10c3  
+fjsp.hurink.rdata-orb03.m10j10c3  
+fjsp.hurink.rdata-orb04.m10j10c3  
+fjsp.hurink.rdata-orb05.m10j10c3  
+fjsp.hurink.rdata-orb06.m10j10c3  
+fjsp.hurink.rdata-orb07.m10j10c3  
+fjsp.hurink.rdata-orb08.m10j10c3  
+fjsp.hurink.rdata-orb09.m10j10c3  
 fjsp.hurink.rdata-orb10.m10j10c3  
-fjsp.hurink.sdata-abz5.m10j10c1  
-fjsp.hurink.sdata-abz6.m10j10c1  
-fjsp.hurink.sdata-abz7.m15j20c1  
-fjsp.hurink.sdata-abz8.m15j20c1  
-fjsp.hurink.sdata-abz9.m15j20c1  
+##fjsp.hurink.sdata-abz5.m10j10c1 <=> jsp.ABZ05.m10j10c1  
+##fjsp.hurink.sdata-abz6.m10j10c1 <=> jsp.ABZ06.m10j10c1  
+##fjsp.hurink.sdata-abz7.m15j20c1 <=> jsp.ABZ07.m15j20c1  
+##fjsp.hurink.sdata-abz8.m15j20c1 <=> jsp.ABZ08.m15j20c1  
+##fjsp.hurink.sdata-abz9.m15j20c1 <=> jsp.ABZ09.m15j20c1  
 fjsp.hurink.sdata-car1.m5j11c1  
 fjsp.hurink.sdata-car2.m4j13c1  
 fjsp.hurink.sdata-car3.m5j12c1  
@@ -334,59 +334,59 @@ fjsp.hurink.sdata-car5.m6j10c1
 fjsp.hurink.sdata-car6.m9j8c1  
 fjsp.hurink.sdata-car7.m7j7c1  
 fjsp.hurink.sdata-car8.m8j8c1  
-fjsp.hurink.sdata-la01.m5j10c1  
-fjsp.hurink.sdata-la02.m5j10c1  
-fjsp.hurink.sdata-la03.m5j10c1  
-fjsp.hurink.sdata-la04.m5j10c1  
-fjsp.hurink.sdata-la05.m5j10c1  
-fjsp.hurink.sdata-la06.m5j15c1  
-fjsp.hurink.sdata-la07.m5j15c1  
-fjsp.hurink.sdata-la08.m5j15c1  
-fjsp.hurink.sdata-la09.m5j15c1  
-fjsp.hurink.sdata-la10.m5j15c1  
-fjsp.hurink.sdata-la11.m5j20c1  
-fjsp.hurink.sdata-la12.m5j20c1  
-fjsp.hurink.sdata-la13.m5j20c1  
-fjsp.hurink.sdata-la14.m5j20c1  
-fjsp.hurink.sdata-la15.m5j20c1  
-fjsp.hurink.sdata-la16.m10j10c1  
-fjsp.hurink.sdata-la17.m10j10c1  
-fjsp.hurink.sdata-la18.m10j10c1  
-fjsp.hurink.sdata-la19.m10j10c1  
-fjsp.hurink.sdata-la20.m10j10c1  
-fjsp.hurink.sdata-la21.m10j15c1  
-fjsp.hurink.sdata-la22.m10j15c1  
-fjsp.hurink.sdata-la23.m10j15c1  
-fjsp.hurink.sdata-la24.m10j15c1  
-fjsp.hurink.sdata-la25.m10j15c1  
-fjsp.hurink.sdata-la26.m10j20c1  
-fjsp.hurink.sdata-la27.m10j20c1  
-fjsp.hurink.sdata-la28.m10j20c1  
-fjsp.hurink.sdata-la29.m10j20c1  
-fjsp.hurink.sdata-la30.m10j20c1  
-fjsp.hurink.sdata-la31.m10j30c1  
-fjsp.hurink.sdata-la32.m10j30c1  
-fjsp.hurink.sdata-la33.m10j30c1  
-fjsp.hurink.sdata-la34.m10j30c1  
-fjsp.hurink.sdata-la35.m10j30c1  
-fjsp.hurink.sdata-la36.m15j15c1  
-fjsp.hurink.sdata-la37.m15j15c1  
-fjsp.hurink.sdata-la38.m15j15c1  
-fjsp.hurink.sdata-la39.m15j15c1  
-fjsp.hurink.sdata-la40.m15j15c1  
-fjsp.hurink.sdata-mt06.m6j6c1  
-fjsp.hurink.sdata-mt10.m10j10c1  
-fjsp.hurink.sdata-mt20.m5j20c1  
-fjsp.hurink.sdata-orb1.m10j10c1  
-fjsp.hurink.sdata-orb2.m10j10c1  
-fjsp.hurink.sdata-orb3.m10j10c1  
-fjsp.hurink.sdata-orb4.m10j10c1  
-fjsp.hurink.sdata-orb5.m10j10c1  
-fjsp.hurink.sdata-orb6.m10j10c1  
-fjsp.hurink.sdata-orb7.m10j10c1  
-fjsp.hurink.sdata-orb8.m10j10c1  
-fjsp.hurink.sdata-orb9.m10j10c1  
-fjsp.hurink.sdata-orb10.m10j10c1  
+##fjsp.hurink.sdata-la01.m5j10c1  <=> jsp.LA01.m5j10c1  
+##fjsp.hurink.sdata-la02.m5j10c1  <=> jsp.LA02.m5j10c1  
+##fjsp.hurink.sdata-la03.m5j10c1  <=> jsp.LA03.m5j10c1  
+##fjsp.hurink.sdata-la04.m5j10c1  <=> jsp.LA04.m5j10c1  
+##fjsp.hurink.sdata-la05.m5j10c1  <=> jsp.LA05.m5j10c1  
+##fjsp.hurink.sdata-la06.m5j15c1  <=> jsp.LA06.m5j15c1  
+##fjsp.hurink.sdata-la07.m5j15c1  <=> jsp.LA07.m5j15c1  
+##fjsp.hurink.sdata-la08.m5j15c1  <=> jsp.LA08.m5j15c1  
+##fjsp.hurink.sdata-la09.m5j15c1  <=> jsp.LA09.m5j15c1  
+##fjsp.hurink.sdata-la10.m5j15c1  <=> jsp.LA10.m5j15c1  
+##fjsp.hurink.sdata-la11.m5j20c1  <=> jsp.LA11.m5j20c1  
+##fjsp.hurink.sdata-la12.m5j20c1  <=> jsp.LA12.m5j20c1  
+##fjsp.hurink.sdata-la13.m5j20c1  <=> jsp.LA13.m5j20c1  
+##fjsp.hurink.sdata-la14.m5j20c1  <=> jsp.LA14.m5j20c1  
+##fjsp.hurink.sdata-la15.m5j20c1  <=> jsp.LA15.m5j20c1  
+##fjsp.hurink.sdata-la16.m10j10c1 <=> jsp.LA16.m10j10c1  
+##fjsp.hurink.sdata-la17.m10j10c1 <=> jsp.LA17.m10j10c1  
+##fjsp.hurink.sdata-la18.m10j10c1 <=> jsp.LA18.m10j10c1  
+##fjsp.hurink.sdata-la19.m10j10c1 <=> jsp.LA19.m10j10c1  
+##fjsp.hurink.sdata-la20.m10j10c1 <=> jsp.LA20.m10j10c1  
+##fjsp.hurink.sdata-la21.m10j15c1 <=> jsp.LA21.m10j15c1  
+##fjsp.hurink.sdata-la22.m10j15c1 <=> jsp.LA22.m10j15c1  
+##fjsp.hurink.sdata-la23.m10j15c1 <=> jsp.LA23.m10j15c1  
+##fjsp.hurink.sdata-la24.m10j15c1 <=> jsp.LA24.m10j15c1  
+##fjsp.hurink.sdata-la25.m10j15c1 <=> jsp.LA25.m10j15c1  
+##fjsp.hurink.sdata-la26.m10j20c1 <=> jsp.LA26.m10j20c1  
+##fjsp.hurink.sdata-la27.m10j20c1 <=> jsp.LA27.m10j20c1  
+##fjsp.hurink.sdata-la28.m10j20c1 <=> jsp.LA28.m10j20c1  
+##fjsp.hurink.sdata-la29.m10j20c1 <=> jsp.LA29.m10j20c1  
+##fjsp.hurink.sdata-la30.m10j20c1 <=> jsp.LA30.m10j20c1  
+##fjsp.hurink.sdata-la31.m10j30c1 <=> jsp.LA31.m10j30c1  
+##fjsp.hurink.sdata-la32.m10j30c1 <=> jsp.LA32.m10j30c1  
+##fjsp.hurink.sdata-la33.m10j30c1 <=> jsp.LA33.m10j30c1  
+##fjsp.hurink.sdata-la34.m10j30c1 <=> jsp.LA34.m10j30c1  
+##fjsp.hurink.sdata-la35.m10j30c1 <=> jsp.LA35.m10j30c1  
+##fjsp.hurink.sdata-la36.m15j15c1 <=> jsp.LA36.m15j15c1  
+##fjsp.hurink.sdata-la37.m15j15c1 <=> jsp.LA37.m15j15c1  
+##fjsp.hurink.sdata-la38.m15j15c1 <=> jsp.LA38.m15j15c1  
+##fjsp.hurink.sdata-la39.m15j15c1 <=> jsp.LA39.m15j15c1  
+##fjsp.hurink.sdata-la40.m15j15c1 <=> jsp.LA40.m15j15c1  
+##fjsp.hurink.sdata-mt06.m6j6c1   <=> jsp.FT06.m6j6c1  
+##fjsp.hurink.sdata-mt10.m10j10c1 <=> jsp.FT10.m10j10c1  
+##fjsp.hurink.sdata-mt20.m5j20c1  <=> jsp.FT20.m5j20c1  
+##fjsp.hurink.sdata-orb01.m10j10c1  <=> jsp.ORB01.m10j10c1  
+##fjsp.hurink.sdata-orb02.m10j10c1  <=> jsp.ORB02.m10j10c1  
+##fjsp.hurink.sdata-orb03.m10j10c1  <=> jsp.ORB03.m10j10c1  
+##fjsp.hurink.sdata-orb04.m10j10c1  <=> jsp.ORB04.m10j10c1  
+##fjsp.hurink.sdata-orb05.m10j10c1  <=> jsp.ORB05.m10j10c1  
+##fjsp.hurink.sdata-orb06.m10j10c1  <=> jsp.ORB06.m10j10c1  
+##fjsp.hurink.sdata-orb07.m10j10c1  <=> jsp.ORB07.m10j10c1  
+##fjsp.hurink.sdata-orb08.m10j10c1  <=> jsp.ORB08.m10j10c1  
+##fjsp.hurink.sdata-orb09.m10j10c1  <=> jsp.ORB09.m10j10c1  
+##fjsp.hurink.sdata-orb10.m10j10c1 <=> jsp.ORB10.m10j10c1  
 fjsp.hurink.vdata-abz5.m10j10c9  
 fjsp.hurink.vdata-abz6.m10j10c8  
 fjsp.hurink.vdata-abz7.m15j20c11  
@@ -443,15 +443,15 @@ fjsp.hurink.vdata-la40.m15j15c11
 fjsp.hurink.vdata-mt06.m6j6c5  
 fjsp.hurink.vdata-mt10.m10j10c8  
 fjsp.hurink.vdata-mt20.m5j20c5  
-fjsp.hurink.vdata-orb1.m10j10c8  
-fjsp.hurink.vdata-orb2.m10j10c8  
-fjsp.hurink.vdata-orb3.m10j10c8  
-fjsp.hurink.vdata-orb4.m10j10c9  
-fjsp.hurink.vdata-orb5.m10j10c8  
-fjsp.hurink.vdata-orb6.m10j10c8  
-fjsp.hurink.vdata-orb7.m10j10c8  
-fjsp.hurink.vdata-orb8.m10j10c8  
-fjsp.hurink.vdata-orb9.m10j10c8  
+fjsp.hurink.vdata-orb01.m10j10c8  
+fjsp.hurink.vdata-orb02.m10j10c8  
+fjsp.hurink.vdata-orb03.m10j10c8  
+fjsp.hurink.vdata-orb04.m10j10c9  
+fjsp.hurink.vdata-orb05.m10j10c8  
+fjsp.hurink.vdata-orb06.m10j10c8  
+fjsp.hurink.vdata-orb07.m10j10c8  
+fjsp.hurink.vdata-orb08.m10j10c8  
+fjsp.hurink.vdata-orb09.m10j10c8  
 fjsp.hurink.vdata-orb10.m10j10c8  
 jsp.ABZ05.m10j10c1  
 jsp.ABZ06.m10j10c1  
@@ -611,6 +611,86 @@ jsp.SWV17.m10j50c1
 jsp.SWV18.m10j50c1  
 jsp.SWV19.m10j50c1  
 jsp.SWV20.m10j50c1  
+jsp.TA01.m15j15c1  
+jsp.TA02.m15j15c1  
+jsp.TA03.m15j15c1  
+jsp.TA04.m15j15c1  
+jsp.TA05.m15j15c1  
+jsp.TA06.m15j15c1  
+jsp.TA07.m15j15c1  
+jsp.TA08.m15j15c1  
+jsp.TA09.m15j15c1  
+jsp.TA10.m15j15c1  
+jsp.TA11.m15j20c1  
+jsp.TA12.m15j20c1  
+jsp.TA13.m15j20c1  
+jsp.TA14.m15j20c1  
+jsp.TA15.m15j20c1  
+jsp.TA16.m15j20c1  
+jsp.TA17.m15j20c1  
+jsp.TA18.m15j20c1  
+jsp.TA19.m15j20c1  
+jsp.TA20.m15j20c1  
+jsp.TA21.m20j20c1  
+jsp.TA22.m20j20c1  
+jsp.TA23.m20j20c1  
+jsp.TA24.m20j20c1  
+jsp.TA25.m20j20c1  
+jsp.TA26.m20j20c1  
+jsp.TA27.m20j20c1  
+jsp.TA28.m20j20c1  
+jsp.TA29.m20j20c1  
+jsp.TA30.m20j20c1  
+jsp.TA31.m15j30c1  
+jsp.TA32.m15j30c1  
+jsp.TA33.m15j30c1  
+jsp.TA34.m15j30c1  
+jsp.TA35.m15j30c1  
+jsp.TA36.m15j30c1  
+jsp.TA37.m15j30c1  
+jsp.TA38.m15j30c1  
+jsp.TA39.m15j30c1  
+jsp.TA40.m15j30c1  
+jsp.TA41.m20j30c1  
+jsp.TA42.m20j30c1  
+jsp.TA43.m20j30c1  
+jsp.TA44.m20j30c1  
+jsp.TA45.m20j30c1  
+jsp.TA46.m20j30c1  
+jsp.TA47.m20j30c1  
+jsp.TA48.m20j30c1  
+jsp.TA49.m20j30c1  
+jsp.TA50.m20j30c1  
+jsp.TA51.m15j50c1  
+jsp.TA52.m15j50c1  
+jsp.TA53.m15j50c1  
+jsp.TA54.m15j50c1  
+jsp.TA55.m15j50c1  
+jsp.TA56.m15j50c1  
+jsp.TA57.m15j50c1  
+jsp.TA58.m15j50c1  
+jsp.TA59.m15j50c1  
+jsp.TA60.m15j50c1  
+jsp.TA61.m20j50c1  
+jsp.TA62.m20j50c1  
+jsp.TA63.m20j50c1  
+jsp.TA64.m20j50c1  
+jsp.TA65.m20j50c1  
+jsp.TA66.m20j50c1  
+jsp.TA67.m20j50c1  
+jsp.TA68.m20j50c1  
+jsp.TA69.m20j50c1  
+jsp.TA70.m20j50c1  
+jsp.TA71.m20j100c1  
+jsp.TA72.m20j100c1  
+jsp.TA73.m20j100c1  
+jsp.TA74.m20j100c1  
+jsp.TA75.m20j100c1  
+jsp.TA76.m20j100c1  
+jsp.TA77.m20j100c1  
+jsp.TA78.m20j100c1  
+jsp.TA79.m20j100c1  
+jsp.TA80.m20j100c1  
 jsp.YN01.m20j20c1  
 jsp.YN02.m20j20c1  
 jsp.YN03.m20j20c1  
