@@ -22,9 +22,9 @@ tags:
 对于在帕累托前沿 (Pareto Frontier) 上的点, 找不到这样一个点, 在各个维度 (目标) 上都比他们数值更大 (目标函数值更优).
 反之, 通俗地说, 就是存在一个点在各个维度上都能碾压某个不在 Pareto Frontier 上的点.
 
-在搜索引擎里搜了下, 想找找有没有高效的求解方案, 找到了下面几个网页:
-https://en.wikipedia.org/wiki/Pareto_efficiency#Computation
-https://en.wikipedia.org/wiki/Multi-objective_optimization
+在搜索引擎里搜了下, 想找找有没有高效的求解方案, 找到了下面几个网页:  
+https://en.wikipedia.org/wiki/Pareto_efficiency#Computation  
+https://en.wikipedia.org/wiki/Multi-objective_optimization  
 https://en.wikipedia.org/wiki/Skyline_operator
 
 其中令人惊讶的是, 这个问题居然跟数据库有关, 甚至 SQL 里面还有个专门的算子用来实现这个功能!
