@@ -39,7 +39,7 @@ tags:
 算例文件已重定向至标准输入 `stdin`/`cin`, 标准输出 `stdout`/`cout` 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 `stderr`/`cerr`).
 例如, 在控制台运行以下命令表示调用可执行文件 `fjsp.exe` 在限时 300 秒, 随机种子为 12345 的情况下求解路径为 `../data/jsp.FT06.m6j6c1.txt` 的算例, 解文件输出至 `sln.jsp.FT06.m6j6c1.txt`:
 ```
-fjsp.exe 1000 123456 <../data/jsp.FT06.m6j6c1.txt >sln.jsp.FT06.m6j6c1.txt
+fjsp.exe 300 123456 <../data/jsp.FT06.m6j6c1.txt >sln.jsp.FT06.m6j6c1.txt
 ```
 
 - 运行时间上限.
@@ -106,15 +106,18 @@ fjsp.exe 1000 123456 <../data/jsp.FT06.m6j6c1.txt >sln.jsp.FT06.m6j6c1.txt
 - 发送至邮箱 [szx@duhe.tech](mailto:szx@duhe.tech).
 - 邮件标题格式为 "**Challenge2020FJSP-姓名-学校-专业**".
 - 邮件附件为单个压缩包, 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
-  - 算法的可执行文件 (Windows 平台).
+  - **必要** 算法的可执行文件 (Windows 平台).
     - 建议基于官方 SDK 开发 ([https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.FJSP](https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.FJSP)).
     - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
-  - 算法源码.
-  - 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
+  - **必要** 算法源码.
+    - 可重入 (可在同一线程内反复调用而不会出现数据初始化错误或内存泄漏).
+    - 可并发 (可在同一进程内的多个线程同时运行多个算法求解实例而互不干扰, 满足此要求一般不能有全局的非只读变量).
+    - 可伸缩 (数据结构可以根据算例规模动态申请内存, 而非根据预先指定的编译期常量进行内存分配).
+  - **可选** 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
     - 算例名.
     - 所有任务的完工时间.
     - 计算耗时.
-  - 算法在各算例上求得的完工时间最短的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
+  - **可选** 算法在各算例上求得的完工时间最短的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
 - 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
   - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark/tree/data](https://gitee.com/suzhouxing/npbenchmark/tree/data)).
 
