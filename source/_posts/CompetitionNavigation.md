@@ -66,28 +66,31 @@ tags:
 
 
 
-# 竞赛平台
-
-- **华为** [https://competition.huaweicloud.com/competitions](https://competition.huaweicloud.com/competitions)
-- **阿里** [https://tianchi.aliyun.com/competition/gameList/activeList](https://tianchi.aliyun.com/competition/gameList/activeList)
-- **kaggle** [https://www.kaggle.com/competitions](https://www.kaggle.com/competitions)
-- **AIcrowd** [https://www.aicrowd.com/challenges](https://www.aicrowd.com/challenges)
-- **Biendata** [https://biendata.xyz/](https://biendata.xyz/)
-- **京东** [https://jdata.jd.com/html/list.html](https://jdata.jd.com/html/list.html)
-- **OPTIL** (排行榜) [https://www.optil.io/optilion/problems](https://www.optil.io/optilion/problems)
-
-
-
 # 其他竞赛导航
 
 ## 学术会议或权威机构
 
-- PATAT (时刻表调度相关竞赛汇总) [https://www.patatconference.org/communityService.html](https://www.patatconference.org/communityService.html)
 - FLoC (逻辑相关竞赛汇总) (每四年)
   - [https://floc2022.org/](https://floc2022.org/)
   - [https://www.floc2018.org/floc-olympic-games/](https://www.floc2018.org/floc-olympic-games/)
   - [http://vsl2014.at/olympics/](http://vsl2014.at/olympics/)
-- TACAS (系统构建与分析的算法与工具相关竞赛汇总) [https://tacas.info/toolympics.php](https://tacas.info/toolympics.php)
+- GECCO (运筹优化竞赛汇总) (每年)
+  - [https://gecco-2021.sigevo.org/Competitions](https://gecco-2021.sigevo.org/Competitions)
+  - [https://gecco-2020.sigevo.org/index.html/Competitions](https://gecco-2020.sigevo.org/index.html/Competitions)
+- PATAT (时刻表调度相关竞赛汇总) (不规律) [https://www.patatconference.org/communityService.html](https://www.patatconference.org/communityService.html)
+- TACAS (系统构建与分析的算法与工具相关竞赛汇总) (不规律) [https://tacas.info/toolympics.php](https://tacas.info/toolympics.php)
+
+
+## 竞赛平台
+
+- **华为** [https://competition.huaweicloud.com/competitions](https://competition.huaweicloud.com/competitions)
+- **阿里** [https://tianchi.aliyun.com/competition/gameList/activeList](https://tianchi.aliyun.com/competition/gameList/activeList)
+- **AIcrowd** [https://www.aicrowd.com/challenges](https://www.aicrowd.com/challenges)
+- **kaggle** [https://www.kaggle.com/competitions](https://www.kaggle.com/competitions)
+- **Biendata** [https://biendata.xyz/](https://biendata.xyz/)
+- **京东** [https://jdata.jd.com/html/list.html](https://jdata.jd.com/html/list.html)
+- **OPTIL** (排行榜) [https://www.optil.io/optilion/problems](https://www.optil.io/optilion/problems)
+
 
 ## 个人搜集
 
@@ -106,6 +109,8 @@ tags:
   - **监控相机布局** [http://www.mage.fst.uha.fr/brevilliers/ocp-uscp-benchmark/index.html](http://www.mage.fst.uha.fr/brevilliers/ocp-uscp-benchmark/index.html)
     - 历史链接 [http://www.mage.fst.uha.fr/brevilliers/gecco-2020-ocp-uscp-competition](http://www.mage.fst.uha.fr/brevilliers/gecco-2020-ocp-uscp-competition)
     - 历史链接 [http://www.mage.fst.uha.fr/brevilliers/gecco-2021-ocp-uscp-competition](http://www.mage.fst.uha.fr/brevilliers/gecco-2021-ocp-uscp-competition)
+- AIcrowd
+  - **列车调度** [https://www.aicrowd.com/challenges/flatland-3](https://www.aicrowd.com/challenges/flatland-3)
 - 京东
   - **库存管理** [https://jdata.jd.com/html/detail.html?id=4](https://jdata.jd.com/html/detail.html?id=4)
   - **车辆路由** [https://jdata.jd.com/html/detail.html?id=5](https://jdata.jd.com/html/detail.html?id=5)
@@ -117,6 +122,7 @@ tags:
   - **无人机路径规划** [https://tianchi.aliyun.com/competition/entrance/231622/introduction](https://tianchi.aliyun.com/competition/entrance/231622/introduction)
   - **客流量预测** [https://tianchi.aliyun.com/competition/entrance/231588/information](https://tianchi.aliyun.com/competition/entrance/231588/information)
 - 华为
+  - **卫星通信路径规划** [https://competition.huaweicloud.com/information/1000041474/circumstance](https://competition.huaweicloud.com/information/1000041474/circumstance)
   - **机器分配** 2018 年软件精英挑战赛
   - **中心选址流量分发** 2017 年软件精英挑战赛
   - **光网络路由** 2016 年软件精英挑战赛
