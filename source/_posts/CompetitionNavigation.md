@@ -59,6 +59,7 @@ tags:
   - **DIMACS** (不规律) [http://dimacs.rutgers.edu/programs/challenge/](http://dimacs.rutgers.edu/programs/challenge/)
     - 历史链接 [http://dimacs.rutgers.edu/archive/Challenges/](http://dimacs.rutgers.edu/archive/Challenges/)
   - **ROADEF** (每一到两年) [http://www.roadef.org/challenge](http://www.roadef.org/challenge)
+  - **PACE** (每年) [https://pacechallenge.org/](https://pacechallenge.org/)
   - **VeRoLog** (不规律) [https://www.euro-online.org/websites/verolog/verolog-solver-challenge/](https://www.euro-online.org/websites/verolog/verolog-solver-challenge/)
 - 生物信息学 BI
   - 蛋白质结构预测
