@@ -2,65 +2,191 @@
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2021 - Routing and Wavelength Assignment</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2021 - Routing and Wavelength Assignment</h1><div class="post-meta">Jul 10, 2021<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2021/07/10/Contest-2021RWA/" href="/techive/2021/07/10/Contest-2021RWA/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>路由与波长分配问题是通信领域中的重要问题, 具有较高的实际应用价值.<br>路由与波长分配问题主要研究如何为通信业务规划传输路径并分配波长, 使得所有业务可以在互不干扰的情况下传输.<br>高效的路由与波长分配问题的求解算法对提高网络的传输效率具有意义重大.<br>同时, 路由与波长分配问题还与多智能体路径规划以及芯片布线十分相似, 具有重要的理论意义.</p>
-<h1 id="路由与波长分配算法训练"><a href="#路由与波长分配算法训练" class="headerlink" title="路由与波长分配算法训练"></a>路由与波长分配算法训练</h1><h2 id="问题概述"><a href="#问题概述" class="headerlink" title="问题概述"></a>问题概述</h2><p>给定一个有向图, 以及一系列通信业务, 每个通信业务有固定的起点和终点.<br>请为每个通信业务规划一条传输路径, 并为其分配一个波长, 在确保每条有向边上经过的所有业务波长互不相同的前提下, 最小化使用的波长数.</p>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2021 - Routing and Wavelength Assignment</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2021 - Routing and Wavelength Assignment</h1><div class="post-meta">Jul 10, 2021<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2021/07/10/Contest-2021RWA/" href="/techive/2021/07/10/Contest-2021RWA/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>路由与波长分配问题是通信领域中的重要问题, 具有较高的实际应用价值. 路由与波长分配问题主要研究如何为通信业务规划传输路径并分配波长, 使得所有业务可以在互不干扰的情况下传输. 高效的路由与波长分配问题的求解算法对提高网络的传输效率具有意义重大. 同时, 路由与波长分配问题还与多智能体路径规划以及芯片布线十分相似, 具有重要的理论意义.</p>
+<h1 id="路由与波长分配算法训练">路由与波长分配算法训练</h1>
+<h2 id="问题概述">问题概述</h2>
+<p>给定一个有向图, 以及一系列通信业务, 每个通信业务有固定的起点和终点. 请为每个通信业务规划一条传输路径, 并为其分配一个波长, 在确保每条有向边上经过的所有业务波长互不相同的前提下, 最小化使用的波长数.</p>
 <ul>
-<li>参考文献.<ul>
+<li>参考文献.
+<ul>
 <li>[1] Y. Fang, Z. Lü, Z. Su, Y. Wang, T. Zhang, and Q. Zhang, “Local Search based on a New Neighborhood for Routing and Wavelength Assignment,” in 2020 IEEE International Conference on Systems, Man, and Cybernetics (SMC), 2020, pp. 1123–1128. doi: 10.1109/SMC42975.2020.9283031.</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).<br>算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>).<br>例如, 在控制台运行以下命令表示调用可执行文件 <code>rwa.exe</code> 在限时 300 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/ATT.n90e274t359.txt</code> 的算例, 解文件输出至 <code>sln.ATT.n90e274t359.txt</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rwa.exe 300 123456 &lt;../data/ATT.n90e274t359.txt &gt;sln.ATT.n90e274t359.txt</span><br></pre></td></tr></table></figure></p>
+<h2 id="命令行参数">命令行参数</h2>
+<p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535). 算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>). 例如, 在控制台运行以下命令表示调用可执行文件 <code>rwa.exe</code> 在限时 300 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/ATT.n90e274t359.txt</code> 的算例, 解文件输出至 <code>sln.ATT.n90e274t359.txt</code>: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rwa.exe 300 123456 &lt;../data/ATT.n90e274t359.txt &gt;sln.ATT.n90e274t359.txt</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>运行时间上限.<ul>
+<li>运行时间上限.
+<ul>
 <li>超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已输出解 (最好还能自行正常退出).</li>
-</ul>
-</li>
-<li>随机种子设置.<ul>
+</ul></li>
+<li>随机种子设置.
+<ul>
 <li>使用 C 语言随机数生成器请用 <code>srand</code>.</li>
 <li>使用 C++ 随机数生成器 (如 <code>mt19937</code>) 请在构造时传参或调用 <code>seed()</code> 方法设置.</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="输入的算例文件格式"><a href="#输入的算例文件格式" class="headerlink" title="输入的算例文件格式"></a>输入的算例文件格式</h2><p>所有算例的节点从 0 开始连续编号.</p>
-<p>第一行给出 3 个由空白字符分隔的整数, 分别表示节点数 N, 有向边数 E, 以及通信业务数 T.<br>接下来连续 E 行, 每行包含 2 个由空白字符分隔的整数, 第 i 行表示第 i 条有向边的源点和宿点.<br>接下来连续 T 行, 每行包含 2 个由空白字符分隔的整数, 第 i 行表示第 i 个通信业务的起点和终点.</p>
-<p>例如, 以下算例文件表示在 4 个节点和 5 条有向边的有向图上传输 3 个通信业务; 其中,<br>有向图包含 0, 1, 2, 3 共 4 个节点以及 0-1, 1-2, 2-3, 3-0, 1-0 共 4 条有向边,<br>通信业务 0 的起点为 0 终点为 1,<br>通信业务 1 的起点为 1 终点为 0,<br>通信业务 2 的起点为 1 终点为 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">4 5 3</span><br><span class="line">0 1</span><br><span class="line">1 2</span><br><span class="line">2 3</span><br><span class="line">3 0</span><br><span class="line">1 0</span><br><span class="line">0 1</span><br><span class="line">1 0</span><br><span class="line">1 3</span><br></pre></td></tr></table></figure></p>
-<h2 id="输出的解文件格式"><a href="#输出的解文件格式" class="headerlink" title="输出的解文件格式"></a>输出的解文件格式</h2><p>输出 T 行整数表示 T 个通信业务的传输方案, 第 i 行表示第 i 个通信业务的波长分配和传输路径.<br>每行第一个整数表示第 i 个通信业务使用的波长, 第二个整数表示传输路径上的节点数, 随后连续 P 个由空白字符分隔的整数表示传输路径上依次经过的节点.</p>
-<p>波长可以取 <code>int</code> 范围内任意整数, 检查程序自动统计不同的整数的数量.<br>传输路径上的节点若不包含通信业务的起点和终点, 检查程序将自动将其添加至路径中.</p>
-<p>例如, 以下解文件表示 3 个通信业务的波长分配和传输路径; 其中,<br>通信业务 0 使用的波长为 1, 依次经过节点 0 和 1;<br>通信业务 1 使用的波长为 1, 直接从起点 1 到达终点 0;<br>通信业务 2 使用的波长为 0, 依次经过节点 1 和 2, 最后到达终点 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 2 0 1</span><br><span class="line">1 0</span><br><span class="line">0 2 1 2</span><br></pre></td></tr></table></figure></p>
-<h2 id="提交要求"><a href="#提交要求" class="headerlink" title="提交要求"></a>提交要求</h2><ul>
+<h2 id="输入的算例文件格式">输入的算例文件格式</h2>
+<p>所有算例的节点从 0 开始连续编号.</p>
+<p>第一行给出 3 个由空白字符分隔的整数, 分别表示节点数 N, 有向边数 E, 以及通信业务数 T. 接下来连续 E 行, 每行包含 2 个由空白字符分隔的整数, 第 i 行表示第 i 条有向边的源点和宿点. 接下来连续 T 行, 每行包含 2 个由空白字符分隔的整数, 第 i 行表示第 i 个通信业务的起点和终点.</p>
+<p>例如, 以下算例文件表示在 4 个节点和 5 条有向边的有向图上传输 3 个通信业务; 其中,<br>
+有向图包含 0, 1, 2, 3 共 4 个节点以及 0-1, 1-2, 2-3, 3-0, 1-0 共 4 条有向边,<br>
+通信业务 0 的起点为 0 终点为 1,<br>
+通信业务 1 的起点为 1 终点为 0,<br>
+通信业务 2 的起点为 1 终点为 3: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">4 5 3</span><br><span class="line">0 1</span><br><span class="line">1 2</span><br><span class="line">2 3</span><br><span class="line">3 0</span><br><span class="line">1 0</span><br><span class="line">0 1</span><br><span class="line">1 0</span><br><span class="line">1 3</span><br></pre></td></tr></table></figure></p>
+<h2 id="输出的解文件格式">输出的解文件格式</h2>
+<p>输出 T 行整数表示 T 个通信业务的传输方案, 第 i 行表示第 i 个通信业务的波长分配和传输路径. 每行第一个整数表示第 i 个通信业务使用的波长, 第二个整数表示传输路径上的节点数, 随后连续 P 个由空白字符分隔的整数表示传输路径上依次经过的节点.</p>
+<p>波长可以取 <code>int</code> 范围内任意整数, 检查程序自动统计不同的整数的数量. 传输路径上的节点若不包含通信业务的起点和终点, 检查程序将自动将其添加至路径中.</p>
+<p>例如, 以下解文件表示 3 个通信业务的波长分配和传输路径; 其中,<br>
+通信业务 0 使用的波长为 1, 依次经过节点 0 和 1;<br>
+通信业务 1 使用的波长为 1, 直接从起点 1 到达终点 0;<br>
+通信业务 2 使用的波长为 0, 依次经过节点 1 和 2, 最后到达终点 3: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 2 0 1</span><br><span class="line">1 0</span><br><span class="line">0 2 1 2</span><br></pre></td></tr></table></figure></p>
+<h2 id="提交要求">提交要求</h2>
+<ul>
 <li>发送至邮箱 <a href="mailto:szx@duhe.tech" target="_blank" rel="noopener">szx@duhe.tech</a>.</li>
-<li>邮件标题格式为 “<strong>Challenge2021RWA-姓名-学校-专业</strong>“.</li>
-<li>邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 “<strong>姓名-学校-专业</strong>“, 其内包含下列文件.<ul>
-<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).<ul>
+<li>邮件标题格式为 "<strong>Challenge2021RWA-姓名-学校-专业</strong>".</li>
+<li>邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "<strong>姓名-学校-专业</strong>", 其内包含下列文件.
+<ul>
+<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).
+<ul>
 <li>建议基于官方 SDK 开发 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.RWA" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.RWA</a>).</li>
 <li>用 g++ 的同学编译时请静态链接, 即添加 <code>-static-libgcc -static-libstdc++</code> 编译选项.</li>
-</ul>
-</li>
-<li><strong>必要</strong> 算法源码.<ul>
+</ul></li>
+<li><strong>必要</strong> 算法源码.
+<ul>
 <li>可重入 (可在同一线程内反复调用而不会出现数据初始化错误或内存泄漏).</li>
 <li>可并发 (可在同一进程内的多个线程同时运行多个算法求解实例而互不干扰, 满足此要求一般不能有全局的非只读变量).</li>
 <li>可伸缩 (数据结构可以根据算例规模动态申请内存, 而非根据预先指定的编译期常量进行内存分配).</li>
-</ul>
-</li>
-<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).<ul>
+</ul></li>
+<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
+<ul>
 <li>算例名.</li>
 <li>使用的波长数.</li>
 <li>计算耗时.</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>可选</strong> 算法在各算例上求得的使用波长数最少的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).</li>
-</ul>
-</li>
-<li>若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.<ul>
+</ul></li>
+<li>若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
+<ul>
 <li>若测试结果较优, 可在排行榜页面看到自己的运行情况 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/data" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/data</a>).</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<p>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   rwa.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        ATT.n90e274t359.txt</span><br><span class="line">        ATT2.n71e350t2918.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
-<h2 id="算例清单"><a href="#算例清单" class="headerlink" title="算例清单"></a>算例清单</h2><p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark/tree/data/RWA/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/data/RWA/Instance</a></p>
+<p>例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   rwa.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        ATT.n90e274t359.txt</span><br><span class="line">        ATT2.n71e350t2918.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="算例清单">算例清单</h2>
+<p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark/tree/data/RWA/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/data/RWA/Instance</a></p>
 <p>算例规模从小到大依次为 (求解难度不一定随规模增加, 但除 Z* 以外的算例应该都很容易求解):</p>
-<p>ATT.n90e274t359<br>ATT2.n71e350t2918<br>Brasil.n27e140t1370<br>EON.n20e78t373<br>Finland.n31e102t930<br>NSF-01.n14e42t284<br>NSF-03.n14e42t285<br>NSF-12.n14e42t551<br>NSF-48.n14e42t547<br>NSF2-01.n14e44t284<br>NSF2-03.n14e44t285<br>NSF2-12.n14e44t551<br>NSF2-48.n14e44t547<br>Y3-020-1.n100e344t1975<br>Y3-020-2.n100e368t1961<br>Y3-020-3.n100e356t2055<br>Y3-020-4.n100e354t1989<br>Y3-020-5.n100e350t1975<br>Y3-040-1.n100e344t3894<br>Y3-040-2.n100e368t3956<br>Y3-040-3.n100e356t4012<br>Y3-040-4.n100e354t3959<br>Y3-040-5.n100e350t3996<br>Y3-060-1.n100e344t5967<br>Y3-060-2.n100e368t5907<br>Y3-060-3.n100e356t5989<br>Y3-060-4.n100e354t5932<br>Y3-060-5.n100e350t5990<br>Y3-080-1.n100e344t7959<br>Y3-080-2.n100e368t7911<br>Y3-080-3.n100e356t7987<br>Y3-080-4.n100e354t7908<br>Y3-080-5.n100e350t7924<br>Y3-100-1.n100e344t9900<br>Y3-100-2.n100e368t9900<br>Y3-100-3.n100e356t9900<br>Y3-100-4.n100e354t9900<br>Y3-100-5.n100e350t9900<br>Y4-020-1.n100e440t1975<br>Y4-020-2.n100e460t1961<br>Y4-020-3.n100e436t2055<br>Y4-020-4.n100e442t1989<br>Y4-020-5.n100e430t1975<br>Y4-040-1.n100e440t3894<br>Y4-040-2.n100e460t3956<br>Y4-040-3.n100e436t4012<br>Y4-040-4.n100e442t3959<br>Y4-040-5.n100e430t3996<br>Y4-060-1.n100e440t5967<br>Y4-060-2.n100e460t5907<br>Y4-060-3.n100e436t5989<br>Y4-060-4.n100e442t5932<br>Y4-060-5.n100e430t5990<br>Y4-080-1.n100e440t7959<br>Y4-080-2.n100e460t7911<br>Y4-080-3.n100e436t7987<br>Y4-080-4.n100e442t7908<br>Y4-080-5.n100e430t7924<br>Y4-100-1.n100e440t9900<br>Y4-100-2.n100e460t9900<br>Y4-100-3.n100e436t9900<br>Y4-100-4.n100e442t9900<br>Y4-100-5.n100e430t9900<br>Y5-020-1.n100e570t1975<br>Y5-020-2.n100e504t1961<br>Y5-020-3.n100e582t2055<br>Y5-020-4.n100e548t1989<br>Y5-020-5.n100e568t1975<br>Y5-040-1.n100e570t3894<br>Y5-040-2.n100e504t3956<br>Y5-040-3.n100e582t4012<br>Y5-040-4.n100e548t3959<br>Y5-040-5.n100e568t3996<br>Y5-060-1.n100e570t5967<br>Y5-060-2.n100e504t5907<br>Y5-060-3.n100e582t5989<br>Y5-060-4.n100e548t5932<br>Y5-060-5.n100e568t5990<br>Y5-080-1.n100e570t7959<br>Y5-080-2.n100e504t7911<br>Y5-080-3.n100e582t7987<br>Y5-080-4.n100e548t7908<br>Y5-080-5.n100e568t7924<br>Y5-100-1.n100e570t9900<br>Y5-100-2.n100e504t9900<br>Y5-100-3.n100e582t9900<br>Y5-100-4.n100e548t9900<br>Y5-100-5.n100e568t9900<br>Z04x25-020.n100e400t1975<br>Z04x25-040.n100e400t3894<br>Z04x25-060.n100e400t5967<br>Z04x25-080.n100e400t7959<br>Z04x25-100.n100e400t9900<br>Z05x20-020.n100e400t1975<br>Z05x20-040.n100e400t3894<br>Z05x20-060.n100e400t5967<br>Z05x20-080.n100e400t7959<br>Z05x20-100.n100e400t9900<br>Z06x17-020.n102e408t1975<br>Z06x17-040.n102e408t3894<br>Z06x17-060.n102e408t5967<br>Z06x17-080.n102e408t7959<br>Z06x17-100.n102e408t10302<br>Z08x13-020.n104e416t1975<br>Z08x13-040.n104e416t3894<br>Z08x13-060.n104e416t5967<br>Z08x13-080.n104e416t7959<br>Z08x13-100.n104e416t10712<br>Z10x10-020.n100e400t1975<br>Z10x10-040.n100e400t3894<br>Z10x10-060.n100e400t5967<br>Z10x10-080.n100e400t7959<br>Z10x10-100.n100e400t9900  </p>
+<p>ATT.n90e274t359<br>
+ATT2.n71e350t2918<br>
+Brasil.n27e140t1370<br>
+EON.n20e78t373<br>
+Finland.n31e102t930<br>
+NSF-01.n14e42t284<br>
+NSF-03.n14e42t285<br>
+NSF-12.n14e42t551<br>
+NSF-48.n14e42t547<br>
+NSF2-01.n14e44t284<br>
+NSF2-03.n14e44t285<br>
+NSF2-12.n14e44t551<br>
+NSF2-48.n14e44t547<br>
+Y3-020-1.n100e344t1975<br>
+Y3-020-2.n100e368t1961<br>
+Y3-020-3.n100e356t2055<br>
+Y3-020-4.n100e354t1989<br>
+Y3-020-5.n100e350t1975<br>
+Y3-040-1.n100e344t3894<br>
+Y3-040-2.n100e368t3956<br>
+Y3-040-3.n100e356t4012<br>
+Y3-040-4.n100e354t3959<br>
+Y3-040-5.n100e350t3996<br>
+Y3-060-1.n100e344t5967<br>
+Y3-060-2.n100e368t5907<br>
+Y3-060-3.n100e356t5989<br>
+Y3-060-4.n100e354t5932<br>
+Y3-060-5.n100e350t5990<br>
+Y3-080-1.n100e344t7959<br>
+Y3-080-2.n100e368t7911<br>
+Y3-080-3.n100e356t7987<br>
+Y3-080-4.n100e354t7908<br>
+Y3-080-5.n100e350t7924<br>
+Y3-100-1.n100e344t9900<br>
+Y3-100-2.n100e368t9900<br>
+Y3-100-3.n100e356t9900<br>
+Y3-100-4.n100e354t9900<br>
+Y3-100-5.n100e350t9900<br>
+Y4-020-1.n100e440t1975<br>
+Y4-020-2.n100e460t1961<br>
+Y4-020-3.n100e436t2055<br>
+Y4-020-4.n100e442t1989<br>
+Y4-020-5.n100e430t1975<br>
+Y4-040-1.n100e440t3894<br>
+Y4-040-2.n100e460t3956<br>
+Y4-040-3.n100e436t4012<br>
+Y4-040-4.n100e442t3959<br>
+Y4-040-5.n100e430t3996<br>
+Y4-060-1.n100e440t5967<br>
+Y4-060-2.n100e460t5907<br>
+Y4-060-3.n100e436t5989<br>
+Y4-060-4.n100e442t5932<br>
+Y4-060-5.n100e430t5990<br>
+Y4-080-1.n100e440t7959<br>
+Y4-080-2.n100e460t7911<br>
+Y4-080-3.n100e436t7987<br>
+Y4-080-4.n100e442t7908<br>
+Y4-080-5.n100e430t7924<br>
+Y4-100-1.n100e440t9900<br>
+Y4-100-2.n100e460t9900<br>
+Y4-100-3.n100e436t9900<br>
+Y4-100-4.n100e442t9900<br>
+Y4-100-5.n100e430t9900<br>
+Y5-020-1.n100e570t1975<br>
+Y5-020-2.n100e504t1961<br>
+Y5-020-3.n100e582t2055<br>
+Y5-020-4.n100e548t1989<br>
+Y5-020-5.n100e568t1975<br>
+Y5-040-1.n100e570t3894<br>
+Y5-040-2.n100e504t3956<br>
+Y5-040-3.n100e582t4012<br>
+Y5-040-4.n100e548t3959<br>
+Y5-040-5.n100e568t3996<br>
+Y5-060-1.n100e570t5967<br>
+Y5-060-2.n100e504t5907<br>
+Y5-060-3.n100e582t5989<br>
+Y5-060-4.n100e548t5932<br>
+Y5-060-5.n100e568t5990<br>
+Y5-080-1.n100e570t7959<br>
+Y5-080-2.n100e504t7911<br>
+Y5-080-3.n100e582t7987<br>
+Y5-080-4.n100e548t7908<br>
+Y5-080-5.n100e568t7924<br>
+Y5-100-1.n100e570t9900<br>
+Y5-100-2.n100e504t9900<br>
+Y5-100-3.n100e582t9900<br>
+Y5-100-4.n100e548t9900<br>
+Y5-100-5.n100e568t9900<br>
+Z04x25-020.n100e400t1975<br>
+Z04x25-040.n100e400t3894<br>
+Z04x25-060.n100e400t5967<br>
+Z04x25-080.n100e400t7959<br>
+Z04x25-100.n100e400t9900<br>
+Z05x20-020.n100e400t1975<br>
+Z05x20-040.n100e400t3894<br>
+Z05x20-060.n100e400t5967<br>
+Z05x20-080.n100e400t7959<br>
+Z05x20-100.n100e400t9900<br>
+Z06x17-020.n102e408t1975<br>
+Z06x17-040.n102e408t3894<br>
+Z06x17-060.n102e408t5967<br>
+Z06x17-080.n102e408t7959<br>
+Z06x17-100.n102e408t10302<br>
+Z08x13-020.n104e416t1975<br>
+Z08x13-040.n104e416t3894<br>
+Z08x13-060.n104e416t5967<br>
+Z08x13-080.n104e416t7959<br>
+Z08x13-100.n104e416t10712<br>
+Z10x10-020.n100e400t1975<br>
+Z10x10-040.n100e400t3894<br>
+Z10x10-060.n100e400t5967<br>
+Z10x10-080.n100e400t7959<br>
+Z10x10-100.n100e400t9900</p>
 </div><div class="tags"><a href="/techive/tags/组合优化/">组合优化</a><a href="/techive/tags/算法挑战/">算法挑战</a></div><div class="post-nav"><a href="/techive/2021/07/10/Contest-2021RectPacking/" class="pre">SmartLab Challenge 2021 - Rectangle Packing</a><a href="/techive/2021/01/14/Contest-2020FJSP/" class="next">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
 var disqus_identifier = '2021/07/10/Contest-2021RWA/';
 var disqus_title = 'SmartLab Challenge 2021 - Routing and Wavelength Assignment';
@@ -86,7 +212,7 @@ $.ajax({
   error: function() {
     $('.btn_click_load').css('display','block');
   }
-});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法竞赛/">算法竞赛</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/05/IdealPostgraduateEducation/">IdealPostgraduateEducation</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2020/12/22/Contest-2020pCenter/">SmartLab Challenge 2020 - p-Center and Unicost Set Covering</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法竞赛/">算法竞赛</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/05/IdealPostgraduateEducation/">IdealPostgraduateEducation</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2020/12/22/Contest-2020pCenter/">SmartLab Challenge 2020 - p-Center and Unicost Set Covering</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
