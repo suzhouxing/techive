@@ -2,325 +2,348 @@
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">组合优化 (三) 算法简介</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">组合优化 (三) 算法简介</h1><div class="post-meta">Jan 13, 2019<span> | </span><span class="category"><a href="/techive/categories/组合优化/">组合优化</a></span></div><a data-disqus-identifier="2019/01/13/Opt-AlgorithmDesign/" href="/techive/2019/01/13/Opt-AlgorithmDesign/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>由于生产实践中面临的绝大多数具有实际意义的组合优化问题都已经在理论上被证明属于难以使用可接受的计算资源在可接受的时间内求解的 NP-Hard 问题, 其求解算法不像 P 问题一样存在标准答案.<br>此外, 在实际的工业应用中, 由于未来的不确定性以及评价指标常常无法完美量化等问题, 耗费大量计算资源和时间精确求出最优解几乎没有实际意义.<br>所以, 组合优化算法的设计往往是在优度与速度之间寻找平衡点.</p>
-<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h1><h2 id="预处理-Preprocess"><a href="#预处理-Preprocess" class="headerlink" title="预处理 (Preprocess)"></a>预处理 (Preprocess)</h2><ul>
-<li>缩减问题规模 (Reduction)<ul>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">组合优化 (三) 算法简介</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">组合优化 (三) 算法简介</h1><div class="post-meta">Jan 13, 2019<span> | </span><span class="category"><a href="/techive/categories/组合优化/">组合优化</a></span></div><a data-disqus-identifier="2019/01/13/Opt-AlgorithmDesign/" href="/techive/2019/01/13/Opt-AlgorithmDesign/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>由于生产实践中面临的绝大多数具有实际意义的组合优化问题都已经在理论上被证明属于难以使用可接受的计算资源在可接受的时间内求解的 NP-Hard 问题, 其求解算法不像 P 问题一样存在标准答案. 此外, 在实际的工业应用中, 由于未来的不确定性以及评价指标常常无法完美量化等问题, 耗费大量计算资源和时间精确求出最优解几乎没有实际意义. 所以, 组合优化算法的设计往往是在优度与速度之间寻找平衡点.</p>
+<h1 id="算法设计">算法设计</h1>
+<h2 id="预处理-preprocess">预处理 (Preprocess)</h2>
+<ul>
+<li>缩减问题规模 (Reduction)
+<ul>
 <li>参考文献: <a href="https://doi.org/10.1145/990308.990309" target="_blank" rel="noopener">Polynomial-time data reduction for dominating set</a></li>
-</ul>
-</li>
+</ul></li>
 <li>加载用户参数与算法默认参数</li>
 <li>初始化辅助数据结构</li>
 </ul>
-<h2 id="精确算法-Exact-Algorithms"><a href="#精确算法-Exact-Algorithms" class="headerlink" title="精确算法 (Exact Algorithms)"></a>精确算法 (Exact Algorithms)</h2><ul>
-<li>分支限界 (Branch and Bound)<ul>
-<li>分支策略 (Branching)<ul>
+<h2 id="精确算法-exact-algorithms">精确算法 (Exact Algorithms)</h2>
+<ul>
+<li>分支限界 (Branch and Bound)
+<ul>
+<li>分支策略 (Branching)
+<ul>
 <li>深度优先 (Depth-First Search)</li>
 <li>广度优先 (Breadth-First Search)</li>
 <li>优度优先 (Best-First Search)</li>
-</ul>
-</li>
-<li>剪枝策略 (Pruning)<ul>
+</ul></li>
+<li>剪枝策略 (Pruning)
+<ul>
 <li>可行性剪枝 (Feasibility Pruning)</li>
-<li>上下界剪枝 (Bound Pruning)<ul>
+<li>上下界剪枝 (Bound Pruning)
+<ul>
 <li>(最小化问题) 当前目标函数值 + 剩余部分下界 &lt; 上界</li>
 <li>A* 算法实质上是该策略在特定问题上的一种高效实现</li>
-</ul>
-</li>
-<li>支配性剪枝 (Dominance Pruning)<ul>
+</ul></li>
+<li>支配性剪枝 (Dominance Pruning)
+<ul>
 <li>动态规划实质上是将该策略发挥到了极致</li>
-</ul>
-</li>
+</ul></li>
 <li>参考文献: <a href="https://doi.org/10.1016/j.cor.2012.07.008" target="_blank" rel="noopener">On an exact method for the constrained shortest path problem</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>线性规划与混合整数规划求解算法 (Mathematical Programming)<ul>
+</ul></li>
+</ul></li>
+<li>线性规划与混合整数规划求解算法 (Mathematical Programming)
+<ul>
 <li>单纯形法 (Simplex Method)</li>
 <li>内点法 (Interior Point Method, Barrier Method)</li>
 <li>分支切割/割平面法 (Branch and Cut, Cutting Plane Method)</li>
 <li>分支定价/列生成 (Branch and Price, Column Generation)</li>
-</ul>
-</li>
-<li>动态规划 (Dynamic Programming)<ul>
+</ul></li>
+<li>动态规划 (Dynamic Programming)
+<ul>
 <li>递推函数 (Recursive Formulation)</li>
 <li>重叠子问题/最优子结构 (Overlapping Subproblem, Optimal Substructure)</li>
-</ul>
-</li>
-<li>其他经典算法<ul>
+</ul></li>
+<li>其他经典算法
+<ul>
 <li>最大流 (Maximum Flow)</li>
 <li>最小费用流 (Minimum-Cost Flow)</li>
 <li>完美匹配/最大匹配 (Perfect Matching, Maximum Matching, Assignment Problem)</li>
+</ul></li>
+<li>参考文献
+<ul>
+<li>http://theory.stanford.edu/~amitp/GameProgramming/</li>
+<li>https://www.redblobgames.com/pathfinding/a-star/introduction.html</li>
+<li>https://www.redblobgames.com/pathfinding/a-star/implementation.html</li>
+</ul></li>
 </ul>
-</li>
-<li>参考文献<ul>
-<li><a href="http://theory.stanford.edu/~amitp/GameProgramming/" target="_blank" rel="noopener">http://theory.stanford.edu/~amitp/GameProgramming/</a></li>
-<li><a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html" target="_blank" rel="noopener">https://www.redblobgames.com/pathfinding/a-star/introduction.html</a></li>
-<li><a href="https://www.redblobgames.com/pathfinding/a-star/implementation.html" target="_blank" rel="noopener">https://www.redblobgames.com/pathfinding/a-star/implementation.html</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="元启发式算法-Metaheuristics"><a href="#元启发式算法-Metaheuristics" class="headerlink" title="元启发式算法 (Metaheuristics)"></a>元启发式算法 (Metaheuristics)</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
-<li>分类<br><img src="MetaheuristicsClassification.png" alt="Classification"></li>
-<li>基本思想<ul>
+<h2 id="元启发式算法-metaheuristics">元启发式算法 (Metaheuristics)</h2>
+<h3 id="概述">概述</h3>
+<ul>
+<li>分类<br>
+<img src="MetaheuristicsClassification.png" alt="Classification"></li>
+<li>基本思想
+<ul>
 <li>在 系统地探索整个解空间 和 盲目地探索邻近的解空间 之间寻找平衡点</li>
-<li>集中性 (Intensification) 与 疏散性 (Diversification) 的平衡<ul>
+<li>集中性 (Intensification) 与 疏散性 (Diversification) 的平衡
+<ul>
 <li>也称为 探索 (Exploration) 与 利用 (Exploitation) 的平衡</li>
-</ul>
-</li>
+</ul></li>
 <li>时空开销 (Complexity) 与 求解质量 (Quality) 的平衡</li>
-</ul>
-</li>
-<li>邻域动作 (Neighborhood Move): 尝试对解向量做微小的改变<ul>
+</ul></li>
+<li>邻域动作 (Neighborhood Move): 尝试对解向量做微小的改变
+<ul>
 <li>在一次迭代中每一个决策变量都可以改变: 精确算法</li>
 <li>在一次迭代中仅改变一个决策变量: 原子邻域动作</li>
 <li>寻找两者的平衡点: 集中性与疏散性的平衡</li>
-</ul>
-</li>
-<li>迭代禁忌搜索过程<br>  <img src="TS.png" alt="TS"><ul>
+</ul></li>
+<li>迭代禁忌搜索过程<br>
+<img src="TS.png" alt="TS">
+<ul>
 <li>使用贪心算法或随机生成一个初始解</li>
 <li>每次从当前解移动到某个邻居解 (Neighboring Solution), 直至一定步数不能改进</li>
 <li>然后进行扰动, 贪心或随机地对更改部分解向量, 重复上述过程</li>
-</ul>
-</li>
-<li>元启发式算法框架<br>  <img src="Framework.png" alt="Framework"><ul>
-<li>算法层为整个程序的框架, 比如迭代局部搜索, 遗传算法, 混合进化算法等.<br>  算法层决定了使用那些搜索策略, 搜索策略之间以什么次序出现, 各搜索策略的初始解, 各搜索策略的停止策略参数控制 (停止条件), 整个算法的停止条件等.</li>
-<li>搜索层是具体的搜索算法, 执行一次搜索会产生一条搜索路径 (Trajectory). 随机游走, 模拟退火, 局部搜索, 禁忌搜索等都是搜索层的组件.<br>从广义上来说, 构造初始解, 迭代局部搜索中的扰动过程, 遗传算法中的交叉算子都是搜索层的组件.<br>在搜索过程中, 要考虑的主要问题是每次迭代选择什么邻域结构进行探索, 以及决定停止搜索的策略.<br>比如TS的停止策略是一定步数未改进就停止, 而停止条件是一个特定的最大未改进步数具体取值.</li>
-<li>邻域动作选择一般是搜索过程中对算法性能影响最大的模块.<br>它通过循环调用邻域动作评估层的组件对考虑范围之内的邻域动作对目标函数值的改变情况进行评估, 然后按照某种策略挑选其中的一个动作.<br>最常见的挑选策略有 首次改进 (First Improvement) 和 最优改进 (Best Improvement). 此外, 还可以有导向性地或者随机地在整个邻域中挑选一部分邻域动作进行评估.</li>
+</ul></li>
+<li>元启发式算法框架<br>
+<img src="Framework.png" alt="Framework">
+<ul>
+<li>算法层为整个程序的框架, 比如迭代局部搜索, 遗传算法, 混合进化算法等. 算法层决定了使用那些搜索策略, 搜索策略之间以什么次序出现, 各搜索策略的初始解, 各搜索策略的停止策略参数控制 (停止条件), 整个算法的停止条件等.</li>
+<li>搜索层是具体的搜索算法, 执行一次搜索会产生一条搜索路径 (Trajectory). 随机游走, 模拟退火, 局部搜索, 禁忌搜索等都是搜索层的组件. 从广义上来说, 构造初始解, 迭代局部搜索中的扰动过程, 遗传算法中的交叉算子都是搜索层的组件. 在搜索过程中, 要考虑的主要问题是每次迭代选择什么邻域结构进行探索, 以及决定停止搜索的策略. 比如TS的停止策略是一定步数未改进就停止, 而停止条件是一个特定的最大未改进步数具体取值.</li>
+<li>邻域动作选择一般是搜索过程中对算法性能影响最大的模块. 它通过循环调用邻域动作评估层的组件对考虑范围之内的邻域动作对目标函数值的改变情况进行评估, 然后按照某种策略挑选其中的一个动作. 最常见的挑选策略有 首次改进 (First Improvement) 和 最优改进 (Best Improvement). 此外, 还可以有导向性地或者随机地在整个邻域中挑选一部分邻域动作进行评估.</li>
 <li>邻域动作评估可以是结合特殊的数据结构进行增量评估或者全部重算. 在绝大多数情况下增量评估的速度会远快于全部重算.</li>
-<li>邻域动作的执行比较简单, 主要有更新解向量, 更新辅助数据结构, 更新禁忌表, 更新缓存和更新历史最优解等操作.<br>其中更新历史最优主要是处理目标函数值相同的情况, 可以随机选择, 也可以设计辅助目标函数进行处理.</li>
-</ul>
-</li>
-<li>邻域动作举例<ul>
+<li>邻域动作的执行比较简单, 主要有更新解向量, 更新辅助数据结构, 更新禁忌表, 更新缓存和更新历史最优解等操作. 其中更新历史最优主要是处理目标函数值相同的情况, 可以随机选择, 也可以设计辅助目标函数进行处理.</li>
+</ul></li>
+<li>邻域动作举例
+<ul>
 <li>Boolean Satisfiability Problem (SAT)</li>
 <li>Graph Coloring Problem</li>
 <li>P-Center Problem</li>
 <li>Personnel Scheduling Prblem</li>
 <li>Traveling Salesman Problem</li>
-</ul>
-</li>
-<li>常用算法<ul>
-<li>提升算法 (Trajectory-Based Methods)<ul>
+</ul></li>
+<li>常用算法
+<ul>
+<li>提升算法 (Trajectory-Based Methods)
+<ul>
 <li>迭代禁忌搜索</li>
 <li>模拟退火 (类似 Epsilon-Greedy 策略)</li>
-<li>拍卖算法/地貌调整/格局检测 (Auction Algorithm, Landscape Adjustment, Configuration Checking)<ul>
-<li>提升反复出现的惩罚项在目标函数中的权重实现 “软” 禁忌<ul>
+<li>拍卖算法/地貌调整/格局检测 (Auction Algorithm, Landscape Adjustment, Configuration Checking)
+<ul>
+<li>提升反复出现的惩罚项在目标函数中的权重实现 "软" 禁忌
+<ul>
 <li>例如图着色中令 反复出现的 或者 局部最优解中的 冲突边的计 1.01 条冲突边</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>种群算法 (Population-Based Methods)<ul>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>种群算法 (Population-Based Methods)
+<ul>
 <li>混合进化算法/模因算法 (Hybrid Evolutionary Algorithm, Memetic Algorithm), 遗传算法 (Genetic Algorithm)</li>
 <li>蚁群, 蜂群, 粒子群 (与强化学习十分相似)</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="初始解-Initial-Solution-Generation"><a href="#初始解-Initial-Solution-Generation" class="headerlink" title="初始解 (Initial Solution Generation)"></a>初始解 (Initial Solution Generation)</h3><ul>
-<li>贪心 (Greedy)<ul>
+<h3 id="初始解-initial-solution-generation">初始解 (Initial Solution Generation)</h3>
+<ul>
+<li>贪心 (Greedy)
+<ul>
 <li>有利于快速收敛 (Fast Convergence)</li>
 <li>不利于初始解的多样性</li>
-</ul>
-</li>
+</ul></li>
 <li>随机 (Random)</li>
 </ul>
-<h3 id="禁忌搜索-Tabu-Search"><a href="#禁忌搜索-Tabu-Search" class="headerlink" title="禁忌搜索 (Tabu Search)"></a>禁忌搜索 (Tabu Search)</h3><ul>
-<li>邻域结构 (Neighborhood Structure) 设计<ul>
-<li>原子邻域动作<ul>
-<li>添加, 删除, 更换, 交换, 移动, …</li>
-</ul>
-</li>
-<li>复合邻域动作<ul>
+<h3 id="禁忌搜索-tabu-search">禁忌搜索 (Tabu Search)</h3>
+<ul>
+<li>邻域结构 (Neighborhood Structure) 设计
+<ul>
+<li>原子邻域动作
+<ul>
+<li>添加, 删除, 更换, 交换, 移动, ...</li>
+</ul></li>
+<li>复合邻域动作
+<ul>
 <li>块交换, 块移动</li>
 <li>大邻域搜索 (Large Neighborhood Search)</li>
 <li>弹射链 (Ejection Chain)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>邻域评估 (Neighborhood Evaluation): 目标函数值改进量计算<ul>
+</ul></li>
+</ul></li>
+<li>邻域评估 (Neighborhood Evaluation): 目标函数值改进量计算
+<ul>
 <li>增量评估 (Incremental Evaluation): 因为仅对解向量做了微小的改变, 所以目标函数中大多数项目并未改变</li>
-<li>邻域缓存 (Cache): 在邻域动作执行后, 大多数邻域动作与被改变的决策变量并不相关, 其增量无需重新计算, 故可以将其缓存起来<ul>
+<li>邻域缓存 (Cache): 在邻域动作执行后, 大多数邻域动作与被改变的决策变量并不相关, 其增量无需重新计算, 故可以将其缓存起来
+<ul>
 <li>主动更新 (Active Update): 每次执行邻域动作后更新所有相关动作的增量</li>
-<li>惰性更新 (Lazy Update): 使用标记位记录缓存是否失效, 需要比较相关动作的增量时再更新<ul>
+<li>惰性更新 (Lazy Update): 使用标记位记录缓存是否失效, 需要比较相关动作的增量时再更新
+<ul>
 <li>启用了邻域精简或抽样策略时才有惰性更新的必要</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>邻域动作选择策略<ul>
-<li>单个邻域 (直接选择邻域动作)<ul>
-<li>首次改进 (First Improvement)<ul>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>邻域动作选择策略
+<ul>
+<li>单个邻域 (直接选择邻域动作)
+<ul>
+<li>首次改进 (First Improvement)
+<ul>
 <li>记录上一轮的评估进度直接从下一个动作开始, 循环评估所有动作</li>
 <li>每次从随机位置开始依次评估所有邻域动作</li>
-</ul>
-</li>
-<li>最大改进 (Best Improvement)<ul>
-<li>多个目标函数增量相同的最优动作随机选择一个<ul>
+</ul></li>
+<li>最大改进 (Best Improvement)
+<ul>
+<li>多个目标函数增量相同的最优动作随机选择一个
+<ul>
 <li>在线选择 (Online Selection): <a href="https://en.wikipedia.org/wiki/Reservoir_sampling" target="_blank" rel="noopener">水塘抽样 (Reservoir Sampling)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>邻域精简/候选动作集 (Neiborhood Reduction, Candidate Set)<ul>
+</ul></li>
+</ul></li>
+<li>邻域精简/候选动作集 (Neiborhood Reduction, Candidate Set)
+<ul>
 <li>根据特定策略筛选排除显然没有改进潜力的动作</li>
-</ul>
-</li>
-<li>邻域近似评估 (Neihborhood Estimation, Approximate Evaluation)<ul>
+</ul></li>
+<li>邻域近似评估 (Neihborhood Estimation, Approximate Evaluation)
+<ul>
 <li>根据其他辅助指标快速对所有动作排序, 仅对排名靠前的若干动作进行精确评估</li>
-</ul>
-</li>
+</ul></li>
 <li>邻域抽样 (Neighborhood Sampling)</li>
-</ul>
-</li>
-<li>多邻域 (先选出邻域结构再选择动作)<ul>
-<li>评估所有邻域的所有动作<ul>
+</ul></li>
+<li>多邻域 (先选出邻域结构再选择动作)
+<ul>
+<li>评估所有邻域的所有动作
+<ul>
 <li>可以结合邻域抽样随机挑选部分动作</li>
-</ul>
-</li>
+</ul></li>
 <li>变邻域搜索 (Variable Neighborhood Search)</li>
-<li>根据适应性选择最合适的邻域<ul>
+<li>根据适应性选择最合适的邻域
+<ul>
 <li>根据历史改进情况调整各邻域权重, 然后采用轮盘赌 (Roulette Wheel) 选择其中一个</li>
-</ul>
-</li>
+</ul></li>
 <li>等概率随机选择</li>
-</ul>
-</li>
-<li>优先队列优化: 避免遍历整个邻域, 直接在 O(1) 时间内挑选最优动作<ul>
+</ul></li>
+<li>优先队列优化: 避免遍历整个邻域, 直接在 O(1) 时间内挑选最优动作
+<ul>
 <li>一般使用桶队列 (Bucket Queue) 等基于基数排序 (Radix Sort) 的优先队列实现 (而非基于比较的树状优先队列)</li>
 <li>往往与邻域缓存结合使用, 实现惰性更新优先队列中的键值对</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>禁忌策略<ul>
-<li>禁忌表<ul>
-<li>如果一个邻域动作被执行则禁止其<strong>逆操作</strong>在短时间内被选中<ul>
+</ul></li>
+</ul></li>
+<li>禁忌策略
+<ul>
+<li>禁忌表
+<ul>
+<li>如果一个邻域动作被执行则禁止其<strong>逆操作</strong>在短时间内被选中
+<ul>
 <li>刚增加则禁止马上被删除</li>
 <li>刚交换防止马上被换回来</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>禁忌步长 (Tabu Tenure)<ul>
+</ul></li>
+</ul></li>
+<li>禁忌步长 (Tabu Tenure)
+<ul>
 <li>可能与问题规模, 禁忌表大小, 目标函数值, 邻域动作出现次数相关</li>
 <li>一般需要加上随机成分</li>
 <li>具体实现时将禁忌多久转换为什么时候解禁</li>
-</ul>
-</li>
-<li>解禁策略/特赦准则 (Aspiration Criteria)<ul>
+</ul></li>
+<li>解禁策略/特赦准则 (Aspiration Criteria)
+<ul>
 <li>如果被禁忌的邻域动作是当前邻域的最优动作且能够改进历史最优解则允许其被执行</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="扰动-Perturbation"><a href="#扰动-Perturbation" class="headerlink" title="扰动 (Perturbation)"></a>扰动 (Perturbation)</h3><ul>
-<li>重新构造初始解 (Random Restart)<ul>
+<h3 id="扰动-perturbation">扰动 (Perturbation)</h3>
+<ul>
+<li>重新构造初始解 (Random Restart)
+<ul>
 <li>需要初始解生成程序具有一定的随机性</li>
 <li>与之前的搜索完全无关, 无法利用已有的搜索结果</li>
-</ul>
-</li>
+</ul></li>
 <li>贪心或随机地更改解向量中的部分元素</li>
 <li>随机执行邻域动作 (Random Walk)</li>
-<li>交叉算符 (Crossover Operator)<ul>
+<li>交叉算符 (Crossover Operator)
+<ul>
 <li>将多个解向量中较优的子结构进行组合</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="图着色禁忌搜索算法总结"><a href="#图着色禁忌搜索算法总结" class="headerlink" title="图着色禁忌搜索算法总结"></a>图着色禁忌搜索算法总结</h3><ul>
-<li>重新统计每个邻域动作的改进量代价太大<ul>
+<h3 id="图着色禁忌搜索算法总结">图着色禁忌搜索算法总结</h3>
+<ul>
+<li>重新统计每个邻域动作的改进量代价太大
+<ul>
 <li>改变一个节点的颜色在稀疏图上对整体格局影响很小 =&gt; 记录个节点各种颜色的相邻节点的数量 (即变成各种颜色引入的冲突数量)</li>
 <li>使用新颜色相邻节点数减去旧颜色相邻节点数快速计算改进量</li>
-</ul>
-</li>
-<li>每次遍历所有动作中挑选最优动作代价太大<ul>
+</ul></li>
+<li>每次遍历所有动作中挑选最优动作代价太大
+<ul>
 <li>大多数动作显然不可能产生改进 =&gt; 仅评估有冲突的节点</li>
-<li>使用优先队列每次直接取出最优动作<ul>
+<li>使用优先队列每次直接取出最优动作
+<ul>
 <li>非禁忌优先队列 + 禁忌优先队列 + 待解禁循环队列</li>
 <li>使用相邻颜色表校验出队动作实现惰性更新优先队列</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="混合整数规划-Mixed-Integer-Programming"><a href="#混合整数规划-Mixed-Integer-Programming" class="headerlink" title="混合整数规划 (Mixed-Integer Programming)"></a>混合整数规划 (Mixed-Integer Programming)</h2><ul>
-<li>概述<ul>
+<h2 id="混合整数规划-mixed-integer-programming">混合整数规划 (Mixed-Integer Programming)</h2>
+<ul>
+<li>概述
+<ul>
 <li>对于一组给定的自变量, 确定其取值, 使其在满足给定不等式组的前提下, 给定的函数取到最小值</li>
 <li>决策变量的定义域可以是实数 (连续变量) 也可以是整数 (离散变量)</li>
-</ul>
-</li>
-<li>编程范式与原理简介<ul>
-<li><a href="http://www.gurobi.com/resources/getting-started/lp-basics" target="_blank" rel="noopener">http://www.gurobi.com/resources/getting-started/lp-basics</a></li>
-<li><a href="http://www.gurobi.com/resources/getting-started/mip-basics" target="_blank" rel="noopener">http://www.gurobi.com/resources/getting-started/mip-basics</a></li>
-</ul>
-</li>
-<li>不同的表现形式<ul>
-<li>线形规划模型的标准形式<br><img src="LP1.png" alt="StdForm"></li>
-<li>图形表示<br><img src="LP2.png" alt="GraphRep"></li>
-<li>矩阵表示<br><img src="LP3.png" alt="MatrixRep"></li>
-<li>使用方法<ul>
-<li>使用专门的建模语言<ul>
-<li><a href="https://www.gurobi.com/documentation/6.5/refman/model_file_formats.html" target="_blank" rel="noopener">https://www.gurobi.com/documentation/6.5/refman/model_file_formats.html</a></li>
-<li>举例: <a href="coins.lp">coin</a> &amp; <a href="qafiro.lp">qafiro</a> </li>
-</ul>
-</li>
+</ul></li>
+<li>编程范式与原理简介
+<ul>
+<li>http://www.gurobi.com/resources/getting-started/lp-basics</li>
+<li>http://www.gurobi.com/resources/getting-started/mip-basics</li>
+</ul></li>
+<li>不同的表现形式
+<ul>
+<li>线形规划模型的标准形式<br>
+<img src="LP1.png" alt="StdForm"></li>
+<li>图形表示<br>
+<img src="LP2.png" alt="GraphRep"></li>
+<li>矩阵表示<br>
+<img src="LP3.png" alt="MatrixRep"></li>
+<li>使用方法
+<ul>
+<li>使用专门的建模语言
+<ul>
+<li>https://www.gurobi.com/documentation/6.5/refman/model_file_formats.html</li>
+<li>举例: <a href="coins.lp">coin</a> &amp; <a href="qafiro.lp">qafiro</a></li>
+</ul></li>
 <li>使用命令行接口</li>
-<li>使用应用程序接口<ul>
+<li>使用应用程序接口
+<ul>
 <li>添加决策变量</li>
 <li>添加目标函数</li>
 <li>添加约束</li>
 <li>求解</li>
 <li>获取决策变量取值</li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="贪心算法与近似算法-Approximate-Algorithm"><a href="#贪心算法与近似算法-Approximate-Algorithm" class="headerlink" title="贪心算法与近似算法 (Approximate Algorithm)"></a>贪心算法与近似算法 (Approximate Algorithm)</h2><ul>
-<li>贪心算法可视为不回溯的优度优先搜索</li>
-<li>近似算法是一类特殊的贪心算法<ul>
-<li>近似比 (Approximation Ratio): 最坏情况下贪心解离最优解的差距</li>
-</ul>
-</li>
-</ul>
-<h2 id="算法运行模式对比"><a href="#算法运行模式对比" class="headerlink" title="算法运行模式对比"></a>算法运行模式对比</h2><ul>
-<li>树搜索<br><img src="TreeSearch.png" alt="TreeSearch"></li>
-<li>动态规划<br><img src="DynamicProgramming.png" alt="DynamicProgramming"></li>
-<li>局部搜索<br><img src="LocalSearch.png" alt="LocalSearch"></li>
-</ul>
-<h3 id="树搜索与局部搜索"><a href="#树搜索与局部搜索" class="headerlink" title="树搜索与局部搜索"></a>树搜索与局部搜索</h3><p>局部搜索虽然名字里有 “局部”, 但是从某种意义上来说反而很全局——可以对解向量的任意位置进行修改.</p>
+<h2 id="贪心算法与近似算法-approximate-algorithm">贪心算法与近似算法 (Approximate Algorithm)</h2>
 <ul>
-<li>以最小化问题为例,<ul>
+<li>贪心算法可视为不回溯的优度优先搜索</li>
+<li>近似算法是一类特殊的贪心算法
+<ul>
+<li>近似比 (Approximation Ratio): 最坏情况下贪心解离最优解的差距</li>
+</ul></li>
+</ul>
+<h2 id="算法运行模式对比">算法运行模式对比</h2>
+<ul>
+<li>树搜索<br>
+<img src="TreeSearch.png" alt="TreeSearch"></li>
+<li>动态规划<br>
+<img src="DynamicProgramming.png" alt="DynamicProgramming"></li>
+<li>局部搜索<br>
+<img src="LocalSearch.png" alt="LocalSearch"></li>
+</ul>
+<h3 id="树搜索与局部搜索">树搜索与局部搜索</h3>
+<p>局部搜索虽然名字里有 "局部", 但是从某种意义上来说反而很全局——可以对解向量的任意位置进行修改.</p>
+<ul>
+<li>以最小化问题为例,
+<ul>
 <li>局部搜索关注上界, 是真实可行的解的目标函数值, 更适合实际应用.</li>
 <li>树搜索关注下界, 是理论上最优的解的目标函数值, 更适合理论分析.</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="更宏观的算法设计"><a href="#更宏观的算法设计" class="headerlink" title="更宏观的算法设计"></a>更宏观的算法设计</h2><ul>
-<li>简化问题模型, 将其转换为可高效 (精确) 求解的经典问题, 获得较好格局后再修复细节.<ul>
-<li>固定部分决策.<ul>
+<h2 id="更宏观的算法设计">更宏观的算法设计</h2>
+<ul>
+<li>简化问题模型, 将其转换为可高效 (精确) 求解的经典问题, 获得较好格局后再修复细节.
+<ul>
+<li>固定部分决策.
+<ul>
 <li>类比: 导师提出求解思路, 学生只需顺着思路实现, 比自己从头设计算法更容易出成果.</li>
-</ul>
-</li>
-<li>松弛部分约束.<ul>
+</ul></li>
+<li>松弛部分约束.
+<ul>
 <li>类比: 两个城市之间的通勤时间与直线距离除以交通工具的速度差别不大.</li>
-</ul>
-</li>
-<li>忽略部分目标函数成份.<ul>
+</ul></li>
+<li>忽略部分目标函数成份.
+<ul>
 <li>类比: 地表附近计算重力无需考虑万有引力甚至相对论效应.</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 </ul>
 </div><div class="tags"><a href="/techive/tags/组合优化/">组合优化</a><a href="/techive/tags/技术/">技术</a><a href="/techive/tags/建模/">建模</a><a href="/techive/tags/数学/">数学</a><a href="/techive/tags/优化/">优化</a></div><div class="post-nav"><a href="/techive/2019/01/13/Opt-SoftwareEngineering/" class="pre">组合优化 (四) 算法工程</a><a href="/techive/2019/01/13/Opt-MathematicalProgramming/" class="next">组合优化 (二) 数学建模基础</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
 var disqus_identifier = '2019/01/13/Opt-AlgorithmDesign/';
@@ -347,7 +370,7 @@ $.ajax({
   error: function() {
     $('.btn_click_load').css('display','block');
   }
-});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法竞赛/">算法竞赛</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/05/IdealPostgraduateEducation/">IdealPostgraduateEducation</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法竞赛/">算法竞赛</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/05/IdealPostgraduateEducation/">IdealPostgraduateEducation</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
