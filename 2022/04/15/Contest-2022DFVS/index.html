@@ -2,315 +2,166 @@
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</h1><div class="post-meta">Apr 15, 2022<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2022/04/15/Contest-2022DFVS/" href="/techive/2022/04/15/Contest-2022DFVS/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>反馈点集问题在众多领域中有广泛的应用, 可以用来对多种组合优化问题进行建模. 有向反馈点集问题主要研究如何消除有向拓扑图中的环路问题. 比如在操作系统解决死锁时, 需要尽可能少地强行终止用户进程. 比如以层次图模式绘制思维导图或电路原理图时, 需要尽量避免出现逆向边. 高效的反馈点集问题求解算法具有极其重要的理论与应用价值.</p>
-<h1 id="有向反馈点集算法训练">有向反馈点集算法训练</h1>
-<h2 id="问题概述">问题概述</h2>
-<p>给定一个有向图, 请删除最少数量的节点 (所有与被删除节点直接相连的有向边均被一并删除), 使该有向图无环.</p>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</h1><div class="post-meta">Apr 15, 2022<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2022/04/15/Contest-2022DFVS/" href="/techive/2022/04/15/Contest-2022DFVS/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>反馈点集问题在众多领域中有广泛的应用, 可以用来对多种组合优化问题进行建模.<br>有向反馈点集问题主要研究如何消除有向拓扑图中的环路问题.<br>比如在操作系统解决死锁时, 需要尽可能少地强行终止用户进程.<br>比如以层次图模式绘制思维导图或电路原理图时, 需要尽量避免出现逆向边.<br>高效的反馈点集问题求解算法具有极其重要的理论与应用价值.</p>
+<h1 id="有向反馈点集算法训练"><a href="#有向反馈点集算法训练" class="headerlink" title="有向反馈点集算法训练"></a>有向反馈点集算法训练</h1><h2 id="问题概述"><a href="#问题概述" class="headerlink" title="问题概述"></a>问题概述</h2><p>给定一个有向图, 请删除最少数量的节点 (所有与被删除节点直接相连的有向边均被一并删除), 使该有向图无环.</p>
 <ul>
-<li>参考文献.
-<ul>
+<li>参考文献.<ul>
 <li>[1] P. Galinier, E. Lemamou, and M. W. Bouzidi, “Applying local search to the feedback vertex set problem,” Journal of Heuristics, vol. 19, no. 5, pp. 797–818, Oct. 2013, doi: 10.1007/s10732-013-9224-z.</li>
 <li>[2] P. Festa, P. M. Pardalos, and M. G. C. Resende, “Feedback Set Problems,” in Handbook of Combinatorial Optimization: Supplement Volume A, D.-Z. Du and P. M. Pardalos, Eds. Boston, MA: Springer US, 1999, pp. 209–258. doi: 10.1007/978-1-4757-3023-4_4.</li>
 <li>[3] D. Zhao, L. Xu, S. -M. Qin, G. Liu, and Z. Wang, “The Feedback Vertex Set Problem of Multiplex Networks,” IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 67, no. 12, pp. 3492–3496, Dec. 2020, doi: 10.1109/TCSII.2020.2997974.</li>
-</ul></li>
 </ul>
-<h2 id="命令行参数">命令行参数</h2>
-<p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535). 算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>). 例如, 在控制台运行以下命令表示调用可执行文件 <code>dfvsp.exe</code> 在限时 600 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/pardalos.n50e100.txt</code> 的算例, 解文件输出至 <code>sln.pardalos.n50e100.txt</code>: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dfvsp.exe 600 123456 &lt;../data/pardalos.n50e100.txt &gt;sln.pardalos.n50e100.txt</span><br></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).<br>算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>).<br>例如, 在控制台运行以下命令表示调用可执行文件 <code>dfvsp.exe</code> 在限时 600 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/pardalos.n50e100.txt</code> 的算例, 解文件输出至 <code>sln.pardalos.n50e100.txt</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dfvsp.exe 600 123456 &lt;../data/pardalos.n50e100.txt &gt;sln.pardalos.n50e100.txt</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>运行时间上限.
-<ul>
+<li>运行时间上限.<ul>
 <li>超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已输出解 (最好还能自行正常退出).</li>
-</ul></li>
-<li>随机种子设置.
-<ul>
+</ul>
+</li>
+<li>随机种子设置.<ul>
 <li>使用 C 语言随机数生成器请用 <code>srand</code>.</li>
 <li>使用 C++ 随机数生成器 (如 <code>mt19937</code>) 请在构造时传参或调用 <code>seed()</code> 方法设置.</li>
-</ul></li>
 </ul>
-<h2 id="输入的算例文件格式">输入的算例文件格式</h2>
-<p>所有算例的节点从 0 开始连续编号.</p>
-<p>第一行给出 2 个由空白字符分隔的整数, 分别表示节点数 N, 有向边数 E. 接下来连续 N 行给出有向图的邻接表, 第 i 行表示第 i 个节点可以直接到达的节点集合, 节点集合由若干由空白字符分隔的整数表示.</p>
-<p>例如, 以下算例文件表示节点数为 3, 有向边数为 4; 其中:<br>
-从节点 0 出发可以到达节点 1 和 2;<br>
-从节点 1 出发可以到达节点 0;<br>
-从节点 2 出发可以到达节点 1. <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3 4</span><br><span class="line">1 2</span><br><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure></p>
-<h2 id="输出的解文件格式">输出的解文件格式</h2>
-<p>输出 K 个用空白字符 (建议使用换行符) 分隔整数表示 K 个被删除的节点.</p>
-<p>例如, 以下解文件表示删除节点 0 和 2: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">2</span><br></pre></td></tr></table></figure></p>
-<h2 id="提交要求">提交要求</h2>
-<ul>
+</li>
+</ul>
+<h2 id="输入的算例文件格式"><a href="#输入的算例文件格式" class="headerlink" title="输入的算例文件格式"></a>输入的算例文件格式</h2><p>所有算例的节点从 0 开始连续编号.</p>
+<p>第一行给出 2 个由空白字符分隔的整数, 分别表示节点数 N, 有向边数 E.<br>接下来连续 N 行给出有向图的邻接表, 第 i 行表示第 i 个节点可以直接到达的节点集合, 节点集合由若干由空白字符分隔的整数表示.</p>
+<p>例如, 以下算例文件表示节点数为 3, 有向边数为 4; 其中:<br>从节点 0 出发可以到达节点 1 和 2;<br>从节点 1 出发可以到达节点 0;<br>从节点 2 出发可以到达节点 1.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3 4</span><br><span class="line">1 2</span><br><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure></p>
+<h2 id="输出的解文件格式"><a href="#输出的解文件格式" class="headerlink" title="输出的解文件格式"></a>输出的解文件格式</h2><p>输出 K 个用空白字符 (建议使用换行符) 分隔整数表示 K 个被删除的节点.</p>
+<p>例如, 以下解文件表示删除节点 0 和 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">2</span><br></pre></td></tr></table></figure></p>
+<h2 id="提交要求"><a href="#提交要求" class="headerlink" title="提交要求"></a>提交要求</h2><ul>
 <li>发送至邮箱 <a href="mailto:szx@duhe.tech" target="_blank" rel="noopener">szx@duhe.tech</a>.</li>
-<li>邮件标题格式为 "<strong>Challenge2022DFVSP-姓名-学校-专业</strong>".</li>
-<li>邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "<strong>姓名-学校-专业</strong>", 其内包含下列文件.
-<ul>
-<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).
-<ul>
+<li>邮件标题格式为 “<strong>Challenge2022DFVSP-姓名-学校-专业</strong>“.</li>
+<li>邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 “<strong>姓名-学校-专业</strong>“, 其内包含下列文件.<ul>
+<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).<ul>
 <li>建议基于官方 SDK 开发 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.DFVSP" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.DFVSP</a>).</li>
 <li>用 g++ 的同学编译时建议静态链接, 即添加 <code>-static-libgcc -static-libstdc++</code> 编译选项.</li>
-</ul></li>
-<li><strong>必要</strong> 算法源码.
-<ul>
+</ul>
+</li>
+<li><strong>必要</strong> 算法源码.<ul>
 <li>可重入 (可在同一线程内反复调用而不会出现数据初始化错误或内存泄漏).</li>
 <li>可并发 (可在同一进程内的多个线程同时运行多个算法求解实例而互不干扰, 满足此要求一般不能有全局的非只读变量).</li>
 <li>可伸缩 (数据结构可以根据算例规模动态申请内存, 而非根据预先指定的编译期常量进行内存分配).</li>
-</ul></li>
-<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
-<ul>
+</ul>
+</li>
+<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).<ul>
 <li>算例名.</li>
 <li>删除节点数.</li>
 <li>计算耗时.</li>
-</ul></li>
-<li><strong>可选</strong> 算法在各算例上求得的颜色数最少的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).</li>
-</ul></li>
-<li>若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
-<ul>
-<li>若测试结果较优, 可在排行榜页面看到自己的运行情况 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/data" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/data</a>).</li>
-</ul></li>
 </ul>
-<p>例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   dfvsp.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        pardalos.n50e100.txt</span><br><span class="line">        pardalos.n50e150.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
-<h2 id="算例清单">算例清单</h2>
-<p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark/tree/data/DFVSP/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/data/DFVSP/Instance</a></p>
+</li>
+<li><strong>可选</strong> 算法在各算例上求得的颜色数最少的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).</li>
+</ul>
+</li>
+<li>若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.<ul>
+<li>若测试结果较优, 可在排行榜页面看到自己的运行情况 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/data" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/data</a>).</li>
+</ul>
+</li>
+</ul>
+<p>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   dfvsp.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        pardalos.n50e100.txt</span><br><span class="line">        pardalos.n50e150.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="算例清单"><a href="#算例清单" class="headerlink" title="算例清单"></a>算例清单</h2><p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark/tree/data/DFVSP/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/data/DFVSP/Instance</a></p>
 <p>算例规模从小到大依次为 (求解难度不一定随规模增加):</p>
-<p>pardalos.n50e100.txt<br>
-pardalos.n50e150.txt<br>
-pardalos.n50e200.txt<br>
-pardalos.n50e250.txt<br>
-pardalos.n50e300.txt<br>
-pardalos.n50e500.txt<br>
-pardalos.n50e600.txt<br>
-pardalos.n50e700.txt<br>
-pardalos.n50e800.txt<br>
-pardalos.n50e900.txt<br>
-pardalos.n100e200.txt<br>
-pardalos.n100e300.txt<br>
-pardalos.n100e400.txt<br>
-pardalos.n100e500.txt<br>
-pardalos.n100e600.txt<br>
-pardalos.n100e1000.txt<br>
-pardalos.n100e1100.txt<br>
-pardalos.n100e1200.txt<br>
-pardalos.n100e1300.txt<br>
-pardalos.n100e1400.txt<br>
-pardalos.n500e1000.txt<br>
-pardalos.n500e1500.txt<br>
-pardalos.n500e2000.txt<br>
-pardalos.n500e2500.txt<br>
-pardalos.n500e3000.txt<br>
-pardalos.n500e5000.txt<br>
-pardalos.n500e5500.txt<br>
-pardalos.n500e6000.txt<br>
-pardalos.n500e6500.txt<br>
-pardalos.n500e7000.txt<br>
-pardalos.n1000e3000.txt<br>
-pardalos.n1000e3500.txt<br>
-pardalos.n1000e4000.txt<br>
-pardalos.n1000e4500.txt<br>
-pardalos.n1000e5000.txt<br>
-pardalos.n1000e10000.txt<br>
-pardalos.n1000e15000.txt<br>
-pardalos.n1000e20000.txt<br>
-pardalos.n1000e25000.txt<br>
-pardalos.n1000e30000.txt<br>
-pace.h001.n1024e2103.txt<br>
-pace.h003.n1024e3480.txt<br>
-pace.h005.n843e3995.txt<br>
-pace.h007.n2048e4096.txt<br>
-pace.h009.n1024e5231.txt<br>
-pace.h011.n1024e5480.txt<br>
-pace.h013.n2048e5216.txt<br>
-pace.h015.n2048e7005.txt<br>
-pace.h017.n1024e9737.txt<br>
-pace.h019.n1024e10284.txt<br>
-pace.h021.n2048e10573.txt<br>
-pace.h023.n2048e11098.txt<br>
-pace.h025.n1024e15102.txt<br>
-pace.h027.n2048e14738.txt<br>
-pace.h029.n1024e19861.txt<br>
-pace.h031.n2048e18876.txt<br>
-pace.h033.n6301e20777.txt<br>
-pace.h035.n8192e30498.txt<br>
-pace.h037.n8192e30814.txt<br>
-pace.h039.n9473e43691.txt<br>
-pace.h041.n8192e45139.txt<br>
-pace.h043.n8192e50901.txt<br>
-pace.h045.n8192e54189.txt<br>
-pace.h047.n8192e54807.txt<br>
-pace.h049.n8192e57468.txt<br>
-pace.h051.n8192e71995.txt<br>
-pace.h053.n8192e73399.txt<br>
-pace.h055.n15268e74339.txt<br>
-pace.h057.n8192e83083.txt<br>
-pace.h059.n7115e103689.txt<br>
-pace.h061.n8192e112798.txt<br>
-pace.h063.n36682e88328.txt<br>
-pace.h065.n26475e106762.txt<br>
-pace.h067.n8192e138733.txt<br>
-pace.h069.n8192e156904.txt<br>
-pace.h071.n8192e168714.txt<br>
-pace.h073.n16384e166938.txt<br>
-pace.h075.n34978e169522.txt<br>
-pace.h077.n62586e147892.txt<br>
-pace.h079.n16384e216334.txt<br>
-pace.h081.n32768e224254.txt<br>
-pace.h083.n32768e256256.txt<br>
-pace.h085.n16384e283794.txt<br>
-pace.h087.n58960e269439.txt<br>
-pace.h089.n8192e358201.txt<br>
-pace.h091.n16384e354031.txt<br>
-pace.h093.n32768e363878.txt<br>
-pace.h095.n32768e409363.txt<br>
-pace.h097.n16384e458925.txt<br>
-pace.h099.n97898e447979.txt<br>
-pace.h101.n65536e618237.txt<br>
-pace.h103.n159316e544621.txt<br>
-pace.h105.n65536e652583.txt<br>
-pace.h107.n32768e699385.txt<br>
-pace.h109.n8192e839576.txt<br>
-pace.h111.n77360e828161.txt<br>
-pace.h113.n194085e854377.txt<br>
-pace.h115.n262111e1234877.txt<br>
-pace.h117.n325729e1469679.txt<br>
-pace.h119.n342573e1619304.txt<br>
-pace.h121.n16384e2076651.txt<br>
-pace.h123.n4096e2097152.txt<br>
-pace.h125.n16384e2097152.txt<br>
-pace.h127.n32768e2128971.txt<br>
-pace.h129.n32768e2148521.txt<br>
-pace.h131.n16384e2194576.txt<br>
-pace.h133.n131072e2130456.txt<br>
-pace.h135.n32768e2235835.txt<br>
-pace.h137.n32768e2241646.txt<br>
-pace.h139.n16384e2293868.txt<br>
-pace.h141.n65536e2321780.txt<br>
-pace.h143.n32768e2412833.txt<br>
-pace.h145.n32768e2416820.txt<br>
-pace.h147.n32768e2422154.txt<br>
-pace.h149.n131072e2340382.txt<br>
-pace.h151.n65536e2457973.txt<br>
-pace.h153.n32768e2554765.txt<br>
-pace.h155.n131072e2459701.txt<br>
-pace.h157.n281903e2312497.txt<br>
-pace.h159.n32768e2621362.txt<br>
-pace.h161.n32768e2684883.txt<br>
-pace.h163.n32768e2696696.txt<br>
-pace.h165.n131072e2622100.txt<br>
-pace.h167.n65536e2731506.txt<br>
-pace.h169.n32768e2808603.txt<br>
-pace.h171.n131072e2741624.txt<br>
-pace.h173.n32768e2843144.txt<br>
-pace.h175.n131072e2757784.txt<br>
-pace.h177.n131072e2784435.txt<br>
-pace.h179.n131072e2921009.txt<br>
-pace.h181.n131072e2950732.txt<br>
-pace.h183.n131072e3115621.txt<br>
-pace.h185.n32768e3222505.txt<br>
-pace.h187.n131072e3225441.txt<br>
-pace.h189.n262144e3100310.txt<br>
-pace.h191.n131072e3275806.txt<br>
-pace.h193.n32768e3734348.txt<br>
-pace.h195.n4096e4194304.txt<br>
-pace.h197.n8192e4194304.txt<br>
-pace.h199.n875713e5105039.txt</p>
-<p>#pace.e001.n512e651.txt<br>
-#pace.e003.n1024e6055.txt<br>
-#pace.e005.n1024e5736.txt<br>
-#pace.e007.n1024e4198.txt<br>
-#pace.e009.n1024e6804.txt<br>
-#pace.e011.n4096e15076.txt<br>
-#pace.e013.n2048e7038.txt<br>
-#pace.e015.n2048e9390.txt<br>
-#pace.e017.n1024e3800.txt<br>
-#pace.e019.n2048e11718.txt<br>
-#pace.e021.n2048e6147.txt<br>
-#pace.e023.n2048e5400.txt<br>
-#pace.e025.n1024e2802.txt<br>
-#pace.e027.n2048e9406.txt<br>
-#pace.e029.n2048e11302.txt<br>
-#pace.e031.n4096e26071.txt<br>
-#pace.e033.n1024e2010.txt<br>
-#pace.e035.n4096e17074.txt<br>
-#pace.e037.n4096e28675.txt<br>
-#pace.e039.n1024e2570.txt<br>
-#pace.e041.n4096e27082.txt<br>
-#pace.e043.n2048e5700.txt<br>
-#pace.e045.n4096e30202.txt<br>
-#pace.e047.n4096e28612.txt<br>
-#pace.e049.n4096e23857.txt<br>
-#pace.e051.n4096e12946.txt<br>
-#pace.e053.n4096e26872.txt<br>
-#pace.e055.n4096e12085.txt<br>
-#pace.e057.n4096e12298.txt<br>
-#pace.e059.n1024e1124.txt<br>
-#pace.e061.n2048e4320.txt<br>
-#pace.e063.n4096e23766.txt<br>
-#pace.e065.n8192e48759.txt<br>
-#pace.e067.n2048e4241.txt<br>
-#pace.e069.n4096e22368.txt<br>
-#pace.e071.n2048e4896.txt<br>
-#pace.e073.n8192e51796.txt<br>
-#pace.e075.n8192e31504.txt<br>
-#pace.e077.n8192e54744.txt<br>
-#pace.e079.n8192e52154.txt<br>
-#pace.e081.n8192e51030.txt<br>
-#pace.e083.n2048e3537.txt<br>
-#pace.e085.n8192e69446.txt<br>
-#pace.e087.n8192e69372.txt<br>
-#pace.e089.n8192e55556.txt<br>
-#pace.e091.n2048e3364.txt<br>
-#pace.e093.n16384e109487.txt<br>
-#pace.e095.n8192e59029.txt<br>
-#pace.e097.n16384e103725.txt<br>
-#pace.e099.n8192e38175.txt<br>
-#pace.e101.n32768e246723.txt<br>
-#pace.e103.n16384e77536.txt<br>
-#pace.e105.n2048e10584.txt<br>
-#pace.e107.n16384e104833.txt<br>
-#pace.e109.n16384e149298.txt<br>
-#pace.e111.n2048e31904.txt<br>
-#pace.e113.n1024e25750.txt<br>
-#pace.e115.n32768e304304.txt<br>
-#pace.e117.n32768e304790.txt<br>
-#pace.e119.n32768e272707.txt<br>
-#pace.e121.n1024e5480.txt<br>
-#pace.e123.n32768e256256.txt<br>
-#pace.e125.n32768e288748.txt<br>
-#pace.e127.n2048e25492.txt<br>
-#pace.e129.n32768e256665.txt<br>
-#pace.e131.n32768e240240.txt<br>
-#pace.e133.n2048e22332.txt<br>
-#pace.e135.n32768e240816.txt<br>
-#pace.e137.n2048e7003.txt<br>
-#pace.e139.n65536e288492.txt<br>
-#pace.e141.n65536e303686.txt<br>
-#pace.e143.n65536e303696.txt<br>
-#pace.e145.n2048e27086.txt<br>
-#pace.e147.n1024e25052.txt<br>
-#pace.e149.n1024e3624.txt<br>
-#pace.e151.n65536e653240.txt<br>
-#pace.e153.n2048e22306.txt<br>
-#pace.e155.n65536e619239.txt<br>
-#pace.e157.n65536e652583.txt<br>
-#pace.e159.n65536e550097.txt<br>
-#pace.e161.n2048e28713.txt<br>
-#pace.e163.n131072e574081.txt<br>
-#pace.e165.n131072e603932.txt<br>
-#pace.e167.n1024e5487.txt<br>
-#pace.e169.n131072e604300.txt<br>
-#pace.e171.n131072e604042.txt<br>
-#pace.e173.n1024e23175.txt<br>
-#pace.e175.n2048e22520.txt<br>
-#pace.e177.n32768e320320.txt<br>
-#pace.e179.n2048e27346.txt<br>
-#pace.e181.n32768e321088.txt<br>
-#pace.e183.n1024e5471.txt<br>
-#pace.e185.n4096e62879.txt<br>
-#pace.e187.n1024e3632.txt<br>
-#pace.e189.n1024e2048.txt<br>
-#pace.e191.n2048e4143.txt<br>
-#pace.e193.n1024e17144.txt<br>
-#pace.e195.n1024e32768.txt<br>
-#pace.e197.n4096e93346.txt<br>
-#pace.e199.n16384e559996.txt</p>
+<p>pardalos.n50e100.txt<br>pardalos.n50e150.txt<br>pardalos.n50e200.txt<br>pardalos.n50e250.txt<br>pardalos.n50e300.txt<br>pardalos.n50e500.txt<br>pardalos.n50e600.txt<br>pardalos.n50e700.txt<br>pardalos.n50e800.txt<br>pardalos.n50e900.txt<br>pardalos.n100e200.txt<br>pardalos.n100e300.txt<br>pardalos.n100e400.txt<br>pardalos.n100e500.txt<br>pardalos.n100e600.txt<br>pardalos.n100e1000.txt<br>pardalos.n100e1100.txt<br>pardalos.n100e1200.txt<br>pardalos.n100e1300.txt<br>pardalos.n100e1400.txt<br>pardalos.n500e1000.txt<br>pardalos.n500e1500.txt<br>pardalos.n500e2000.txt<br>pardalos.n500e2500.txt<br>pardalos.n500e3000.txt<br>pardalos.n500e5000.txt<br>pardalos.n500e5500.txt<br>pardalos.n500e6000.txt<br>pardalos.n500e6500.txt<br>pardalos.n500e7000.txt<br>pardalos.n1000e3000.txt<br>pardalos.n1000e3500.txt<br>pardalos.n1000e4000.txt<br>pardalos.n1000e4500.txt<br>pardalos.n1000e5000.txt<br>pardalos.n1000e10000.txt<br>pardalos.n1000e15000.txt<br>pardalos.n1000e20000.txt<br>pardalos.n1000e25000.txt<br>pardalos.n1000e30000.txt<br>pace.h001.n1024e2103.txt<br>pace.h003.n1024e3480.txt<br>pace.h005.n843e3995.txt<br>pace.h007.n2048e4096.txt<br>pace.h009.n1024e5231.txt<br>pace.h011.n1024e5480.txt<br>pace.h013.n2048e5216.txt<br>pace.h015.n2048e7005.txt<br>pace.h017.n1024e9737.txt<br>pace.h019.n1024e10284.txt<br>pace.h021.n2048e10573.txt<br>pace.h023.n2048e11098.txt<br>pace.h025.n1024e15102.txt<br>pace.h027.n2048e14738.txt<br>pace.h029.n1024e19861.txt<br>pace.h031.n2048e18876.txt<br>pace.h033.n6301e20777.txt<br>pace.h035.n8192e30498.txt<br>pace.h037.n8192e30814.txt<br>pace.h039.n9473e43691.txt<br>pace.h041.n8192e45139.txt<br>pace.h043.n8192e50901.txt<br>pace.h045.n8192e54189.txt<br>pace.h047.n8192e54807.txt<br>pace.h049.n8192e57468.txt<br>pace.h051.n8192e71995.txt<br>pace.h053.n8192e73399.txt<br>pace.h055.n15268e74339.txt<br>pace.h057.n8192e83083.txt<br>pace.h059.n7115e103689.txt<br>pace.h061.n8192e112798.txt<br>pace.h063.n36682e88328.txt<br>pace.h065.n26475e106762.txt<br>pace.h067.n8192e138733.txt<br>pace.h069.n8192e156904.txt<br>pace.h071.n8192e168714.txt<br>pace.h073.n16384e166938.txt<br>pace.h075.n34978e169522.txt<br>pace.h077.n62586e147892.txt<br>pace.h079.n16384e216334.txt<br>pace.h081.n32768e224254.txt<br>pace.h083.n32768e256256.txt<br>pace.h085.n16384e283794.txt<br>pace.h087.n58960e269439.txt<br>pace.h089.n8192e358201.txt<br>pace.h091.n16384e354031.txt<br>pace.h093.n32768e363878.txt<br>pace.h095.n32768e409363.txt<br>pace.h097.n16384e458925.txt<br>pace.h099.n97898e447979.txt<br>pace.h101.n65536e618237.txt<br>pace.h103.n159316e544621.txt<br>pace.h105.n65536e652583.txt<br>pace.h107.n32768e699385.txt<br>pace.h109.n8192e839576.txt<br>pace.h111.n77360e828161.txt<br>pace.h113.n194085e854377.txt<br>pace.h115.n262111e1234877.txt<br>pace.h117.n325729e1469679.txt<br>pace.h119.n342573e1619304.txt<br>pace.h121.n16384e2076651.txt<br>pace.h123.n4096e2097152.txt<br>pace.h125.n16384e2097152.txt<br>pace.h127.n32768e2128971.txt<br>pace.h129.n32768e2148521.txt<br>pace.h131.n16384e2194576.txt<br>pace.h133.n131072e2130456.txt<br>pace.h135.n32768e2235835.txt<br>pace.h137.n32768e2241646.txt<br>pace.h139.n16384e2293868.txt<br>pace.h141.n65536e2321780.txt<br>pace.h143.n32768e2412833.txt<br>pace.h145.n32768e2416820.txt<br>pace.h147.n32768e2422154.txt<br>pace.h149.n131072e2340382.txt<br>pace.h151.n65536e2457973.txt<br>pace.h153.n32768e2554765.txt<br>pace.h155.n131072e2459701.txt<br>pace.h157.n281903e2312497.txt<br>pace.h159.n32768e2621362.txt<br>pace.h161.n32768e2684883.txt<br>pace.h163.n32768e2696696.txt<br>pace.h165.n131072e2622100.txt<br>pace.h167.n65536e2731506.txt<br>pace.h169.n32768e2808603.txt<br>pace.h171.n131072e2741624.txt<br>pace.h173.n32768e2843144.txt<br>pace.h175.n131072e2757784.txt<br>pace.h177.n131072e2784435.txt<br>pace.h179.n131072e2921009.txt<br>pace.h181.n131072e2950732.txt<br>pace.h183.n131072e3115621.txt<br>pace.h185.n32768e3222505.txt<br>pace.h187.n131072e3225441.txt<br>pace.h189.n262144e3100310.txt<br>pace.h191.n131072e3275806.txt<br>pace.h193.n32768e3734348.txt<br>pace.h195.n4096e4194304.txt<br>pace.h197.n8192e4194304.txt<br>pace.h199.n875713e5105039.txt  </p>
+<p>#pace.e001.n512e651.txt  </p>
+<p>#pace.e003.n1024e6055.txt  </p>
+<p>#pace.e005.n1024e5736.txt  </p>
+<p>#pace.e007.n1024e4198.txt  </p>
+<p>#pace.e009.n1024e6804.txt  </p>
+<p>#pace.e011.n4096e15076.txt  </p>
+<p>#pace.e013.n2048e7038.txt  </p>
+<p>#pace.e015.n2048e9390.txt  </p>
+<p>#pace.e017.n1024e3800.txt  </p>
+<p>#pace.e019.n2048e11718.txt  </p>
+<p>#pace.e021.n2048e6147.txt  </p>
+<p>#pace.e023.n2048e5400.txt  </p>
+<p>#pace.e025.n1024e2802.txt  </p>
+<p>#pace.e027.n2048e9406.txt  </p>
+<p>#pace.e029.n2048e11302.txt  </p>
+<p>#pace.e031.n4096e26071.txt  </p>
+<p>#pace.e033.n1024e2010.txt  </p>
+<p>#pace.e035.n4096e17074.txt  </p>
+<p>#pace.e037.n4096e28675.txt  </p>
+<p>#pace.e039.n1024e2570.txt  </p>
+<p>#pace.e041.n4096e27082.txt  </p>
+<p>#pace.e043.n2048e5700.txt  </p>
+<p>#pace.e045.n4096e30202.txt  </p>
+<p>#pace.e047.n4096e28612.txt  </p>
+<p>#pace.e049.n4096e23857.txt  </p>
+<p>#pace.e051.n4096e12946.txt  </p>
+<p>#pace.e053.n4096e26872.txt  </p>
+<p>#pace.e055.n4096e12085.txt  </p>
+<p>#pace.e057.n4096e12298.txt  </p>
+<p>#pace.e059.n1024e1124.txt  </p>
+<p>#pace.e061.n2048e4320.txt  </p>
+<p>#pace.e063.n4096e23766.txt  </p>
+<p>#pace.e065.n8192e48759.txt  </p>
+<p>#pace.e067.n2048e4241.txt  </p>
+<p>#pace.e069.n4096e22368.txt  </p>
+<p>#pace.e071.n2048e4896.txt  </p>
+<p>#pace.e073.n8192e51796.txt  </p>
+<p>#pace.e075.n8192e31504.txt  </p>
+<p>#pace.e077.n8192e54744.txt  </p>
+<p>#pace.e079.n8192e52154.txt  </p>
+<p>#pace.e081.n8192e51030.txt  </p>
+<p>#pace.e083.n2048e3537.txt  </p>
+<p>#pace.e085.n8192e69446.txt  </p>
+<p>#pace.e087.n8192e69372.txt  </p>
+<p>#pace.e089.n8192e55556.txt  </p>
+<p>#pace.e091.n2048e3364.txt  </p>
+<p>#pace.e093.n16384e109487.txt  </p>
+<p>#pace.e095.n8192e59029.txt  </p>
+<p>#pace.e097.n16384e103725.txt  </p>
+<p>#pace.e099.n8192e38175.txt  </p>
+<p>#pace.e101.n32768e246723.txt  </p>
+<p>#pace.e103.n16384e77536.txt  </p>
+<p>#pace.e105.n2048e10584.txt  </p>
+<p>#pace.e107.n16384e104833.txt  </p>
+<p>#pace.e109.n16384e149298.txt  </p>
+<p>#pace.e111.n2048e31904.txt  </p>
+<p>#pace.e113.n1024e25750.txt  </p>
+<p>#pace.e115.n32768e304304.txt  </p>
+<p>#pace.e117.n32768e304790.txt  </p>
+<p>#pace.e119.n32768e272707.txt  </p>
+<p>#pace.e121.n1024e5480.txt  </p>
+<p>#pace.e123.n32768e256256.txt  </p>
+<p>#pace.e125.n32768e288748.txt  </p>
+<p>#pace.e127.n2048e25492.txt  </p>
+<p>#pace.e129.n32768e256665.txt  </p>
+<p>#pace.e131.n32768e240240.txt  </p>
+<p>#pace.e133.n2048e22332.txt  </p>
+<p>#pace.e135.n32768e240816.txt  </p>
+<p>#pace.e137.n2048e7003.txt  </p>
+<p>#pace.e139.n65536e288492.txt  </p>
+<p>#pace.e141.n65536e303686.txt  </p>
+<p>#pace.e143.n65536e303696.txt  </p>
+<p>#pace.e145.n2048e27086.txt  </p>
+<p>#pace.e147.n1024e25052.txt  </p>
+<p>#pace.e149.n1024e3624.txt  </p>
+<p>#pace.e151.n65536e653240.txt  </p>
+<p>#pace.e153.n2048e22306.txt  </p>
+<p>#pace.e155.n65536e619239.txt  </p>
+<p>#pace.e157.n65536e652583.txt  </p>
+<p>#pace.e159.n65536e550097.txt  </p>
+<p>#pace.e161.n2048e28713.txt  </p>
+<p>#pace.e163.n131072e574081.txt  </p>
+<p>#pace.e165.n131072e603932.txt  </p>
+<p>#pace.e167.n1024e5487.txt  </p>
+<p>#pace.e169.n131072e604300.txt  </p>
+<p>#pace.e171.n131072e604042.txt  </p>
+<p>#pace.e173.n1024e23175.txt  </p>
+<p>#pace.e175.n2048e22520.txt  </p>
+<p>#pace.e177.n32768e320320.txt  </p>
+<p>#pace.e179.n2048e27346.txt  </p>
+<p>#pace.e181.n32768e321088.txt  </p>
+<p>#pace.e183.n1024e5471.txt  </p>
+<p>#pace.e185.n4096e62879.txt  </p>
+<p>#pace.e187.n1024e3632.txt  </p>
+<p>#pace.e189.n1024e2048.txt  </p>
+<p>#pace.e191.n2048e4143.txt  </p>
+<p>#pace.e193.n1024e17144.txt  </p>
+<p>#pace.e195.n1024e32768.txt  </p>
+<p>#pace.e197.n4096e93346.txt  </p>
+<p>#pace.e199.n16384e559996.txt  </p>
 </div><div class="tags"><a href="/techive/tags/组合优化/">组合优化</a><a href="/techive/tags/算法挑战/">算法挑战</a></div><div class="post-nav"><a href="/techive/2022/03/25/Contest-2022OARSMT/" class="next">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
 var disqus_identifier = '2022/04/15/Contest-2022DFVS/';
 var disqus_title = 'SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem';
@@ -336,7 +187,7 @@ $.ajax({
   error: function() {
     $('.btn_click_load').css('display','block');
   }
-});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法竞赛/">算法竞赛</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/05/IdealPostgraduateEducation/">IdealPostgraduateEducation</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法竞赛/">算法竞赛</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/05/IdealPostgraduateEducation/">IdealPostgraduateEducation</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
