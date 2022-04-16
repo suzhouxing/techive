@@ -84,12 +84,12 @@ oarsmt.exe 300 123456 <../data/rc01.n10o10.txt >sln.rc01.n10o10.txt
 
 例如, 以下解文件表示 3 条路径的形状; 其中,  
 路径 0 的起点坐标为 (0, 2), 先纵坐标 +1 到达途经点 (0, 3), 然后横坐标 +1 到达终点 (1, 3);  
-路径 1 的起点坐标为 (1, 3), 终点坐标为 (3, 3);  
-路径 2 的起点坐标为 (3, 3), 终点坐标为 (3, 1):
+路径 1 的起点坐标为 (1, 3), 横坐标 +2 到达终点坐标为 (3, 3);  
+路径 2 的起点坐标为 (3, 3), 纵坐标 -2 到达终点坐标为 (3, 1):
 ```
 0 2 y 1 x 1
-1 3 3 3
-3 3 3 1
+1 3 x 2
+3 3 y -2
 
 ```
 
@@ -134,7 +134,7 @@ oarsmt.exe 300 123456 <../data/rc01.n10o10.txt >sln.rc01.n10o10.txt
 
 ## 算例清单
 
-下载地址: [https://gitee.com/suzhouxing/npbenchmark/tree/data/RPP/Instance](https://gitee.com/suzhouxing/npbenchmark/tree/data/RPP/Instance)
+下载地址: [https://gitee.com/suzhouxing/npbenchmark/tree/data/OARSMT/Instance](https://gitee.com/suzhouxing/npbenchmark/tree/data/OARSMT/Instance)
 
 ind1.n10o32  
 ind2.n10o43  
