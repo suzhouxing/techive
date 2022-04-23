@@ -4,6 +4,7 @@ date: 2022-04-15 21:49:35
 categories:
 - 算法挑战
 tags:
+- Challenge
 - 算法挑战
 - 组合优化
 ---
@@ -65,7 +66,7 @@ dfvsp.exe 600 123456 <../data/pardalos.n50e100.txt >sln.pardalos.n50e100.txt
 
 ## 输出的解文件格式
 
-输出 K 个用空白字符 (建议使用换行符) 分隔整数表示 K 个被删除的节点.
+输出 K 个用空白字符 (建议使用换行符) 分隔的整数表示 K 个被删除的节点.
 
 例如, 以下解文件表示删除节点 0 和 2:
 ```
@@ -93,7 +94,7 @@ dfvsp.exe 600 123456 <../data/pardalos.n50e100.txt >sln.pardalos.n50e100.txt
     - 计算耗时.
   - **可选** 算法在各算例上求得的颜色数最少的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
 - 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
-  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark/tree/data](https://gitee.com/suzhouxing/npbenchmark/tree/data)).
+  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark.data](https://gitee.com/suzhouxing/npbenchmark.data)).
 
 例如:
 ```
@@ -115,7 +116,7 @@ dfvsp.exe 600 123456 <../data/pardalos.n50e100.txt >sln.pardalos.n50e100.txt
 
 ## 算例清单
 
-下载地址: [https://gitee.com/suzhouxing/npbenchmark/tree/data/DFVSP/Instance](https://gitee.com/suzhouxing/npbenchmark/tree/data/DFVSP/Instance)
+下载地址: [https://gitee.com/suzhouxing/npbenchmark.data/DFVSP/Instance](https://gitee.com/suzhouxing/npbenchmark.data/DFVSP/Instance)
 
 算例规模从小到大依次为 (求解难度不一定随规模增加):
 
@@ -260,103 +261,105 @@ pace.h195.n4096e4194304.txt
 pace.h197.n8192e4194304.txt  
 pace.h199.n875713e5105039.txt  
 
-#pace.e001.n512e651.txt  
-#pace.e003.n1024e6055.txt  
-#pace.e005.n1024e5736.txt  
-#pace.e007.n1024e4198.txt  
-#pace.e009.n1024e6804.txt  
-#pace.e011.n4096e15076.txt  
-#pace.e013.n2048e7038.txt  
-#pace.e015.n2048e9390.txt  
-#pace.e017.n1024e3800.txt  
-#pace.e019.n2048e11718.txt  
-#pace.e021.n2048e6147.txt  
-#pace.e023.n2048e5400.txt  
-#pace.e025.n1024e2802.txt  
-#pace.e027.n2048e9406.txt  
-#pace.e029.n2048e11302.txt  
-#pace.e031.n4096e26071.txt  
-#pace.e033.n1024e2010.txt  
-#pace.e035.n4096e17074.txt  
-#pace.e037.n4096e28675.txt  
-#pace.e039.n1024e2570.txt  
-#pace.e041.n4096e27082.txt  
-#pace.e043.n2048e5700.txt  
-#pace.e045.n4096e30202.txt  
-#pace.e047.n4096e28612.txt  
-#pace.e049.n4096e23857.txt  
-#pace.e051.n4096e12946.txt  
-#pace.e053.n4096e26872.txt  
-#pace.e055.n4096e12085.txt  
-#pace.e057.n4096e12298.txt  
-#pace.e059.n1024e1124.txt  
-#pace.e061.n2048e4320.txt  
-#pace.e063.n4096e23766.txt  
-#pace.e065.n8192e48759.txt  
-#pace.e067.n2048e4241.txt  
-#pace.e069.n4096e22368.txt  
-#pace.e071.n2048e4896.txt  
-#pace.e073.n8192e51796.txt  
-#pace.e075.n8192e31504.txt  
-#pace.e077.n8192e54744.txt  
-#pace.e079.n8192e52154.txt  
-#pace.e081.n8192e51030.txt  
-#pace.e083.n2048e3537.txt  
-#pace.e085.n8192e69446.txt  
-#pace.e087.n8192e69372.txt  
-#pace.e089.n8192e55556.txt  
-#pace.e091.n2048e3364.txt  
-#pace.e093.n16384e109487.txt  
-#pace.e095.n8192e59029.txt  
-#pace.e097.n16384e103725.txt  
-#pace.e099.n8192e38175.txt  
-#pace.e101.n32768e246723.txt  
-#pace.e103.n16384e77536.txt  
-#pace.e105.n2048e10584.txt  
-#pace.e107.n16384e104833.txt  
-#pace.e109.n16384e149298.txt  
-#pace.e111.n2048e31904.txt  
-#pace.e113.n1024e25750.txt  
-#pace.e115.n32768e304304.txt  
-#pace.e117.n32768e304790.txt  
-#pace.e119.n32768e272707.txt  
-#pace.e121.n1024e5480.txt  
-#pace.e123.n32768e256256.txt  
-#pace.e125.n32768e288748.txt  
-#pace.e127.n2048e25492.txt  
-#pace.e129.n32768e256665.txt  
-#pace.e131.n32768e240240.txt  
-#pace.e133.n2048e22332.txt  
-#pace.e135.n32768e240816.txt  
-#pace.e137.n2048e7003.txt  
-#pace.e139.n65536e288492.txt  
-#pace.e141.n65536e303686.txt  
-#pace.e143.n65536e303696.txt  
-#pace.e145.n2048e27086.txt  
-#pace.e147.n1024e25052.txt  
-#pace.e149.n1024e3624.txt  
-#pace.e151.n65536e653240.txt  
-#pace.e153.n2048e22306.txt  
-#pace.e155.n65536e619239.txt  
-#pace.e157.n65536e652583.txt  
-#pace.e159.n65536e550097.txt  
-#pace.e161.n2048e28713.txt  
-#pace.e163.n131072e574081.txt  
-#pace.e165.n131072e603932.txt  
-#pace.e167.n1024e5487.txt  
-#pace.e169.n131072e604300.txt  
-#pace.e171.n131072e604042.txt  
-#pace.e173.n1024e23175.txt  
-#pace.e175.n2048e22520.txt  
-#pace.e177.n32768e320320.txt  
-#pace.e179.n2048e27346.txt  
-#pace.e181.n32768e321088.txt  
-#pace.e183.n1024e5471.txt  
-#pace.e185.n4096e62879.txt  
-#pace.e187.n1024e3632.txt  
-#pace.e189.n1024e2048.txt  
-#pace.e191.n2048e4143.txt  
-#pace.e193.n1024e17144.txt  
-#pace.e195.n1024e32768.txt  
-#pace.e197.n4096e93346.txt  
-#pace.e199.n16384e559996.txt  
+<details style="border: 1px solid #aaa; border-radius: 4px;"><summary>⯈ 隐藏算例</summary>
+pace.e001.n512e651.txt  
+pace.e003.n1024e6055.txt  
+pace.e005.n1024e5736.txt  
+pace.e007.n1024e4198.txt  
+pace.e009.n1024e6804.txt  
+pace.e011.n4096e15076.txt  
+pace.e013.n2048e7038.txt  
+pace.e015.n2048e9390.txt  
+pace.e017.n1024e3800.txt  
+pace.e019.n2048e11718.txt  
+pace.e021.n2048e6147.txt  
+pace.e023.n2048e5400.txt  
+pace.e025.n1024e2802.txt  
+pace.e027.n2048e9406.txt  
+pace.e029.n2048e11302.txt  
+pace.e031.n4096e26071.txt  
+pace.e033.n1024e2010.txt  
+pace.e035.n4096e17074.txt  
+pace.e037.n4096e28675.txt  
+pace.e039.n1024e2570.txt  
+pace.e041.n4096e27082.txt  
+pace.e043.n2048e5700.txt  
+pace.e045.n4096e30202.txt  
+pace.e047.n4096e28612.txt  
+pace.e049.n4096e23857.txt  
+pace.e051.n4096e12946.txt  
+pace.e053.n4096e26872.txt  
+pace.e055.n4096e12085.txt  
+pace.e057.n4096e12298.txt  
+pace.e059.n1024e1124.txt  
+pace.e061.n2048e4320.txt  
+pace.e063.n4096e23766.txt  
+pace.e065.n8192e48759.txt  
+pace.e067.n2048e4241.txt  
+pace.e069.n4096e22368.txt  
+pace.e071.n2048e4896.txt  
+pace.e073.n8192e51796.txt  
+pace.e075.n8192e31504.txt  
+pace.e077.n8192e54744.txt  
+pace.e079.n8192e52154.txt  
+pace.e081.n8192e51030.txt  
+pace.e083.n2048e3537.txt  
+pace.e085.n8192e69446.txt  
+pace.e087.n8192e69372.txt  
+pace.e089.n8192e55556.txt  
+pace.e091.n2048e3364.txt  
+pace.e093.n16384e109487.txt  
+pace.e095.n8192e59029.txt  
+pace.e097.n16384e103725.txt  
+pace.e099.n8192e38175.txt  
+pace.e101.n32768e246723.txt  
+pace.e103.n16384e77536.txt  
+pace.e105.n2048e10584.txt  
+pace.e107.n16384e104833.txt  
+pace.e109.n16384e149298.txt  
+pace.e111.n2048e31904.txt  
+pace.e113.n1024e25750.txt  
+pace.e115.n32768e304304.txt  
+pace.e117.n32768e304790.txt  
+pace.e119.n32768e272707.txt  
+pace.e121.n1024e5480.txt  
+pace.e123.n32768e256256.txt  
+pace.e125.n32768e288748.txt  
+pace.e127.n2048e25492.txt  
+pace.e129.n32768e256665.txt  
+pace.e131.n32768e240240.txt  
+pace.e133.n2048e22332.txt  
+pace.e135.n32768e240816.txt  
+pace.e137.n2048e7003.txt  
+pace.e139.n65536e288492.txt  
+pace.e141.n65536e303686.txt  
+pace.e143.n65536e303696.txt  
+pace.e145.n2048e27086.txt  
+pace.e147.n1024e25052.txt  
+pace.e149.n1024e3624.txt  
+pace.e151.n65536e653240.txt  
+pace.e153.n2048e22306.txt  
+pace.e155.n65536e619239.txt  
+pace.e157.n65536e652583.txt  
+pace.e159.n65536e550097.txt  
+pace.e161.n2048e28713.txt  
+pace.e163.n131072e574081.txt  
+pace.e165.n131072e603932.txt  
+pace.e167.n1024e5487.txt  
+pace.e169.n131072e604300.txt  
+pace.e171.n131072e604042.txt  
+pace.e173.n1024e23175.txt  
+pace.e175.n2048e22520.txt  
+pace.e177.n32768e320320.txt  
+pace.e179.n2048e27346.txt  
+pace.e181.n32768e321088.txt  
+pace.e183.n1024e5471.txt  
+pace.e185.n4096e62879.txt  
+pace.e187.n1024e3632.txt  
+pace.e189.n1024e2048.txt  
+pace.e191.n2048e4143.txt  
+pace.e193.n1024e17144.txt  
+pace.e195.n1024e32768.txt  
+pace.e197.n4096e93346.txt  
+pace.e199.n16384e559996.txt  
+</details>
