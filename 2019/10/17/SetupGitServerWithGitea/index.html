@@ -2,103 +2,99 @@
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">用 Gitea 搭建自己的 Git 服务器</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">用 Gitea 搭建自己的 Git 服务器</h1><div class="post-meta">Oct 17, 2019<span> | </span><span class="category"><a href="/techive/categories/技术/">技术</a></span></div><a data-disqus-identifier="2019/10/17/SetupGitServerWithGitea/" href="/techive/2019/10/17/SetupGitServerWithGitea/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>在永恒之蓝等通过网络文件共享传播的病毒肆虐之后, 很多网络供应商都封禁了文件共享相关端口, 以至于无法简单地通过映射网络驱动器来搭建 Git 的远端仓库, 然后使用 “哑协议” 执行 clone, push, pull 等操作. 因此, 我们可能需要使用支持 http 或者 ssh 的 Git 服务器.<br>目前功能最强大的免费 Git 服务器为 <a href="https://about.gitlab.com/install/" target="_blank" rel="noopener">Gitlab</a>, 它可以让用户自己搭建与 <a href="https://github.com" target="_blank" rel="noopener">https://github.com</a> 或者 <a href="https://gitlab.com" target="_blank" rel="noopener">https://gitlab.com</a> 一样的网站. 但 Gitlab 不支持免费用于商业用途. 此外, 同类开源或免费软件还有 <a href="https://bonobogitserver.com/" target="_blank" rel="noopener">Bonobo</a>, <a href="https://gogs.io/" target="_blank" rel="noopener">Gogs</a>, <a href="https://www.scm-manager.org/" target="_blank" rel="noopener">SCM-Manager</a>, <a href="http://gitblit.com/" target="_blank" rel="noopener">Gitblit</a> 等.</p>
-<h1 id="Windows-环境下操作步骤"><a href="#Windows-环境下操作步骤" class="headerlink" title="Windows 环境下操作步骤"></a>Windows 环境下操作步骤</h1><h2 id="第三方库依赖"><a href="#第三方库依赖" class="headerlink" title="第三方库依赖"></a>第三方库依赖</h2><ol>
-<li>安装 Git<ol>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">用 Gitea 搭建自己的 Git 服务器</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">用 Gitea 搭建自己的 Git 服务器</h1><div class="post-meta">Oct 17, 2019<span> | </span><span class="category"><a href="/techive/categories/技术/">技术</a></span></div><a data-disqus-identifier="2019/10/17/SetupGitServerWithGitea/" href="/techive/2019/10/17/SetupGitServerWithGitea/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>在永恒之蓝等通过网络文件共享传播的病毒肆虐之后, 很多网络供应商都封禁了文件共享相关端口, 以至于无法简单地通过映射网络驱动器来搭建 Git 的远端仓库, 然后使用 "哑协议" 执行 clone, push, pull 等操作. 因此, 我们可能需要使用支持 http 或者 ssh 的 Git 服务器. 目前功能最强大的免费 Git 服务器为 <a href="https://about.gitlab.com/install/" target="_blank" rel="noopener">Gitlab</a>, 它可以让用户自己搭建与 https://github.com 或者 https://gitlab.com 一样的网站. 但 Gitlab 不支持免费用于商业用途. 此外, 同类开源或免费软件还有 <a href="https://bonobogitserver.com/" target="_blank" rel="noopener">Bonobo</a>, <a href="https://gogs.io/" target="_blank" rel="noopener">Gogs</a>, <a href="https://www.scm-manager.org/" target="_blank" rel="noopener">SCM-Manager</a>, <a href="http://gitblit.com/" target="_blank" rel="noopener">Gitblit</a> 等.</p>
+<h1 id="windows-环境下操作步骤">Windows 环境下操作步骤</h1>
+<h2 id="第三方库依赖">第三方库依赖</h2>
+<ol type="1">
+<li>安装 Git
+<ol type="1">
 <li>在<a href="https://git-scm.com/" target="_blank" rel="noopener">官方网站</a>下载最新版安装包</li>
 <li>双击运行安装包按照安装向导的提示点下一步即可</li>
+</ol></li>
 </ol>
-</li>
-</ol>
-<h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><ol>
+<h2 id="基本流程">基本流程</h2>
+<ol type="1">
 <li><p>在<a href="https://gitea.io" target="_blank" rel="noopener">官方网站</a>或者 <a href="https://github.com/go-gitea/gitea/releases" target="_blank" rel="noopener">Github 的 release 页面</a>下载最新版本</p>
 <ul>
 <li>截至本文发布时最新版本为 <code>gitea-1.9.4-windows-4.0-amd64.exe</code></li>
-</ul>
-</li>
-<li><p>将下载的文件重命名为 <code>gitea.exe</code> 并移动至任意目录下 (本文后续将使用 <code>C:\YOUR\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径)</p>
-</li>
-<li><p>以管理员身份打开命令行, 执行以下命令添加 Gitea 为 Windows 服务<br> <code>sc create gitea start= auto binPath= &quot;&quot;C:\YOUR\INSTALL\PATH\gitea.exe&quot; web --config &quot;C:\YOUR\INSTALL\PATH\custom\conf\app.ini&quot;&quot;</code></p>
+</ul></li>
+<li><p>将下载的文件重命名为 <code>gitea.exe</code> 并移动至任意目录下 (本文后续将使用 <code>C:\YOUR\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径)</p></li>
+<li><p>以管理员身份打开命令行, 执行以下命令添加 Gitea 为 Windows 服务 <code>sc create gitea start= auto binPath= ""C:\YOUR\INSTALL\PATH\gitea.exe" web --config "C:\YOUR\INSTALL\PATH\custom\conf\app.ini""</code></p>
 <ul>
-<li>详情请见 <a href="https://docs.gitea.io/zh-cn/windows-service/" target="_blank" rel="noopener">https://docs.gitea.io/zh-cn/windows-service/</a></li>
+<li>详情请见 https://docs.gitea.io/zh-cn/windows-service/</li>
 <li>在 PowerShell 中执行上述命令可能会失败, 需要使用经典的 cmd</li>
 <li>假设使用的管理员账号为 <code>admin</code>, 密码为 <code>123</code>, 后面其他地方要用时最好保持一致</li>
-</ul>
-</li>
+</ul></li>
 <li><p>如果该服务未自动启动, 在 Windows 的服务列表中找到 <code>gitea</code> 并启动</p>
-<ol>
-<li>以管理员身份打开服务列表<ul>
+<ol type="1">
+<li>以管理员身份打开服务列表
+<ul>
 <li>开始按钮上点右键 -&gt; 计算机管理 -&gt; 服务和应用程序 -&gt; 服务</li>
 <li>Ctrl+Shift+Esc 打开任务管理器 -&gt; 服务 -&gt; 打开服务</li>
 <li>控制面板 -&gt; 系统和安全 -&gt; 管理工具 -&gt; 服务</li>
-</ul>
-</li>
+</ul></li>
 <li>建议在 <code>gitea</code> 服务上点右键 -&gt; 属性 -&gt; 登陆 -&gt; 此账户, 设置账户为之前使用的管理员账户 <code>admin</code>, 然后重启服务</li>
-</ol>
-</li>
+</ol></li>
 <li><p>在浏览器中访问默认的地址 <code>http://localhost:3000</code> 打开网页端, 点击注册按钮</p>
-<ol>
-<li>第一次点击注册时将进入初始配置页面<ol>
+<ol type="1">
+<li>第一次点击注册时将进入初始配置页面
+<ol type="1">
 <li>数据库推荐选择 SQLite3, 数据库路径建议使用默认的安装目录下的子目录</li>
 <li><code>站点名称</code> 随便填</li>
-<li><code>仓库根目录</code> 建议更改至安装目录下, 例如  <code>C:\YOUR\INSTALL\PATH\data\repo</code></li>
+<li><code>仓库根目录</code> 建议更改至安装目录下, 例如 <code>C:\YOUR\INSTALL\PATH\data\repo</code></li>
 <li><code>以用户名运行</code> 建议使用上面用过的管理员账号 <code>admin</code></li>
 <li>把 <code>SSH 服务域名</code> 和 <code>Gitea 基本 URL</code> 中的 <code>localhost</code> 替换为服务器的 IP 地址或域名</li>
 <li>端口根据个人偏好设置, 设为 80 的话以后的仓库链接可以省略端口号, 但是有和其他 web 服务冲突的可能性, 建议使用默认端口</li>
 <li>可选设置中的 <code>管理员账号设置</code> 为 Gitea 网页端的管理员, 不是操作系统的管理员, 如果此时不设置则第一个注册的用户将自动成为管理员</li>
-</ol>
-</li>
+</ol></li>
 <li>再次点击注册, 完成用户注册</li>
+</ol></li>
 </ol>
-</li>
-</ol>
-<h2 id="疑难解答"><a href="#疑难解答" class="headerlink" title="疑难解答"></a>疑难解答</h2><ol>
-<li><p>更改配置</p>
-<ol>
-<li>在 <code>C:\YOUR\INSTALL\PATH\custom\conf\app.ini</code> 文件中修改相关项目<ul>
+<h2 id="疑难解答">疑难解答</h2>
+<ol type="1">
+<li>更改配置
+<ol type="1">
+<li>在 <code>C:\YOUR\INSTALL\PATH\custom\conf\app.ini</code> 文件中修改相关项目
+<ul>
 <li>网页端地址或者代码仓库地址前缀: <code>ROOT_URL</code>, <code>DOMAIN</code>, <code>SSH_DOMAIN</code></li>
 <li>端口: <code>HTTP_PORT</code>, <code>SSH_PORT</code></li>
-</ul>
-</li>
-<li>参考资料<ul>
-<li><a href="https://docs.gitea.io/zh-cn/customizing-gitea/" target="_blank" rel="noopener">https://docs.gitea.io/zh-cn/customizing-gitea/</a></li>
-<li><a href="https://docs.gitea.io/zh-cn/config-cheat-sheet/" target="_blank" rel="noopener">https://docs.gitea.io/zh-cn/config-cheat-sheet/</a></li>
-<li><a href="https://github.com/go-gitea/gitea/blob/master/custom/conf/app.ini.sample" target="_blank" rel="noopener">https://github.com/go-gitea/gitea/blob/master/custom/conf/app.ini.sample</a></li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>局域网或者互联网上其他机器无法访问网页端</p>
-<ol>
-<li>添加防火墙放行规则<ol>
+</ul></li>
+<li>参考资料
+<ul>
+<li>https://docs.gitea.io/zh-cn/customizing-gitea/</li>
+<li>https://docs.gitea.io/zh-cn/config-cheat-sheet/</li>
+<li>https://github.com/go-gitea/gitea/blob/master/custom/conf/app.ini.sample</li>
+</ul></li>
+</ol></li>
+<li>局域网或者互联网上其他机器无法访问网页端
+<ol type="1">
+<li>添加防火墙放行规则
+<ol type="1">
 <li>控制面板 -&gt; 系统和安全 -&gt; Windows Defender 防火墙 -&gt; 允许应用或功能通过 Windows Defender 防火墙 -&gt; 更改设置 -&gt; 允许其他应用 -&gt; 浏览 -&gt; 选中 <code>C:\YOUR\INSTALL\PATH\gitea.exe</code> -&gt; 网络类型 -&gt; 确保公用和专用均被勾选</li>
-</ol>
-</li>
+</ol></li>
 <li>更换端口</li>
 <li>咨询单位网管或互联网服务提供商</li>
-</ol>
-</li>
-<li><p>初始化设置时无法创建数据库</p>
-<ol>
+</ol></li>
+<li>初始化设置时无法创建数据库
+<ol type="1">
 <li>设置 <code>gitea</code> 服务以管理员账号启动</li>
-<li>安装 SQLite3<ol>
-<li>从<a href="https://sqlite.org" target="_blank" rel="noopener">官方网站</a>下载 SQLite3<ul>
+<li>安装 SQLite3
+<ol type="1">
+<li>从<a href="https://sqlite.org" target="_blank" rel="noopener">官方网站</a>下载 SQLite3
+<ul>
 <li>截至本文发布时最新版本为 <code>sqlite-dll-win64-x64-3300100.zip</code></li>
-</ul>
-</li>
-<li>将压缩包内的文件解压至任意目录下<ul>
+</ul></li>
+<li>将压缩包内的文件解压至任意目录下
+<ul>
 <li>本文后续将使用 <code>C:\SQLITE3\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径</li>
-</ul>
-</li>
-</ol>
-</li>
-<li>在环境变量 <code>Path</code> 中添加安装目录<ol>
+</ul></li>
+</ol></li>
+<li>在环境变量 <code>Path</code> 中添加安装目录
+<ol type="1">
 <li>控制面板 -&gt; 系统和安全 -&gt; 系统 -&gt; 高级系统设置 -&gt; 环境变量 -&gt; 系统变量 -&gt; 双击变量 <code>Path</code></li>
 <li>新建一行 <code>C:\SQLITE3\INSTALL\PATH</code> 或者在变量值字符串开头添加 <code>C:\SQLITE3\INSTALL\PATH;</code></li>
-</ol>
-</li>
-</ol>
-</li>
+</ol></li>
+</ol></li>
 </ol>
 </div><div class="tags"><a href="/techive/tags/技术/">技术</a><a href="/techive/tags/Git/">Git</a><a href="/techive/tags/Gitea/">Gitea</a></div><div class="post-nav"><a href="/techive/2020/12/09/Contest-2020GraphColoring/" class="pre">SmartLab Challenge 2020 - Graph Coloring</a><a href="/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/" class="next">组合优化 (五) 数学规划进阶</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
 var disqus_identifier = '2019/10/17/SetupGitServerWithGitea/';
@@ -125,7 +121,7 @@ $.ajax({
   error: function() {
     $('.btn_click_load').css('display','block');
   }
-});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/05/IdealPostgraduateEducation/">IdealPostgraduateEducation</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/05/IdealPostgraduateEducation/">IdealPostgraduateEducation</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/01/14/Contest-2020FJSP/">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的简历 (Gitee)" target="_blank">苏宙行的简历 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的简历 (Github)" target="_blank">苏宙行的简历 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Resume (Gitee)" target="_blank">Zhouxing Su's Resume (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Resume (Github)" target="_blank">Zhouxing Su's Resume (Github)</a><ul></ul><a href="http://smart.hust.edu.cn" title="智慧计算与优化实验室" target="_blank">智慧计算与优化实验室</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
