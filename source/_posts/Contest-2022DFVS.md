@@ -28,7 +28,6 @@ tags:
   - [3] D. Zhao, L. Xu, S. -M. Qin, G. Liu, and Z. Wang, “The Feedback Vertex Set Problem of Multiplex Networks,” IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 67, no. 12, pp. 3492–3496, Dec. 2020, doi: 10.1109/TCSII.2020.2997974.
 
 
-
 ## 命令行参数
 
 请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).

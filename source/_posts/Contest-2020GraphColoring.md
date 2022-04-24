@@ -97,7 +97,7 @@ gcp.exe 600 123456 <../data/DSJC500.5.txt >sln.dsjc500.5.txt
     - 计算耗时.
   - **可选** 算法在各算例上求得的颜色数最少的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
 - 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
-  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark.data](https://gitee.com/suzhouxing/npbenchmark.data)).
+  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark.data/tree/data](https://gitee.com/suzhouxing/npbenchmark.data/tree/data)).
 
 例如:
 ```
@@ -119,7 +119,7 @@ gcp.exe 600 123456 <../data/DSJC500.5.txt >sln.dsjc500.5.txt
 
 ## 算例清单
 
-下载地址: [https://gitee.com/suzhouxing/npbenchmark.data/GCP/Instance](https://gitee.com/suzhouxing/npbenchmark.data/GCP/Instance)
+下载地址: [https://gitee.com/suzhouxing/npbenchmark.data/tree/data/GCP/Instance](https://gitee.com/suzhouxing/npbenchmark.data/tree/data/GCP/Instance)
 
 算例规模从小到大依次为 (求解难度不一定随规模增加, 但 DSJC500.5 以前的算例应该都很容易求解):
 
