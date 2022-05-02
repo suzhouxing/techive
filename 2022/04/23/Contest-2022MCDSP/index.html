@@ -1,20 +1,20 @@
-<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="An Archive for Technologies by Zhouxing Su"><title>SmartLab Challenge 2020 - Graph Coloring | Techive</title><link rel="stylesheet" type="text/css" href="/techive/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/techive/favicon.ico"><link rel="apple-touch-icon" href="/techive/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/techive/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/techive/atom.xml"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="An Archive for Technologies by Zhouxing Su"><title>SmartLab Challenge 2022 - Minimum Connected Dominating Sets | Techive</title><link rel="stylesheet" type="text/css" href="/techive/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/techive/favicon.ico"><link rel="apple-touch-icon" href="/techive/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/techive/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/techive/atom.xml"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2020 - Graph Coloring</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2020 - Graph Coloring</h1><div class="post-meta">Dec 9, 2020<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2020/12/09/Contest-2020GraphColoring/" href="/techive/2020/12/09/Contest-2020GraphColoring/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>图着色问题在众多领域中有广泛的应用, 可以用来对各种各样的组合优化问题进行建模. 图着色问题主要研究独占资源的分配问题. 比如在编译器给变量分配寄存器分配时, 如果两个变量的生命周期有交集, 则不能分配至同一寄存器. 比如在机场分配停机位时, 如果两架飞机的过站时间有交集, 则不能分配至同一停机位. 比如在光纤网络中进行波长分配时, 如果两条光路经过同一条链路, 则不能使用同一波长传输. 比如移动基站进行通讯频率分配时, 如果两个终端设备位于同一组天线的覆盖范围内, 则不能使用同一通讯频率. 比如在学校排课表时, 如果两个班级要上同一位教师的课, 则其上课时间不能相同. 高效的图着色问题求解算法具有极其重要的理论与应用价值.</p>
-<h1 id="图着色算法训练">图着色算法训练</h1>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</h1><div class="post-meta">Apr 23, 2022<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2022/04/23/Contest-2022MCDSP/" href="/techive/2022/04/23/Contest-2022MCDSP/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>最小连通支配集问题在众多领域中有广泛的应用, 可以用来对多种组合优化问题进行建模. 最小连通支配集问题主要研究如何挑选一系列紧密相连的节点为其他节点提供服务的问题. 例如, 通信网络, 能源传输, 物流调拨等众多行业中的选址都可以用最小连通支配集问题进行建模. 高效的最小连通支配集问题求解算法具有极其重要的理论与应用价值.</p>
+<h1 id="最小连通支配集算法训练">最小连通支配集算法训练</h1>
 <h2 id="问题概述">问题概述</h2>
-<p>给定一个无向图, 请为每个节点染一种颜色, 在任意一条无向边两端的节点颜色不同的情况下, 最小化使用的颜色数.</p>
+<p>给定一个无向图, 请挑选一个节点数最少的连通分量, 使所有节点均与该连通分量中的至少一个节点相邻.</p>
 <ul>
 <li>参考文献.
 <ul>
-<li>[1] Z. Lü and J.-K. Hao, “A memetic algorithm for graph coloring,” European Journal of Operational Research, vol. 203, no. 1, pp. 241–250, 2010, doi: 10.1016/j.ejor.2009.07.016.</li>
-<li>[2] L. Moalic and A. Gondran, “Variations on memetic algorithms for graph coloring problems,” Journal of Heuristics, vol. 24, no. 1, pp. 1–24, 2018, doi: 10.1007/s10732-017-9354-9.</li>
+<li>[1] X. Wu, Z. Lü, and F. Glover, “A Fast Vertex Weighting-Based Local Search for Finding Minimum Connected Dominating Sets,” INFORMS Journal on Computing, vol. 34, no. 2, pp. 817–833, Mar. 2022, doi: 10.1287/ijoc.2021.1106.</li>
+<li>[2] X. Wu, Z. Lü, and P. Galinier, “Restricted swap-based neighborhood search for the minimum connected dominating set problem,” Networks, vol. 69, no. 2, pp. 222–236, Mar. 2017, doi: 10.1002/net.21728.</li>
 </ul></li>
 </ul>
 <h2 id="命令行参数">命令行参数</h2>
-<p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535). 算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>). 例如, 在控制台运行以下命令表示调用可执行文件 <code>gcp.exe</code> 在限时 600 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/DSJC500.5.txt</code> 的算例, 解文件输出至 <code>sln.dsjc500.5.txt</code>: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcp.exe 600 123456 &lt;../data/DSJC500.5.txt &gt;sln.dsjc500.5.txt</span><br></pre></td></tr></table></figure></p>
+<p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535). 算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>). 例如, 在控制台运行以下命令表示调用可执行文件 <code>mcdsp.exe</code> 在限时 600 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/LMS.n30e44.txt</code> 的算例, 解文件输出至 <code>sln.LMS.n30e44.txt</code>: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcdsp.exe 600 123456 &lt;../data/LMS.n30e44.txt &gt;sln.LMS.n30e44.txt</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>运行时间上限.
 <ul>
@@ -28,22 +28,21 @@ ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type=
 </ul>
 <h2 id="输入的算例文件格式">输入的算例文件格式</h2>
 <p>所有算例的节点从 0 开始连续编号.</p>
-<p>第一行给出 3 个由空白字符分隔的整数, 分别表示节点数 N, 无向边数 E (有向边数为 2E), 以及参考颜色数 C (相对容易求得可行解, 非最优颜色数). 接下来连续 E 行, 每行包含 2 个由空白字符分隔的整数, 表示一条无向边的两个端点.</p>
-<p>例如, 以下算例文件表示节点数为 4, 无向边数为 3, 参考颜色数为 2; 其中:<br>
+<p>第一行给出 2 个由空白字符分隔的整数, 分别表示节点数 N 与无向边数 E (有向边数为 2E). 接下来连续 E 行, 每行包含 2 个由空白字符分隔的整数, 表示一条无向边的两个端点.</p>
+<p>例如, 以下算例文件表示节点数为 4, 无向边数为 3; 其中:<br>
 节点 0 分别与 1, 2, 3 相邻. <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">4 3 2</span><br><span class="line">0 1</span><br><span class="line">0 2</span><br><span class="line">3 0</span><br></pre></td></tr></table></figure></p>
 <h2 id="输出的解文件格式">输出的解文件格式</h2>
-<p>输出 N 个用空白字符 (建议使用换行符) 分隔整数表示 N 个节点的染色情况, 第 i 个整数表示第 i 个节点的颜色.</p>
-<p>颜色可以取 <code>int</code> 范围内任意非负整数, 检查程序自动统计不同的非负整数的数量.</p>
-<p>例如, 以下解文件表示节点 0 染颜色 0, 节点 1 染颜色 1, 节点 2 染颜色 1, 节点 3 染颜色 1: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line">1</span><br></pre></td></tr></table></figure></p>
+<p>输出 P 个用空白字符 (建议使用换行符) 分隔的整数, 分别表示挑选出的 P 个节点.</p>
+<p>例如, 以下解文件表示选择节点 0 和 2 作为连通支配集: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">2</span><br></pre></td></tr></table></figure></p>
 <h2 id="提交要求">提交要求</h2>
 <ul>
 <li>发送至邮箱 <a href="mailto:szx@duhe.tech" target="_blank" rel="noopener">szx@duhe.tech</a>.</li>
-<li>邮件标题格式为 "<strong>Challenge2020GCP-姓名-学校-专业</strong>".</li>
+<li>邮件标题格式为 "<strong>Challenge2022MCDSP-姓名-学校-专业</strong>".</li>
 <li>邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "<strong>姓名-学校-专业</strong>", 其内包含下列文件.
 <ul>
 <li><strong>必要</strong> 算法的可执行文件 (Windows 平台).
 <ul>
-<li>建议基于官方 SDK 开发 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.GCP" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.GCP</a>).</li>
+<li>建议基于官方 SDK 开发 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.MCDSP" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.MCDSP</a>).</li>
 <li>用 g++ 的同学编译时建议静态链接, 即添加 <code>-static-libgcc -static-libstdc++</code> 编译选项.</li>
 </ul></li>
 <li><strong>必要</strong> 算法源码.
@@ -55,36 +54,158 @@ ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type=
 <li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).
 <ul>
 <li>算例名.</li>
-<li>颜色数.</li>
+<li>连通支配集节点数.</li>
 <li>计算耗时.</li>
 </ul></li>
-<li><strong>可选</strong> 算法在各算例上求得的颜色数最少的解文件 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).</li>
+<li><strong>可选</strong> 算法在各算例上求得的连通支配集节点数最少的解文件 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).</li>
 </ul></li>
 <li>若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
 <ul>
-<li>若测试结果较优, 可在排行榜页面看到自己的运行情况 (<a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data#gcp" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data#gcp</a>).</li>
+<li>若测试结果较优, 可在排行榜页面看到自己的运行情况 (<a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data#mcdsp" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data#mcdsp</a>).</li>
 </ul></li>
 </ul>
-<p>例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   gc.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        DSJC125.1.txt</span><br><span class="line">        DSJC125.5.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<p>例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   mcdsp.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        LPNMR.n40e200.txt</span><br><span class="line">        LPNMR.n45e250.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
 <h2 id="算例清单">算例清单</h2>
-<p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data/GCP/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data/GCP/Instance</a></p>
-<p>算例规模从小到大依次为 (求解难度不一定随规模增加, 但 DSJC500.5 以前的算例应该都很容易求解):</p>
-<p>DSJC0125.1<br>
-DSJC0125.5<br>
-DSJC0125.9<br>
-DSJC0250.1<br>
-DSJC0250.5<br>
-DSJC0250.9<br>
-DSJC0500.1<br>
-DSJC0500.5<br>
-DSJC0500.9<br>
-DSJC1000.1<br>
-DSJC1000.5<br>
-DSJC1000.9</p>
-</div><div class="tags"><a href="/techive/tags/Challenge/">Challenge</a><a href="/techive/tags/算法挑战/">算法挑战</a><a href="/techive/tags/组合优化/">组合优化</a></div><div class="post-nav"><a href="/techive/2020/12/22/Contest-2020pCenter/" class="pre">SmartLab Challenge 2020 - p-Center and Unicost Set Covering</a><a href="/techive/2019/10/17/SetupGitServerWithGitea/" class="next">用 Gitea 搭建自己的 Git 服务器</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
-var disqus_identifier = '2020/12/09/Contest-2020GraphColoring/';
-var disqus_title = 'SmartLab Challenge 2020 - Graph Coloring';
-var disqus_url = 'http://suzhouxing.github.io/techive/2020/12/09/Contest-2020GraphColoring/';
+<p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data/MCDSP/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data/tree/data/MCDSP/Instance</a></p>
+<p>算例规模从小到大依次为 (求解难度不一定随规模增加):</p>
+<p>LPNMR.n40e200<br>
+LPNMR.n45e250<br>
+LPNMR.n50e250<br>
+LPNMR.n55e250<br>
+LPNMR.n60e400<br>
+LPNMR.n70e250<br>
+LPNMR.n80e500<br>
+LPNMR.n90e600<br>
+LMS.n30e44<br>
+LMS.n30e87<br>
+LMS.n30e131<br>
+LMS.n30e218<br>
+LMS.n30e305<br>
+LMS.n50e61<br>
+LMS.n50e123<br>
+LMS.n50e245<br>
+LMS.n50e368<br>
+LMS.n50e613<br>
+LMS.n50e858<br>
+LMS.n70e121<br>
+LMS.n70e242<br>
+LMS.n70e483<br>
+LMS.n70e725<br>
+LMS.n70e1208<br>
+LMS.n70e1691<br>
+LMS.n100e248<br>
+LMS.n100e495<br>
+LMS.n100e990<br>
+LMS.n100e1485<br>
+LMS.n100e2475<br>
+LMS.n100e3465<br>
+LMS.n120e357<br>
+LMS.n120e714<br>
+LMS.n120e1428<br>
+LMS.n120e2142<br>
+LMS.n120e3570<br>
+LMS.n120e4998<br>
+LMS.n150e559<br>
+LMS.n150e1118<br>
+LMS.n150e2235<br>
+LMS.n150e3353<br>
+LMS.n150e5588<br>
+LMS.n150e7823<br>
+LMS.n200e995<br>
+LMS.n200e1990<br>
+LMS.n200e3980<br>
+LMS.n200e5970<br>
+LMS.n200e9950<br>
+LMS.n200e13930<br>
+BPFTC.n14e20<br>
+BPFTC.n30e41<br>
+BPFTC.n57e78<br>
+BPFTC.n73e108<br>
+BPFTC.n118e179<br>
+BPFTC.n300e409<br>
+RGG.n80e262<br>
+RGG.n80e329<br>
+RGG.n80e400<br>
+RGG.n80e474<br>
+RGG.n80e563<br>
+RGG.n80e647<br>
+RGG.n80e735<br>
+RGG.n100e335<br>
+RGG.n100e368<br>
+RGG.n100e435<br>
+RGG.n100e500<br>
+RGG.n100e575<br>
+RGG.n200e756<br>
+RGG.n200e871<br>
+RGG.n200e921<br>
+RGG.n200e997<br>
+RGG.n200e1113<br>
+RGG.n200e1127<br>
+RGG.n200e1269<br>
+RGG.n200e1305<br>
+RGG.n200e1400<br>
+RGG.n200e1501<br>
+RGG.n200e1541<br>
+RGG.n200e1730<br>
+RGG.n250e903<br>
+RGG.n250e1011<br>
+RGG.n250e1119<br>
+RGG.n250e1246<br>
+RGG.n300e1577<br>
+RGG.n300e1710<br>
+RGG.n300e1849<br>
+RGG.n300e1990<br>
+RGG.n350e1461<br>
+RGG.n350e1555<br>
+RGG.n350e1668<br>
+RGG.n350e1787<br>
+RGG.n400e1522<br>
+RGG.n400e1621<br>
+RGG.n400e1750<br>
+RGG.n400e1880<br>
+Sparse.n1000e1298<br>
+Sparse.n1000e1497<br>
+Sparse.n1000e1694<br>
+Sparse.n1500e1995<br>
+Sparse.n1500e2198<br>
+Sparse.n1500e2397<br>
+Sparse.n2000e2598<br>
+Sparse.n2000e2798<br>
+Sparse.n2000e2996<br>
+Sparse.n2500e3297<br>
+Sparse.n2500e3496<br>
+Sparse.n2500e3697<br>
+Sparse.n3000e3998<br>
+Sparse.n3000e4298<br>
+Sparse.n3000e4597<br>
+BOBL.n1000e3449<br>
+BOBL.n1000e3481<br>
+BOBL.n1000e7150<br>
+BOBL.n1000e7164<br>
+BOBL.n1000e13923<br>
+BOBL.n1000e14380<br>
+BOBL.n1000e27002<br>
+BOBL.n1000e27966<br>
+BOBL.n1000e55730<br>
+BOBL.n1000e56085<br>
+BOBL.n1000e111644<br>
+BOBL.n1000e111893<br>
+BOBL.n5000e86922<br>
+BOBL.n5000e87265<br>
+BOBL.n5000e174799<br>
+BOBL.n5000e183025<br>
+BOBL.n5000e349693<br>
+BOBL.n5000e361947<br>
+BOBL.n5000e675960<br>
+BOBL.n5000e701099<br>
+BOBL.n5000e1400601<br>
+BOBL.n5000e1408976<br>
+BOBL.n5000e2792708<br>
+BOBL.n5000e2797377</p>
+</div><div class="tags"><a href="/techive/tags/Challenge/">Challenge</a><a href="/techive/tags/算法挑战/">算法挑战</a><a href="/techive/tags/组合优化/">组合优化</a></div><div class="post-nav"><a href="/techive/2022/04/28/Contest-2023PECCP/" class="pre">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a><a href="/techive/2022/04/15/Contest-2022DFVS/" class="next">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
+var disqus_identifier = '2022/04/23/Contest-2022MCDSP/';
+var disqus_title = 'SmartLab Challenge 2022 - Minimum Connected Dominating Sets';
+var disqus_url = 'http://suzhouxing.github.io/techive/2022/04/23/Contest-2022MCDSP/';
 $('.btn_click_load').click(function() {
   (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
