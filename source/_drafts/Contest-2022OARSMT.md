@@ -31,7 +31,7 @@ tags:
   - [4] H. Zhang, D. Ye, and W. Guo, “A heuristic for constructing a rectilinear Steiner tree by reusing routing resources over obstacles,” Integration, vol. 55, pp. 162–175, Sep. 2016, doi: 10.1016/j.vlsi.2016.06.001.
 
 
-
+<details style="border: 1px solid #aaa; border-radius: 4px;"><summary>⯈ 命令行与文件接口 (已废弃)</summary>
 ## 命令行参数
 
 请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).
@@ -93,43 +93,53 @@ oarsmt.exe 300 123456 <../data/rc01.n10o10.txt >sln.rc01.n10o10.txt
 3 3 y -2
 
 ```
+</details>
+
+
+## SDK 概述
+
+- `Main.cpp` 定义了程序入口.
+  - 已实现命令行参数解析与输入输出读写, 调用算法队单个算例进行求解.
+  - 建议参考其中注释将其修改为批量重复测试多组算例.
+- `OARSteinerMinTree.h` 定义了算法调用接口.
+  - 以 `solve` 为前缀的函数为算法调用接口, 其实现应满足以下工程要求.
+    - 可重入 (可在同一线程内反复调用而不会出现数据初始化错误或内存泄漏).
+    - 可并发 (可在同一进程内的多个线程同时调用求解算法而互不干扰, 满足此要求一般不能有全局的非只读变量).
+    - 可伸缩 (数据结构可以根据算例规模动态申请内存, 而非根据预先指定的编译期常量进行内存分配).
+- `OARSteinerMinTree.cpp` 给出了符合调用接口的算法实现示例.
+  - 示例代码不保证计算结果的可行性与优度.
+  - 在保证满足调用接口的前提下可任意修改本文件, 将其替换为更高效的算法.
+- 使用者可任意添加各类文件和目录.
+  - 测试平台将递归搜索目录树, 将全部 `.cpp` 文件添加为编译目标.
+  - 包含头文件建议使用相对路径.
+  - 考虑到可能使用第三方库, 测试平台将 SDK 根目录 `./` 与 `./include/` 添加为包含目录.
 
 
 ## 提交要求
 
 - 发送至邮箱 [szx@duhe.tech](mailto:szx@duhe.tech).
 - 邮件标题格式为 "**Challenge2022OARSMT-姓名-学校-专业**".
-- 邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "**姓名-学校-专业**", 其内包含下列文件.
-  - **必要** 算法的可执行文件 (Windows 平台).
-    - 建议基于官方 SDK 开发 ([https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.OARSMT](https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.OARSMT)).
-    - 用 g++ 的同学编译时请静态链接, 即添加 `-static-libgcc -static-libstdc++` 编译选项.
-  - **必要** 算法源码.
-    - 可重入 (可在同一线程内反复调用而不会出现数据初始化错误或内存泄漏).
-    - 可并发 (可在同一进程内的多个线程同时运行多个算法求解实例而互不干扰, 满足此要求一般不能有全局的非只读变量).
-    - 可伸缩 (数据结构可以根据算例规模动态申请内存, 而非根据预先指定的编译期常量进行内存分配).
-  - **可选** 算法在各算例上的运行情况概要, 至少包括以下几项信息 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).
-    - 算例名.
-    - 剩余未覆盖元素数.
-    - 计算耗时.
-  - **可选** 算法在各算例上求得包络矩形面积最小的解文件 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).
+- 邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "**姓名-学校-专业**", 其内包含基于 SDK 开发的算法源码.
+  - SDK 仓库地址为 [https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.OARSMT](https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.OARSMT).
+  - 测试平台将自动在 Windows 10 平台下使用 Visual C++ 2019 编译源码生成可执行文件进行测试.
+  - 请确保 SDK 中原有的 `Main.cpp` 和所有 `.h` 文件在压缩包根目录, 相关文件将被 SDK 中的标准版本覆盖 (若移动位置可能出现符号重定义的编译错误).
 - 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
+  - 若源码出现编译错误, 会自动将相关报错信息通过邮件回复.
   - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark.data/tree/data#oarsmt](https://gitee.com/suzhouxing/npbenchmark.data/tree/data#oarsmt)).
 
 例如:
 ```
 苏宙行-华科-计科.zip
-|   packing.exe
-|   results.csv
-|
-+---src
-|       main.cpp
-|       algorithm.cpp
-|       algorithm.h
-|
-+---results
-        rc01.n10o10.txt
-        rc02.n30o10.txt
-        ...
++-- Main.cpp
++-- problem.h
++-- algorithm.cpp
+x-- utils/
+|   +-- a.h
+|   +-- b.cpp
+|   x-- alg/
+|   |   +-- c.h
+x-- misc/
+|   +-- d.h
 ```
 
 
