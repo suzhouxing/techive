@@ -115,7 +115,7 @@ dfvsp.exe 600 123456 <../data/pardalos.n50e100.txt >sln.pardalos.n50e100.txt
 
 ## 算例清单
 
-下载地址: [https://gitee.com/suzhouxing/npbenchmark.data/DFVSP/Instance](https://gitee.com/suzhouxing/npbenchmark.data/DFVSP/Instance)
+下载地址: [https://gitee.com/suzhouxing/npbenchmark.data/tree/data/DFVSP/Instance](https://gitee.com/suzhouxing/npbenchmark.data/tree/data/DFVSP/Instance)
 
 算例规模从小到大依次为 (求解难度不一定随规模增加):
 

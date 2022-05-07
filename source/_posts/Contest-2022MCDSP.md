@@ -111,7 +111,7 @@ mcdsp.exe 600 123456 <../data/LMS.n30e44.txt >sln.LMS.n30e44.txt
 
 ## 算例清单
 
-下载地址: [https://gitee.com/suzhouxing/npbenchmark.data/tree/data/tree/data/MCDSP/Instance](https://gitee.com/suzhouxing/npbenchmark.data/tree/data/MCDSP/Instance)
+下载地址: [https://gitee.com/suzhouxing/npbenchmark.data/tree/data/MCDSP/Instance](https://gitee.com/suzhouxing/npbenchmark.data/tree/data/MCDSP/Instance)
 
 算例规模从小到大依次为 (求解难度不一定随规模增加):
 
