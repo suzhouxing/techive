@@ -2,207 +2,66 @@
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</h1><div class="post-meta">Apr 23, 2022<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2022/04/23/Contest-2022MCDSP/" href="/techive/2022/04/23/Contest-2022MCDSP/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>最小连通支配集问题在众多领域中有广泛的应用, 可以用来对多种组合优化问题进行建模. 最小连通支配集问题主要研究如何挑选一系列紧密相连的节点为其他节点提供服务的问题. 例如, 通信网络, 能源传输, 物流调拨等众多行业中的选址都可以用最小连通支配集问题进行建模. 高效的最小连通支配集问题求解算法具有极其重要的理论与应用价值.</p>
-<h1 id="最小连通支配集算法训练">最小连通支配集算法训练</h1>
-<h2 id="问题概述">问题概述</h2>
-<p>给定一个无向图, 请挑选一个节点数最少的连通分量, 使所有节点均与该连通分量中的至少一个节点相邻.</p>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</h1><div class="post-meta">Apr 23, 2022<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2022/04/23/Contest-2022MCDSP/" href="/techive/2022/04/23/Contest-2022MCDSP/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>最小连通支配集问题在众多领域中有广泛的应用, 可以用来对多种组合优化问题进行建模.<br>最小连通支配集问题主要研究如何挑选一系列紧密相连的节点为其他节点提供服务的问题.<br>例如, 通信网络, 能源传输, 物流调拨等众多行业中的选址都可以用最小连通支配集问题进行建模.<br>高效的最小连通支配集问题求解算法具有极其重要的理论与应用价值.</p>
+<h1 id="最小连通支配集算法训练"><a href="#最小连通支配集算法训练" class="headerlink" title="最小连通支配集算法训练"></a>最小连通支配集算法训练</h1><h2 id="问题概述"><a href="#问题概述" class="headerlink" title="问题概述"></a>问题概述</h2><p>给定一个无向图, 请挑选一个节点数最少的连通分量, 使所有节点均与该连通分量中的至少一个节点相邻.</p>
 <ul>
-<li>参考文献.
-<ul>
+<li>参考文献.<ul>
 <li>[1] X. Wu, Z. Lü, and F. Glover, “A Fast Vertex Weighting-Based Local Search for Finding Minimum Connected Dominating Sets,” INFORMS Journal on Computing, vol. 34, no. 2, pp. 817–833, Mar. 2022, doi: 10.1287/ijoc.2021.1106.</li>
 <li>[2] X. Wu, Z. Lü, and P. Galinier, “Restricted swap-based neighborhood search for the minimum connected dominating set problem,” Networks, vol. 69, no. 2, pp. 222–236, Mar. 2017, doi: 10.1002/net.21728.</li>
-</ul></li>
 </ul>
-<h2 id="命令行参数">命令行参数</h2>
-<p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535). 算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>). 例如, 在控制台运行以下命令表示调用可执行文件 <code>mcdsp.exe</code> 在限时 600 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/LMS.n30e44.txt</code> 的算例, 解文件输出至 <code>sln.LMS.n30e44.txt</code>: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcdsp.exe 600 123456 &lt;../data/LMS.n30e44.txt &gt;sln.LMS.n30e44.txt</span><br></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).<br>算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>).<br>例如, 在控制台运行以下命令表示调用可执行文件 <code>mcdsp.exe</code> 在限时 600 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/LMS.n30e44.txt</code> 的算例, 解文件输出至 <code>sln.LMS.n30e44.txt</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcdsp.exe 600 123456 &lt;../data/LMS.n30e44.txt &gt;sln.LMS.n30e44.txt</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>运行时间上限.
-<ul>
+<li>运行时间上限.<ul>
 <li>超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已输出解 (最好还能自行正常退出).</li>
-</ul></li>
-<li>随机种子设置.
-<ul>
+</ul>
+</li>
+<li>随机种子设置.<ul>
 <li>使用 C 语言随机数生成器请用 <code>srand</code>.</li>
 <li>使用 C++ 随机数生成器 (如 <code>mt19937</code>) 请在构造时传参或调用 <code>seed()</code> 方法设置.</li>
-</ul></li>
 </ul>
-<h2 id="输入的算例文件格式">输入的算例文件格式</h2>
-<p>所有算例的节点从 0 开始连续编号.</p>
-<p>第一行给出 2 个由空白字符分隔的整数, 分别表示节点数 N 与无向边数 E (有向边数为 2E). 接下来连续 E 行, 每行包含 2 个由空白字符分隔的整数, 表示一条无向边的两个端点.</p>
-<p>例如, 以下算例文件表示节点数为 4, 无向边数为 3; 其中:<br>
-节点 0 分别与 1, 2, 3 相邻. <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">4 3 2</span><br><span class="line">0 1</span><br><span class="line">0 2</span><br><span class="line">3 0</span><br></pre></td></tr></table></figure></p>
-<h2 id="输出的解文件格式">输出的解文件格式</h2>
-<p>输出 P 个用空白字符 (建议使用换行符) 分隔的整数, 分别表示挑选出的 P 个节点.</p>
-<p>例如, 以下解文件表示选择节点 0 和 2 作为连通支配集: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">2</span><br></pre></td></tr></table></figure></p>
-<h2 id="提交要求">提交要求</h2>
-<ul>
+</li>
+</ul>
+<h2 id="输入的算例文件格式"><a href="#输入的算例文件格式" class="headerlink" title="输入的算例文件格式"></a>输入的算例文件格式</h2><p>所有算例的节点从 0 开始连续编号.</p>
+<p>第一行给出 2 个由空白字符分隔的整数, 分别表示节点数 N 与无向边数 E (有向边数为 2E).<br>接下来连续 E 行, 每行包含 2 个由空白字符分隔的整数, 表示一条无向边的两个端点.</p>
+<p>例如, 以下算例文件表示节点数为 4, 无向边数为 3; 其中:<br>节点 0 分别与 1, 2, 3 相邻.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">4 3 2</span><br><span class="line">0 1</span><br><span class="line">0 2</span><br><span class="line">3 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="输出的解文件格式"><a href="#输出的解文件格式" class="headerlink" title="输出的解文件格式"></a>输出的解文件格式</h2><p>输出 P 个用空白字符 (建议使用换行符) 分隔的整数, 分别表示挑选出的 P 个节点.</p>
+<p>例如, 以下解文件表示选择节点 0 和 2 作为连通支配集:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">2</span><br></pre></td></tr></table></figure></p>
+<h2 id="提交要求"><a href="#提交要求" class="headerlink" title="提交要求"></a>提交要求</h2><ul>
 <li>发送至邮箱 <a href="mailto:szx@duhe.tech" target="_blank" rel="noopener">szx@duhe.tech</a>.</li>
-<li>邮件标题格式为 "<strong>Challenge2022MCDSP-姓名-学校-专业</strong>".</li>
-<li>邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "<strong>姓名-学校-专业</strong>", 其内包含下列文件.
-<ul>
-<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).
-<ul>
+<li>邮件标题格式为 “<strong>Challenge2022MCDSP-姓名-学校-专业</strong>“.</li>
+<li>邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 “<strong>姓名-学校-专业</strong>“, 其内包含下列文件.<ul>
+<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).<ul>
 <li>建议基于官方 SDK 开发 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.MCDSP" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.MCDSP</a>).</li>
 <li>用 g++ 的同学编译时建议静态链接, 即添加 <code>-static-libgcc -static-libstdc++</code> 编译选项.</li>
-</ul></li>
-<li><strong>必要</strong> 算法源码.
-<ul>
+</ul>
+</li>
+<li><strong>必要</strong> 算法源码.<ul>
 <li>可重入 (可在同一线程内反复调用而不会出现数据初始化错误或内存泄漏).</li>
 <li>可并发 (可在同一进程内的多个线程同时运行多个算法求解实例而互不干扰, 满足此要求一般不能有全局的非只读变量).</li>
 <li>可伸缩 (数据结构可以根据算例规模动态申请内存, 而非根据预先指定的编译期常量进行内存分配).</li>
-</ul></li>
-<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).
-<ul>
+</ul>
+</li>
+<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).<ul>
 <li>算例名.</li>
 <li>连通支配集节点数.</li>
 <li>计算耗时.</li>
-</ul></li>
-<li><strong>可选</strong> 算法在各算例上求得的连通支配集节点数最少的解文件 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).</li>
-</ul></li>
-<li>若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
-<ul>
-<li>若测试结果较优, 可在排行榜页面看到自己的运行情况 (<a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data#mcdsp" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data#mcdsp</a>).</li>
-</ul></li>
 </ul>
-<p>例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   mcdsp.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        LPNMR.n40e200.txt</span><br><span class="line">        LPNMR.n45e250.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
-<h2 id="算例清单">算例清单</h2>
-<p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data/MCDSP/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data/tree/data/MCDSP/Instance</a></p>
+</li>
+<li><strong>可选</strong> 算法在各算例上求得的连通支配集节点数最少的解文件 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).</li>
+</ul>
+</li>
+<li>若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.<ul>
+<li>若测试结果较优, 可在排行榜页面看到自己的运行情况 (<a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data#mcdsp" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data#mcdsp</a>).</li>
+</ul>
+</li>
+</ul>
+<p>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   mcdsp.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        LPNMR.n40e200.txt</span><br><span class="line">        LPNMR.n45e250.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="算例清单"><a href="#算例清单" class="headerlink" title="算例清单"></a>算例清单</h2><p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data/MCDSP/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data/MCDSP/Instance</a></p>
 <p>算例规模从小到大依次为 (求解难度不一定随规模增加):</p>
-<p>LPNMR.n40e200<br>
-LPNMR.n45e250<br>
-LPNMR.n50e250<br>
-LPNMR.n55e250<br>
-LPNMR.n60e400<br>
-LPNMR.n70e250<br>
-LPNMR.n80e500<br>
-LPNMR.n90e600<br>
-LMS.n30e44<br>
-LMS.n30e87<br>
-LMS.n30e131<br>
-LMS.n30e218<br>
-LMS.n30e305<br>
-LMS.n50e61<br>
-LMS.n50e123<br>
-LMS.n50e245<br>
-LMS.n50e368<br>
-LMS.n50e613<br>
-LMS.n50e858<br>
-LMS.n70e121<br>
-LMS.n70e242<br>
-LMS.n70e483<br>
-LMS.n70e725<br>
-LMS.n70e1208<br>
-LMS.n70e1691<br>
-LMS.n100e248<br>
-LMS.n100e495<br>
-LMS.n100e990<br>
-LMS.n100e1485<br>
-LMS.n100e2475<br>
-LMS.n100e3465<br>
-LMS.n120e357<br>
-LMS.n120e714<br>
-LMS.n120e1428<br>
-LMS.n120e2142<br>
-LMS.n120e3570<br>
-LMS.n120e4998<br>
-LMS.n150e559<br>
-LMS.n150e1118<br>
-LMS.n150e2235<br>
-LMS.n150e3353<br>
-LMS.n150e5588<br>
-LMS.n150e7823<br>
-LMS.n200e995<br>
-LMS.n200e1990<br>
-LMS.n200e3980<br>
-LMS.n200e5970<br>
-LMS.n200e9950<br>
-LMS.n200e13930<br>
-BPFTC.n14e20<br>
-BPFTC.n30e41<br>
-BPFTC.n57e78<br>
-BPFTC.n73e108<br>
-BPFTC.n118e179<br>
-BPFTC.n300e409<br>
-RGG.n80e262<br>
-RGG.n80e329<br>
-RGG.n80e400<br>
-RGG.n80e474<br>
-RGG.n80e563<br>
-RGG.n80e647<br>
-RGG.n80e735<br>
-RGG.n100e335<br>
-RGG.n100e368<br>
-RGG.n100e435<br>
-RGG.n100e500<br>
-RGG.n100e575<br>
-RGG.n200e756<br>
-RGG.n200e871<br>
-RGG.n200e921<br>
-RGG.n200e997<br>
-RGG.n200e1113<br>
-RGG.n200e1127<br>
-RGG.n200e1269<br>
-RGG.n200e1305<br>
-RGG.n200e1400<br>
-RGG.n200e1501<br>
-RGG.n200e1541<br>
-RGG.n200e1730<br>
-RGG.n250e903<br>
-RGG.n250e1011<br>
-RGG.n250e1119<br>
-RGG.n250e1246<br>
-RGG.n300e1577<br>
-RGG.n300e1710<br>
-RGG.n300e1849<br>
-RGG.n300e1990<br>
-RGG.n350e1461<br>
-RGG.n350e1555<br>
-RGG.n350e1668<br>
-RGG.n350e1787<br>
-RGG.n400e1522<br>
-RGG.n400e1621<br>
-RGG.n400e1750<br>
-RGG.n400e1880<br>
-Sparse.n1000e1298<br>
-Sparse.n1000e1497<br>
-Sparse.n1000e1694<br>
-Sparse.n1500e1995<br>
-Sparse.n1500e2198<br>
-Sparse.n1500e2397<br>
-Sparse.n2000e2598<br>
-Sparse.n2000e2798<br>
-Sparse.n2000e2996<br>
-Sparse.n2500e3297<br>
-Sparse.n2500e3496<br>
-Sparse.n2500e3697<br>
-Sparse.n3000e3998<br>
-Sparse.n3000e4298<br>
-Sparse.n3000e4597<br>
-BOBL.n1000e3449<br>
-BOBL.n1000e3481<br>
-BOBL.n1000e7150<br>
-BOBL.n1000e7164<br>
-BOBL.n1000e13923<br>
-BOBL.n1000e14380<br>
-BOBL.n1000e27002<br>
-BOBL.n1000e27966<br>
-BOBL.n1000e55730<br>
-BOBL.n1000e56085<br>
-BOBL.n1000e111644<br>
-BOBL.n1000e111893<br>
-BOBL.n5000e86922<br>
-BOBL.n5000e87265<br>
-BOBL.n5000e174799<br>
-BOBL.n5000e183025<br>
-BOBL.n5000e349693<br>
-BOBL.n5000e361947<br>
-BOBL.n5000e675960<br>
-BOBL.n5000e701099<br>
-BOBL.n5000e1400601<br>
-BOBL.n5000e1408976<br>
-BOBL.n5000e2792708<br>
-BOBL.n5000e2797377</p>
-</div><div class="tags"><a href="/techive/tags/Challenge/">Challenge</a><a href="/techive/tags/算法挑战/">算法挑战</a><a href="/techive/tags/组合优化/">组合优化</a></div><div class="post-nav"><a href="/techive/2022/04/28/Contest-2023PECCP/" class="pre">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a><a href="/techive/2022/04/15/Contest-2022DFVS/" class="next">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
+<p>LPNMR.n40e200<br>LPNMR.n45e250<br>LPNMR.n50e250<br>LPNMR.n55e250<br>LPNMR.n60e400<br>LPNMR.n70e250<br>LPNMR.n80e500<br>LPNMR.n90e600<br>LMS.n30e44<br>LMS.n30e87<br>LMS.n30e131<br>LMS.n30e218<br>LMS.n30e305<br>LMS.n50e61<br>LMS.n50e123<br>LMS.n50e245<br>LMS.n50e368<br>LMS.n50e613<br>LMS.n50e858<br>LMS.n70e121<br>LMS.n70e242<br>LMS.n70e483<br>LMS.n70e725<br>LMS.n70e1208<br>LMS.n70e1691<br>LMS.n100e248<br>LMS.n100e495<br>LMS.n100e990<br>LMS.n100e1485<br>LMS.n100e2475<br>LMS.n100e3465<br>LMS.n120e357<br>LMS.n120e714<br>LMS.n120e1428<br>LMS.n120e2142<br>LMS.n120e3570<br>LMS.n120e4998<br>LMS.n150e559<br>LMS.n150e1118<br>LMS.n150e2235<br>LMS.n150e3353<br>LMS.n150e5588<br>LMS.n150e7823<br>LMS.n200e995<br>LMS.n200e1990<br>LMS.n200e3980<br>LMS.n200e5970<br>LMS.n200e9950<br>LMS.n200e13930<br>BPFTC.n14e20<br>BPFTC.n30e41<br>BPFTC.n57e78<br>BPFTC.n73e108<br>BPFTC.n118e179<br>BPFTC.n300e409<br>RGG.n80e262<br>RGG.n80e329<br>RGG.n80e400<br>RGG.n80e474<br>RGG.n80e563<br>RGG.n80e647<br>RGG.n80e735<br>RGG.n100e335<br>RGG.n100e368<br>RGG.n100e435<br>RGG.n100e500<br>RGG.n100e575<br>RGG.n200e756<br>RGG.n200e871<br>RGG.n200e921<br>RGG.n200e997<br>RGG.n200e1113<br>RGG.n200e1127<br>RGG.n200e1269<br>RGG.n200e1305<br>RGG.n200e1400<br>RGG.n200e1501<br>RGG.n200e1541<br>RGG.n200e1730<br>RGG.n250e903<br>RGG.n250e1011<br>RGG.n250e1119<br>RGG.n250e1246<br>RGG.n300e1577<br>RGG.n300e1710<br>RGG.n300e1849<br>RGG.n300e1990<br>RGG.n350e1461<br>RGG.n350e1555<br>RGG.n350e1668<br>RGG.n350e1787<br>RGG.n400e1522<br>RGG.n400e1621<br>RGG.n400e1750<br>RGG.n400e1880<br>Sparse.n1000e1298<br>Sparse.n1000e1497<br>Sparse.n1000e1694<br>Sparse.n1500e1995<br>Sparse.n1500e2198<br>Sparse.n1500e2397<br>Sparse.n2000e2598<br>Sparse.n2000e2798<br>Sparse.n2000e2996<br>Sparse.n2500e3297<br>Sparse.n2500e3496<br>Sparse.n2500e3697<br>Sparse.n3000e3998<br>Sparse.n3000e4298<br>Sparse.n3000e4597<br>BOBL.n1000e3449<br>BOBL.n1000e3481<br>BOBL.n1000e7150<br>BOBL.n1000e7164<br>BOBL.n1000e13923<br>BOBL.n1000e14380<br>BOBL.n1000e27002<br>BOBL.n1000e27966<br>BOBL.n1000e55730<br>BOBL.n1000e56085<br>BOBL.n1000e111644<br>BOBL.n1000e111893<br>BOBL.n5000e86922<br>BOBL.n5000e87265<br>BOBL.n5000e174799<br>BOBL.n5000e183025<br>BOBL.n5000e349693<br>BOBL.n5000e361947<br>BOBL.n5000e675960<br>BOBL.n5000e701099<br>BOBL.n5000e1400601<br>BOBL.n5000e1408976<br>BOBL.n5000e2792708<br>BOBL.n5000e2797377  </p>
+</div><div class="tags"><a href="/techive/tags/组合优化/">组合优化</a><a href="/techive/tags/Challenge/">Challenge</a><a href="/techive/tags/算法挑战/">算法挑战</a></div><div class="post-nav"><a href="/techive/2022/04/28/Contest-2023PECCP/" class="pre">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a><a href="/techive/2022/04/15/Contest-2022DFVS/" class="next">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
 var disqus_identifier = '2022/04/23/Contest-2022MCDSP/';
 var disqus_title = 'SmartLab Challenge 2022 - Minimum Connected Dominating Sets';
 var disqus_url = 'http://suzhouxing.github.io/techive/2022/04/23/Contest-2022MCDSP/';
@@ -227,7 +86,7 @@ $.ajax({
   error: function() {
     $('.btn_click_load').css('display','block');
   }
-});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/28/Contest-2023PECCP/">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/Contest-2022MCDSP/">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://smart.hust.edu.cn" title="智能决策与系统优化实验室" target="_blank">智能决策与系统优化实验室</a><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的主页 (Gitee)" target="_blank">苏宙行的主页 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的主页 (Github)" target="_blank">苏宙行的主页 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Homepage (Gitee)" target="_blank">Zhouxing Su's Homepage (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Homepage (Github)" target="_blank">Zhouxing Su's Homepage (Github)</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/28/Contest-2023PECCP/">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/Contest-2022MCDSP/">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RectPacking/">SmartLab Challenge 2021 - Rectangle Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/07/10/Contest-2021RWA/">SmartLab Challenge 2021 - Routing and Wavelength Assignment</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://smart.hust.edu.cn" title="智能决策与系统优化实验室" target="_blank">智能决策与系统优化实验室</a><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的主页 (Gitee)" target="_blank">苏宙行的主页 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的主页 (Github)" target="_blank">苏宙行的主页 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Homepage (Gitee)" target="_blank">Zhouxing Su's Homepage (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Homepage (Github)" target="_blank">Zhouxing Su's Homepage (Github)</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
