@@ -106,7 +106,8 @@ void main() {
     - 计算耗时.
   - **可选** 算法在各算例上求得的颜色数最少的解文件 (可选, 仅在无法成功调用算法输出可通过检查程序的解时作为参考).
 - 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
-  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark.data/tree/data#peccp](https://gitee.com/suzhouxing/npbenchmark.data/tree/data#peccp)).
+  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark.data/tree/data/PECCP](https://gitee.com/suzhouxing/npbenchmark.data/tree/data/PECCP)).
+- 其他说明参考 ({% post_link Contest-ReadMe 'SmartLab Challenge - ReadMe' %}).
 
 例如:
 ```
