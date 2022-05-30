@@ -32,7 +32,7 @@ tags:
 ## 算法接口概述
 
 在问题描述页面的 "提交要求" 一节可以找到中心选址问题求解算法的 SDK 下载链接 [https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.PCP](https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.PCP).
-SDK 共有 3 个文件, 其用途与内容如下:
+SDK 一般包含 3 个源文件, 其用途与内容如下:
 
 - **Main.cpp** (禁止修改).
   - 算法可执行文件调用入口.
@@ -43,7 +43,7 @@ SDK 共有 3 个文件, 其用途与内容如下:
 - **PCenter.h** (禁止修改).
   - 算法函数接口.
   - 根据问题名称命名.
-  - 定义 API 一遍将该问题的求解算法作为子模块由其他系统调用.
+  - 定义 API 以便将该问题的求解算法作为子模块由其他系统调用.
   - `PCenter` 类为输入数据.
   - `Centers` 类为输出数据.
   - `solvePCenter` 函数为算法函数接口.
@@ -55,8 +55,8 @@ SDK 共有 3 个文件, 其用途与内容如下:
   - 算法函数实现.
   - 与算法函数接口头文件名称相同.
   - 填写 `Solver::solve` 函数实现求解算法.
-- 自行添加其他文件.
-  - *后续*平台将变更为提交源码自动编译测试, 包含头文件时请使用相对路径.
+- 自行添加其他源文件.
+  - *后续*平台将变更为提交源码自动编译测试, 请保持工程目录结构, 包含头文件时请使用相对路径.
 
 
 ## 示例代码详解
@@ -69,7 +69,7 @@ SDK 共有 3 个文件, 其用途与内容如下:
 `Solver::solve` 函数首先调用一次判定版本的算法完成初始半径下的中心选择, 然后不断缩小覆盖半径.
 每次缩小覆盖半径时增量移除每个候选中心无法覆盖到的客户, 得到新的判定问题.
 
-`coverAllNodesUnderFixedRadius` 函数从所有节点中随机挑选中心, 直到 `isTimeout()` 报告超时或达到输入数据指定的中心数.
+`coverAllNodesUnderFixedRadius` 函数从所有节点中随机挑选中心, 直到 `isTimeout` 函数对象报告超时或达到输入数据指定的中心数.
 注意, 测试平台的超时判断机制使用现实世界时间, 而非 CPU 时间.
 显然, 该过程难以得到可行的中心选址方案, 需要将其替换为高效的优化算法.
 
@@ -107,12 +107,6 @@ UncoveredNode 列表示未覆盖的客户数, 若大于 0 则为不可行解, �
 Rank 视图以算例为中心, 列出每个算例上的最好结果 (前 10 名).
 Leaderboard 视图以提交为中心, 对每个问题的每个提交在所有算例上的整体结果进行评分与排序.
 
-由于目前使用的托管平台不支持 csv 文件的渲染, 可以下载后使用 Excel 等软件打开, 也可以使用下面的 javascript 代码进行格式化在网页中查看.
-```js
-javascript:if (window.location.href.endsWith(".csv")) { let box = document.getElementsByTagName("pre")[0]; let lines = box.getElementsByClassName("line"); let tb = "<table>"; for (let line of lines) { let words = line.innerHTML.split(","); tb += "<tr>"; for (let word of words) { tb += "<td>" + word + "</td>"; } tb += "</tr>"; } tb += "</table>"; document.body.innerHTML = tb; let sty = document.createElement("style"); sty.innerHTML = "table { border-collapse: collapse; border-spacing: 0; } td { max-width: 5em; padding: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }  td:nth-child(1) { max-width: 16em; } tr:nth-child(odd) { background-color: #eee; } tr:nth-child(even) { background-color: #fff; }"; document.head.append(sty); }
-```
-具体地, 可以参考下图添加书签, 书签名称随便填自己记得住的名字, URL 栏粘贴上面的代码.
-![添加书签](Bookmark.png)
-之后点击该书签以表格形式展示 csv 文件, 得到下图所示的展示效果.
+由于目前使用的托管平台不支持 csv 文件的渲染, 可以下载后使用 Excel 等软件打开.
+也可以参考 ({% post_link GiteeCsvSupport 'Gitee 渲染 CSV 文件' %}) 将其格式化以直接在网页中查看, 得到下图所示的展示效果.
 ![格式化](Table.png)
-此外, 也可以考虑使用 TamperMonkey 等浏览器插件实现自动格式化 (需要对上述代码稍作修改).
