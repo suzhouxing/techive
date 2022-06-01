@@ -11,9 +11,10 @@ tags:
 
 使用 Gitee 挺长一段时间了, 感觉它是一个非常优秀的国内免费代码托管平台.
 美中不足的是, 它不支持对常见的数据文件格式进行渲染.
-其中就有 CSV 等纯文本表格文件.
+其中就有 CSV 等纯文本表格文件, 在没有按列对齐的情况下可读性相对较低.
 作为一个程序员, 当然要自己动手丰衣足食.
 下面简单记录一下我的魔改方案.
+此外, 顺便夹带一点关于表格 CSS 样式设置的小技巧.
 
 
 
@@ -73,10 +74,14 @@ TamperMonkey 等插件本质上是一个简化插件开发的插件, 它让用�
     box.innerHTML = tb;
 
     let sty = document.createElement("style");
-    sty.innerHTML = "table { border-collapse: collapse; border-spacing: 0; } td { max-width: 5em; padding: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }  td:nth-child(1) { max-width: 16em; } tr:nth-child(odd) { background-color: #eee; } tr:nth-child(even) { background-color: #fff; }";
+    sty.innerHTML = "table { border-collapse: collapse; border-spacing: 0; } td { max-width: 5em; padding: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }  td:nth-child(1) { max-width: 16em; } tr:(odd) { background-color: #eee; } tr:nth-child(even) { background-color: #fff; }";
     document.head.append(sty);
 })();
 ```
 
 其中, `@match` 一行比较重要, 决定了执行该代码的条件, 即哪些 URL 符合执行条件.
 此处设置为 gitee.com 内以 .csv 结尾的 URL.
+
+此外, 表格的 CSS 样式中有个很实用的选择器 `nth-child`.
+该选择器接受一个参数, 取值可以是 `odd`, `even`, 或 `an+b` (`a` 和 `b` 为正整数, 表示除 `a` 模 `b` 的所有正整数).
+该选择器可以实现两行甚至多行交错显示不同样式, 或者自动对首行设置特殊样式.
