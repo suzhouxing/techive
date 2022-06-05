@@ -22,9 +22,9 @@
             
             <tag> 技术 </tag>
             
-            <tag> 编程 </tag>
-            
             <tag> Git </tag>
+            
+            <tag> 编程 </tag>
             
         </tags>
       
@@ -49,11 +49,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -78,11 +78,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -107,11 +107,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -136,11 +136,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -165,11 +165,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -223,11 +223,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -252,9 +252,9 @@
       
         <tags>
             
-            <tag> 组合优化 </tag>
-            
             <tag> 运筹优化 </tag>
+            
+            <tag> 组合优化 </tag>
             
             <tag> 算法竞赛 </tag>
             
@@ -314,11 +314,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -343,11 +343,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -372,11 +372,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -401,11 +401,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
             
         </tags>
       
@@ -430,40 +430,11 @@
       
         <tags>
             
+            <tag> 组合优化 </tag>
+            
             <tag> Challenge </tag>
             
             <tag> 算法挑战 </tag>
-            
-            <tag> 组合优化 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>用 Gitea 搭建自己的 Git 服务器</title>
-      <link href="/techive/2019/10/17/SetupGitServerWithGitea/"/>
-      <url>/techive/2019/10/17/SetupGitServerWithGitea/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      <categories>
-          
-          <category> 技术 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 技术 </tag>
-            
-            <tag> Git </tag>
-            
-            <tag> Gitea </tag>
             
         </tags>
       
@@ -488,9 +459,9 @@
       
         <tags>
             
-            <tag> 组合优化 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 组合优化 </tag>
             
             <tag> 技术 </tag>
             
@@ -550,9 +521,9 @@
       
         <tags>
             
-            <tag> 组合优化 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 组合优化 </tag>
             
             <tag> 技术 </tag>
             
@@ -583,9 +554,9 @@
       
         <tags>
             
-            <tag> 组合优化 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 组合优化 </tag>
             
             <tag> 技术 </tag>
             
@@ -616,9 +587,9 @@
       
         <tags>
             
-            <tag> 组合优化 </tag>
-            
             <tag> 优化 </tag>
+            
+            <tag> 组合优化 </tag>
             
             <tag> 技术 </tag>
             
@@ -836,37 +807,6 @@
             <tag> 技术 </tag>
             
             <tag> 提问 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>原来如此</title>
-      <link href="/techive/2017/09/04/ThereAreReasons/"/>
-      <url>/techive/2017/09/04/ThereAreReasons/</url>
-      
-        <content type="html"><![CDATA[<p>总有些很简单的事情, 自己已经习以为常了, 别人突然问起为什么反而一下解释不清.</p><p>最近写论文, 吕老师在修改时问到, 为什么测试分析里面总是测了 8 次 16 次之类的, 正常人不是应该用整十数吗? 后来过了好几天才想起来, 因为实验室的服务器都是 8 核或 64 核的...</p><p>又想起以前去面试, 突然一下卡住, 说不记得 true 是 0 还是 1 了. 还说自己经常用 0 表示结果没问题. 感觉对面心里肯定在想, 连这点基本常识都没有, 你到底亲自动手写过几行代码? 后来才想起来, 因为运行正常往往只有一个状态, 但是出错可能千奇百怪...</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 日常 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 技术 </tag>
-            
-            <tag> 日常 </tag>
-            
-            <tag> 面试 </tag>
-            
-            <tag> 论文 </tag>
             
         </tags>
       
