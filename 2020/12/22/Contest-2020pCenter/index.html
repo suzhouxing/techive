@@ -2,71 +2,178 @@
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2020 - p-Center and Unicost Set Covering</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2020 - p-Center and Unicost Set Covering</h1><div class="post-meta">Dec 22, 2020<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2020/12/22/Contest-2020pCenter/" href="/techive/2020/12/22/Contest-2020pCenter/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>中心选址问题是通信与物流等领域中的重要问题, 其背后的单一成本集合覆盖问题更是用途广泛.<br>中心选址问题和单一成本集合覆盖问题主要研究如何使用有限的资源提供尽可能高质量的服务的问题.<br>例如, 移动基站, 消防站, 物流仓库, 数据中心等众多设施的选址都可以建模为中心选址问题.<br>高效的中心选址或单一成本集合覆盖问题的求解算法具有极其重要的理论与应用价值.</p>
-<h1 id="中心选址与单一成本集合覆盖算法训练"><a href="#中心选址与单一成本集合覆盖算法训练" class="headerlink" title="中心选址与单一成本集合覆盖算法训练"></a>中心选址与单一成本集合覆盖算法训练</h1><h2 id="问题概述"><a href="#问题概述" class="headerlink" title="问题概述"></a>问题概述</h2><p>给定一系列节点, 从中选出若干节点作为中心为其他节点提供服务.<br>若一个节点由某个中心服务, 则认为其间存在一条服务边.<br>在确保每个节点至少由一个中心服务的前提下, 使最长的服务边最短.</p>
-<p>若固定服务半径 (服务边的最大长度), 该问题等价于集合覆盖问题.<br>即给定一系列元素与若干子集, 请选择给定数量的子集, 使其并集等于所有元素的全集.</p>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2020 - p-Center and Unicost Set Covering</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2020 - p-Center and Unicost Set Covering</h1><div class="post-meta">Dec 22, 2020<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2020/12/22/Contest-2020pCenter/" href="/techive/2020/12/22/Contest-2020pCenter/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>中心选址问题是通信与物流等领域中的重要问题, 其背后的单一成本集合覆盖问题更是用途广泛. 中心选址问题和单一成本集合覆盖问题主要研究如何使用有限的资源提供尽可能高质量的服务的问题. 例如, 移动基站, 消防站, 物流仓库, 数据中心等众多设施的选址都可以建模为中心选址问题. 高效的中心选址或单一成本集合覆盖问题的求解算法具有极其重要的理论与应用价值.</p>
+<h1 id="中心选址与单一成本集合覆盖算法训练">中心选址与单一成本集合覆盖算法训练</h1>
+<h2 id="问题概述">问题概述</h2>
+<p>给定一系列节点, 从中选出若干节点作为中心为其他节点提供服务. 若一个节点由某个中心服务, 则认为其间存在一条服务边. 在确保每个节点至少由一个中心服务的前提下, 使最长的服务边最短.</p>
+<p>若固定服务半径 (服务边的最大长度), 该问题等价于集合覆盖问题. 即给定一系列元素与若干子集, 请选择给定数量的子集, 使其并集等于所有元素的全集.</p>
 <ul>
-<li>参考文献.<ul>
+<li>参考文献.
+<ul>
 <li>[1] Z. Su, Q. Zhang, Z. Lü, C.-M. Li, W. Lin, and F. Ma, “Weighting-based Variable Neighborhood Search for Optimal Camera Placement,” Proceedings of the AAAI Conference on Artificial Intelligence, vol. 35, no. 14, pp. 12400–12408, 2021.</li>
 <li>[2] Q. Zhang, Z. Lü, Z. Su, C. Li, Y. Fang, and F. Ma, “Vertex Weighting-Based Tabu Search for p-Center Problem,” in Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, IJCAI-20, 2020, pp. 1481–1487. doi: 10.24963/ijcai.2020/206.</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).<br>算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>).<br>例如, 在控制台运行以下命令表示调用可执行文件 <code>pcenter.exe</code> 在限时 1000 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/pmed1.n100p5.txt</code> 的算例, 解文件输出至 <code>sln.pmed1.n100p5.txt</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pcenter.exe 1000 123456 &lt;../data/pmed1.n100p5.txt &gt;sln.pmed1.n100p5.txt</span><br></pre></td></tr></table></figure></p>
+<h2 id="命令行参数">命令行参数</h2>
+<p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535). 算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>). 例如, 在控制台运行以下命令表示调用可执行文件 <code>pcenter.exe</code> 在限时 1000 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/pmed1.n100p5.txt</code> 的算例, 解文件输出至 <code>sln.pmed1.n100p5.txt</code>: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pcenter.exe 1000 123456 &lt;../data/pmed1.n100p5.txt &gt;sln.pmed1.n100p5.txt</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>运行时间上限.<ul>
+<li>运行时间上限.
+<ul>
 <li>超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已输出解 (最好还能自行正常退出).</li>
-</ul>
-</li>
-<li>随机种子设置.<ul>
+</ul></li>
+<li>随机种子设置.
+<ul>
 <li>使用 C 语言随机数生成器请用 <code>srand</code>.</li>
 <li>使用 C++ 随机数生成器 (如 <code>mt19937</code>) 请在构造时传参或调用 <code>seed()</code> 方法设置.</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="输入的算例文件格式"><a href="#输入的算例文件格式" class="headerlink" title="输入的算例文件格式"></a>输入的算例文件格式</h2><p>所有算例均已根据给定覆盖半径转换为判定问题, 处理为一系列固定集合数的单一成本集合覆盖算例, 并附有逐步缩小半径时新增的无法覆盖的节点的信息.<br>转换后每个节点都可以覆盖若干节点, 同时也对称地被若干节点覆盖, 故转换后的单一成本集合覆盖算例中集合数等于元素数.</p>
+<h2 id="输入的算例文件格式">输入的算例文件格式</h2>
+<p>所有算例均已根据给定覆盖半径转换为判定问题, 处理为一系列固定集合数的单一成本集合覆盖算例, 并附有逐步缩小半径时新增的无法覆盖的节点的信息. 转换后每个节点都可以覆盖若干节点, 同时也对称地被若干节点覆盖, 故转换后的单一成本集合覆盖算例中集合数等于元素数.</p>
 <p>所有算例的元素和集合分别从 0 开始连续编号.</p>
 <p>第一行给出 2 个由空白字符分隔的整数 N 和 P, 分别表示节点数和中心数 (从集合覆盖的角度来看, N 既是集合数又是元素数, P 为可挑选出的集合数).</p>
-<p>接下来每 2 行一组, 连续 N 组给出每个集合的覆盖范围.<br>每组中第一行为该集合能覆盖的元素数量 C, 第二行为空白字符分隔的 C 个数字, 分别表示该集合能覆盖的元素的编号.</p>
+<p>接下来每 2 行一组, 连续 N 组给出每个集合的覆盖范围. 每组中第一行为该集合能覆盖的元素数量 C, 第二行为空白字符分隔的 C 个数字, 分别表示该集合能覆盖的元素的编号.</p>
 <p>然后给出 2 个由空白字符分隔的整数 U 和 L, 分别表示覆盖半径边长序号的上界和下界 (其中上界即前面给出的判定问题对应的覆盖半径的边长序号, 下界为估计值).</p>
-<p>接下来连续 U - L 行给出每缩小一次覆盖半径新增的无法覆盖的元素的信息 (若 U = L = 0, 说明前面给出的判定问题对应的覆盖半径已经为最优半径, 缩小半径后已不存在可行解).<br>每行第一个整数 K 表示本次缩小半径将导致 K 个元素不再被某个集合覆盖, 随后连续 K 个由空白字符分隔的整数 S 表示集合 S 将新增一个无法覆盖的元素 (同一个集合可能重复出现多次).<br>注意, 在前面给出的判定问题数据中, 每个集合可覆盖的元素已按从近到远的顺序排序, 即每次只用将集合 S 可覆盖元素列表末尾的一个元素删除即可.</p>
-<p>例如, 以下算例文件表示集合和元素的数量均为 4, 要求挑选出 2 个集合覆盖所有元素; 其中,<br>集合 0 可以覆盖 2 个元素, 分别为元素 0 和 3;<br>集合 1 可以覆盖 2 个元素, 分别为元素 1 和 2;<br>集合 2 可以覆盖 3 个元素, 分别为元素 1, 2 和 3;<br>集合 3 可以覆盖 2 个元素, 分别为元素 0 和 2;<br>覆盖半径边长序号的上界为 5 下界为 3; 其中,<br>半径缩小为第 4 短的边时, 集合 2 无法再覆盖最远的元素 3, 集合 3 无法再覆盖最远的元素 2;<br>半径缩小为第 3 短的边时, 集合 1 无法再覆盖最远的元素 2, 集合 2 无法再覆盖最远的元素 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">4 2</span><br><span class="line">2</span><br><span class="line">0 3</span><br><span class="line">2</span><br><span class="line">1 2</span><br><span class="line">3</span><br><span class="line">1 2 3</span><br><span class="line">2</span><br><span class="line">0 2</span><br><span class="line">5 3</span><br><span class="line">2	2 3</span><br><span class="line">2	1 2</span><br></pre></td></tr></table></figure></p>
-<h2 id="输出的解文件格式"><a href="#输出的解文件格式" class="headerlink" title="输出的解文件格式"></a>输出的解文件格式</h2><p>输出 P 个用空白字符 (建议使用换行符) 分隔的整数, 分别表示挑选出的 P 个中心 (集合).</p>
-<p>例如, 以下解文件表示选择节点 0 和 2 作为中心 (集合):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">2</span><br></pre></td></tr></table></figure></p>
-<h2 id="提交要求"><a href="#提交要求" class="headerlink" title="提交要求"></a>提交要求</h2><ul>
+<p>接下来连续 U - L 行给出每缩小一次覆盖半径新增的无法覆盖的元素的信息 (若 U = L = 0, 说明前面给出的判定问题对应的覆盖半径已经为最优半径, 缩小半径后已不存在可行解). 每行第一个整数 K 表示本次缩小半径将导致 K 个元素不再被某个集合覆盖, 随后连续 K 个由空白字符分隔的整数 S 表示集合 S 将新增一个无法覆盖的元素 (同一个集合可能重复出现多次). 注意, 在前面给出的判定问题数据中, 每个集合可覆盖的元素已按从近到远的顺序排序, 即每次只用将集合 S 可覆盖元素列表末尾的一个元素删除即可.</p>
+<p>例如, 以下算例文件表示集合和元素的数量均为 4, 要求挑选出 2 个集合覆盖所有元素; 其中,<br>
+集合 0 可以覆盖 2 个元素, 分别为元素 0 和 3;<br>
+集合 1 可以覆盖 2 个元素, 分别为元素 1 和 2;<br>
+集合 2 可以覆盖 3 个元素, 分别为元素 1, 2 和 3;<br>
+集合 3 可以覆盖 2 个元素, 分别为元素 0 和 2;<br>
+覆盖半径边长序号的上界为 5 下界为 3; 其中,<br>
+半径缩小为第 4 短的边时, 集合 2 无法再覆盖最远的元素 3, 集合 3 无法再覆盖最远的元素 2;<br>
+半径缩小为第 3 短的边时, 集合 1 无法再覆盖最远的元素 2, 集合 2 无法再覆盖最远的元素 1: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">4 2</span><br><span class="line">2</span><br><span class="line">0 3</span><br><span class="line">2</span><br><span class="line">1 2</span><br><span class="line">3</span><br><span class="line">1 2 3</span><br><span class="line">2</span><br><span class="line">0 2</span><br><span class="line">5 3</span><br><span class="line">2	2 3</span><br><span class="line">2	1 2</span><br></pre></td></tr></table></figure></p>
+<h2 id="输出的解文件格式">输出的解文件格式</h2>
+<p>输出 P 个用空白字符 (建议使用换行符) 分隔的整数, 分别表示挑选出的 P 个中心 (集合).</p>
+<p>例如, 以下解文件表示选择节点 0 和 2 作为中心 (集合): <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">2</span><br></pre></td></tr></table></figure></p>
+<h2 id="提交要求">提交要求</h2>
+<ul>
 <li>发送至邮箱 <a href="mailto:szx@duhe.tech" target="_blank" rel="noopener">szx@duhe.tech</a>.</li>
-<li>邮件标题格式为 “<strong>Challenge2020PCP-姓名-学校-专业</strong>“.</li>
-<li>邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 “<strong>姓名-学校-专业</strong>“, 其内包含下列文件.<ul>
-<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).<ul>
+<li>邮件标题格式为 "<strong>Challenge2020PCP-姓名-学校-专业</strong>".</li>
+<li>邮件附件为单个压缩包 (文件大小 2M 以内), 文件名为 "<strong>姓名-学校-专业</strong>", 其内包含下列文件.
+<ul>
+<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).
+<ul>
 <li>建议基于官方 SDK 开发 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.PCP" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.PCP</a>).</li>
 <li>用 g++ 的同学编译时请静态链接, 即添加 <code>-static-libgcc -static-libstdc++</code> 编译选项.</li>
-</ul>
-</li>
-<li><strong>必要</strong> 算法源码.<ul>
+</ul></li>
+<li><strong>必要</strong> 算法源码.
+<ul>
 <li>可重入 (可在同一线程内反复调用而不会出现数据初始化错误或内存泄漏).</li>
 <li>可并发 (可在同一进程内的多个线程同时运行多个算法求解实例而互不干扰, 满足此要求一般不能有全局的非只读变量).</li>
 <li>可伸缩 (数据结构可以根据算例规模动态申请内存, 而非根据预先指定的编译期常量进行内存分配).</li>
-</ul>
-</li>
-<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).<ul>
+</ul></li>
+<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).
+<ul>
 <li>算例名.</li>
 <li>服务半径.</li>
 <li>计算耗时.</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>可选</strong> 算法在各算例上求得的完全覆盖的解文件 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).</li>
-</ul>
-</li>
-<li>若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.<ul>
+</ul></li>
+<li>若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
+<ul>
 <li>若测试结果较优, 可在排行榜页面看到自己的运行情况 (<a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data/PCP" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data/PCP</a>).</li>
-</ul>
-</li>
+</ul></li>
 <li>其他说明参考 (<a href="/techive/2022/05/26/Contest-ReadMe/" title="SmartLab Challenge - ReadMe">SmartLab Challenge - ReadMe</a>).</li>
 </ul>
-<p>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   pcenter.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        pmed1.n100p5.txt</span><br><span class="line">        pmed2.n100p10.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
-<h2 id="算例清单"><a href="#算例清单" class="headerlink" title="算例清单"></a>算例清单</h2><p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data/PCP/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data/PCP/Instance</a></p>
+<p>例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   pcenter.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        pmed1.n100p5.txt</span><br><span class="line">        pmed2.n100p10.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="算例清单">算例清单</h2>
+<p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data/PCP/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data/PCP/Instance</a></p>
 <p>算例规模从小到大依次为 (求解难度不一定随规模增加, 但除 pcb3038* 以外的算例应该都很容易求解):</p>
-<p>pmed01.n100p005<br>pmed02.n100p010<br>pmed03.n100p010<br>pmed04.n100p020<br>pmed05.n100p033<br>pmed06.n200p005<br>pmed07.n200p010<br>pmed08.n200p020<br>pmed09.n200p040<br>pmed10.n200p067<br>pmed11.n300p005<br>pmed12.n300p010<br>pmed13.n300p030<br>pmed14.n300p060<br>pmed15.n300p100<br>pmed16.n400p005<br>pmed17.n400p010<br>pmed18.n400p040<br>pmed19.n400p080<br>pmed20.n400p133<br>pmed21.n500p005<br>pmed22.n500p010<br>pmed23.n500p050<br>pmed24.n500p100<br>pmed25.n500p167<br>pmed26.n600p005<br>pmed27.n600p010<br>pmed28.n600p060<br>pmed29.n600p120<br>pmed30.n600p200<br>pmed31.n700p005<br>pmed32.n700p010<br>pmed33.n700p070<br>pmed34.n700p140<br>pmed35.n800p005<br>pmed36.n800p010<br>pmed37.n800p080<br>pmed38.n900p005<br>pmed39.n900p010<br>pmed40.n900p090<br>u1060p010<br>u1060p020<br>u1060p030<br>u1060p040<br>u1060p050<br>u1060p060<br>u1060p070<br>u1060p080<br>u1060p090<br>u1060p100<br>u1060p110<br>u1060p120<br>u1060p130<br>u1060p140<br>u1060p150<br>rl1323p010<br>rl1323p020<br>rl1323p030<br>rl1323p040<br>rl1323p050<br>rl1323p060<br>rl1323p070<br>rl1323p080<br>rl1323p090<br>rl1323p100<br>u1817p010<br>u1817p020<br>u1817p030<br>u1817p040<br>u1817p050<br>u1817p060<br>u1817p070<br>u1817p080<br>u1817p090<br>u1817p100<br>u1817p110<br>u1817p120<br>u1817p130<br>u1817p140<br>u1817p150<br>pcb3038p010r729<br>pcb3038p020r494<br>pcb3038p030r394<br>pcb3038p040r337<br>pcb3038p050r299<br>pcb3038p100r207<br>pcb3038p150r165<br>pcb3038p200r141<br>pcb3038p250r123<br>pcb3038p300r116<br>pcb3038p350r105<br>pcb3038p400r97<br>pcb3038p450r89<br>pcb3038p500r85  </p>
+<p>pmed01.n100p005<br>
+pmed02.n100p010<br>
+pmed03.n100p010<br>
+pmed04.n100p020<br>
+pmed05.n100p033<br>
+pmed06.n200p005<br>
+pmed07.n200p010<br>
+pmed08.n200p020<br>
+pmed09.n200p040<br>
+pmed10.n200p067<br>
+pmed11.n300p005<br>
+pmed12.n300p010<br>
+pmed13.n300p030<br>
+pmed14.n300p060<br>
+pmed15.n300p100<br>
+pmed16.n400p005<br>
+pmed17.n400p010<br>
+pmed18.n400p040<br>
+pmed19.n400p080<br>
+pmed20.n400p133<br>
+pmed21.n500p005<br>
+pmed22.n500p010<br>
+pmed23.n500p050<br>
+pmed24.n500p100<br>
+pmed25.n500p167<br>
+pmed26.n600p005<br>
+pmed27.n600p010<br>
+pmed28.n600p060<br>
+pmed29.n600p120<br>
+pmed30.n600p200<br>
+pmed31.n700p005<br>
+pmed32.n700p010<br>
+pmed33.n700p070<br>
+pmed34.n700p140<br>
+pmed35.n800p005<br>
+pmed36.n800p010<br>
+pmed37.n800p080<br>
+pmed38.n900p005<br>
+pmed39.n900p010<br>
+pmed40.n900p090<br>
+u1060p010<br>
+u1060p020<br>
+u1060p030<br>
+u1060p040<br>
+u1060p050<br>
+u1060p060<br>
+u1060p070<br>
+u1060p080<br>
+u1060p090<br>
+u1060p100<br>
+u1060p110<br>
+u1060p120<br>
+u1060p130<br>
+u1060p140<br>
+u1060p150<br>
+rl1323p010<br>
+rl1323p020<br>
+rl1323p030<br>
+rl1323p040<br>
+rl1323p050<br>
+rl1323p060<br>
+rl1323p070<br>
+rl1323p080<br>
+rl1323p090<br>
+rl1323p100<br>
+u1817p010<br>
+u1817p020<br>
+u1817p030<br>
+u1817p040<br>
+u1817p050<br>
+u1817p060<br>
+u1817p070<br>
+u1817p080<br>
+u1817p090<br>
+u1817p100<br>
+u1817p110<br>
+u1817p120<br>
+u1817p130<br>
+u1817p140<br>
+u1817p150<br>
+pcb3038p010r729<br>
+pcb3038p020r494<br>
+pcb3038p030r394<br>
+pcb3038p040r337<br>
+pcb3038p050r299<br>
+pcb3038p100r207<br>
+pcb3038p150r165<br>
+pcb3038p200r141<br>
+pcb3038p250r123<br>
+pcb3038p300r116<br>
+pcb3038p350r105<br>
+pcb3038p400r97<br>
+pcb3038p450r89<br>
+pcb3038p500r85</p>
 </div><div class="tags"><a href="/techive/tags/Challenge/">Challenge</a><a href="/techive/tags/算法挑战/">算法挑战</a><a href="/techive/tags/组合优化/">组合优化</a></div><div class="post-nav"><a href="/techive/2021/01/14/Contest-2020FJSP/" class="pre">SmartLab Challenge 2020 - Flexible Job Shop Scheduling</a><a href="/techive/2020/12/09/Contest-2020GraphColoring/" class="next">SmartLab Challenge 2020 - Graph Coloring</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
 var disqus_identifier = '2020/12/22/Contest-2020pCenter/';
 var disqus_title = 'SmartLab Challenge 2020 - p-Center and Unicost Set Covering';
@@ -92,7 +199,7 @@ $.ajax({
   error: function() {
     $('.btn_click_load').css('display','block');
   }
-});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/30/GiteeCsvSupport/">Gitee 渲染 CSV 文件</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/26/Contest-ReadMe/">SmartLab Challenge - ReadMe</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/28/Contest-2023PECCP/">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/Contest-2022MCDSP/">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://smart.hust.edu.cn" title="智能决策与系统优化实验室" target="_blank">智能决策与系统优化实验室</a><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的主页 (Gitee)" target="_blank">苏宙行的主页 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的主页 (Github)" target="_blank">苏宙行的主页 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Homepage (Gitee)" target="_blank">Zhouxing Su's Homepage (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Homepage (Github)" target="_blank">Zhouxing Su's Homepage (Github)</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/Gitea/" style="font-size: 15px;">Gitea</a> <a href="/techive/tags/面试/" style="font-size: 15px;">面试</a> <a href="/techive/tags/论文/" style="font-size: 15px;">论文</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/30/GiteeCsvSupport/">Gitee 渲染 CSV 文件</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/26/Contest-ReadMe/">SmartLab Challenge - ReadMe</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/28/Contest-2023PECCP/">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/Contest-2022MCDSP/">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/01/GeneralSolver/">再谈统一建模语言与通用求解器</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://smart.hust.edu.cn" title="智能决策与系统优化实验室" target="_blank">智能决策与系统优化实验室</a><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的主页 (Gitee)" target="_blank">苏宙行的主页 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的主页 (Github)" target="_blank">苏宙行的主页 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Homepage (Gitee)" target="_blank">Zhouxing Su's Homepage (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Homepage (Github)" target="_blank">Zhouxing Su's Homepage (Github)</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
