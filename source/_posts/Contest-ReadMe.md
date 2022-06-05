@@ -81,11 +81,34 @@ SDK 一般包含 3 个源文件, 其用途与内容如下:
 # 提交
 
 系统处于空闲状态时, 每隔 15 分钟检查一次邮箱 (避免测试过程中进行下载邮件等操作占用 CPU 影响他人的测试结果).
-按照问题描述页面的 "提交要求" 一节成功发送邮件并被系统拉取后, 将收到系统的自动回复, 提示当前待测试的提交数.
+按照问题描述页面的 "提交要求" 一节成功发送邮件并被系统拉取后, ~~将收到系统的自动回复, 提示当前待测试的提交数~~.
 一次拉取若发现同一姓名或邮箱地址多次提交了同一问题的求解算法, 仅对最后一次提交的版本进行测试.
+每个提交在系统中可能经历 3 种状态, 分别是已拉取待测试 (Pending), 正在测试 (Running), 测试完成 (Finished).
+可在 [https://gitee.com/suzhouxing/npbenchmark.data/blob/data/Queue.md](https://gitee.com/suzhouxing/npbenchmark.data/blob/data/Queue.md) 页面查看平台上测试任务的排队状态.
 
 每个算例会使用不同随机种子进行多次独立重复测试 (一般为 5-10 次), 每次独立重复测试的超时时间依次递增.
-*后续*采用源码提交后, 将为 `solve` 函数添加报告计算结果的接口, 使用更精确的方式记录求到最优解的时间.
+超时时间和随机种子由两个命令行参数依次给出.
+达到超时时间后, 平台将额外等待 2 秒, 若程序仍未自行退出, 将向程序发送 SIGINT 信号, 等待 1 秒若仍未结束运行则再次发送 SIGINT 信号, 等待 2 秒若还未退出则强行终止进程.
+若基于 SDK 开发一般无需处理 SIGINT 信号.
+<details style="border: 1px solid #aaa; border-radius: 4px;"><summary>⯈ 处理 SIGINT 信号</summary>
+如确实有需要, 可参考如下代码设置中断信号的响应函数, 以便在收到信号时保存解或设置结束求解的标记位.
+由于相关接口属于 C 语言标准库, 不支持闭包, 必须使用全局变量, 不满足提交要求, 因此强烈建议不使用该机制.
+此外, 收到信号时保存解可能出现数据竞争 (https://www.gnu.org/software/libc/manual/html_node/Non_002datomic-Example.html), 必须对解向量的读写加锁, 反而开销更大.
+若采用设置标记位的方案, 仍需在主循环中反复检查标记位, 其开销与判断计时器超时相比没有显著优势.
+```cpp
+#include <csignal>
+#include <cstdlib>
+void signalHandler(int) {
+    // save solution or set stopping flag.
+    exit(0);
+}
+int main(int argc, char* argv[]) {
+    signal(SIGINT, signalHandler);
+    return 0;
+}
+```
+</details>
+*后续*采用源码提交后, 将为 `solve` 函数添加报告计算结果的接口, 使用更精确的方式记录求到最优解的时间, 同时返回是否可以停止求解的建议 (例如已求得最优解可提前退出节约时间).
 *后续*将对测试用例进行小幅随机等价变换 (重编号, 添加冗余, 化简等), 以避免针对算例过度调参.
 
 所有问题的测试用例均划分为 3 个难度级别.
