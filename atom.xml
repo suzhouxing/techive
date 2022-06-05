@@ -460,20 +460,21 @@
     <link href="http://suzhouxing.github.io/techive/2019/10/17/SetupGitServerWithGitea/"/>
     <id>http://suzhouxing.github.io/techive/2019/10/17/SetupGitServerWithGitea/</id>
     <published>2019-10-17T06:18:36.000Z</published>
-    <updated>2022-06-05T03:08:25.012Z</updated>
+    <updated>2022-06-05T03:10:30.104Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="疑难解答">疑难解答</h2><ol type="1"><li>更改配置<ol type="1"><li>在 <code>C:\YOUR\INSTALL\PATH\custom\conf\app.ini</code> 文件中修改相关项目<ul><li>网页端地址或者代码仓库地址前缀: <code>ROOT_URL</code>, <code>DOMAIN</code>, <code>SSH_DOMAIN</code></li><li>端口: <code>HTTP_PORT</code>, <code>SSH_PORT</code></li></ul></li><li>参考资料<ul><li>https://docs.gitea.io/zh-cn/customizing-gitea/</li><li>https://docs.gitea.io/zh-cn/config-cheat-sheet/</li><li>https://github.com/go-gitea/gitea/blob/master/custom/conf/app.ini.sample</li></ul></li></ol></li><li>局域网或者互联网上其他机器无法访问网页端<ol type="1"><li>添加防火墙放行规则<ol type="1"><li>控制面板 -&gt; 系统和安全 -&gt; Windows Defender 防火墙 -&gt; 允许应用或功能通过 Windows Defender 防火墙 -&gt; 更改设置 -&gt; 允许其他应用 -&gt; 浏览 -&gt; 选中 <code>C:\YOUR\INSTALL\PATH\gitea.exe</code> -&gt; 网络类型 -&gt; 确保公用和专用均被勾选</li></ol></li><li>更换端口</li><li>咨询单位网管或互联网服务提供商</li></ol></li><li>初始化设置时无法创建数据库<ol type="1"><li>设置 <code>gitea</code> 服务以管理员账号启动</li><li>安装 SQLite3<ol type="1"><li>从<a href="https://sqlite.org" target="_blank" rel="noopener">官方网站</a>下载 SQLite3<ul><li>截至本文发布时最新版本为 <code>sqlite-dll-win64-x64-3300100.zip</code></li></ul></li><li>将压缩包内的文件解压至任意目录下<ul><li>本文后续将使用 <code>C:\SQLITE3\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径</li></ul></li></ol></li><li>在环境变量 <code>Path</code> 中添加安装目录<ol type="1"><li>控制面板 -&gt; 系统和安全 -&gt; 系统 -&gt; 高级系统设置 -&gt; 环境变量 -&gt; 系统变量 -&gt; 双击变量 <code>Path</code></li><li>新建一行 <code>C:\SQLITE3\INSTALL\PATH</code> 或者在变量值字符串开头添加 <code>C:\SQLITE3\INSTALL\PATH;</code></li></ol></li></ol></li></ol>]]></content>
+    <content type="html"><![CDATA[<ol start="3" type="1"><li>初始化设置时无法创建数据库<ol type="1"><li>设置 <code>gitea</code> 服务以管理员账号启动</li><li>安装 SQLite3<ol type="1"><li>从<a href="https://sqlite.org" target="_blank" rel="noopener">官方网站</a>下载 SQLite3<ul><li>截至本文发布时最新版本为 <code>sqlite-dll-win64-x64-3300100.zip</code></li></ul></li><li>将压缩包内的文件解压至任意目录下<ul><li>本文后续将使用 <code>C:\SQLITE3\INSTALL\PATH</code> 作为安装目录, 读者请根据自己的情况将其替换为实际的路径</li></ul></li></ol></li><li>在环境变量 <code>Path</code> 中添加安装目录<ol type="1"><li>控制面板 -&gt; 系统和安全 -&gt; 系统 -&gt; 高级系统设置 -&gt; 环境变量 -&gt; 系统变量 -&gt; 双击变量 <code>Path</code></li><li>新建一行 <code>C:\SQLITE3\INSTALL\PATH</code> 或者在变量值字符串开头添加 <code>C:\SQLITE3\INSTALL\PATH;</code></li></ol></li></ol></li></ol>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;疑难解答&quot;&gt;疑难解答&lt;/h2&gt;
+        &lt;ol start=&quot;3&quot; type=&quot;1&quot;&gt;
+&lt;li&gt;初始化设置时无法创建数据库
 &lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;更改配置
+&lt;li&gt;设置 &lt;code&gt;gitea&lt;/code&gt; 服务以管理员账号启动&lt;/li&gt;
+&lt;li&gt;安装 SQLite3
 &lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;在 &lt;code&gt;C:\YOUR\INSTALL\PATH\custom\conf\app.ini&lt;/code&gt; 文件中修改相关项目
-&lt;ul&gt;
+&lt;li&gt;从&lt;a
       
     
     </summary>
