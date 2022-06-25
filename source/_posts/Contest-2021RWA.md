@@ -105,9 +105,7 @@ rwa.exe 300 123456 <../data/ATT.n90e274t359.txt >sln.ATT.n90e274t359.txt
     - 使用的波长数.
     - 计算耗时.
   - **可选** 算法在各算例上求得的使用波长数最少的解文件 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).
-- 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
-  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark.data/tree/data/RWA](https://gitee.com/suzhouxing/npbenchmark.data/tree/data/RWA)).
-- 其他说明参考 ({% post_link Contest-ReadMe 'SmartLab Challenge - ReadMe' %}).
+- 其他所有问题通用的要求见 {% post_link Contest-ReadMe 'SmartLab Challenge - ReadMe' %}.
 
 例如:
 ```

@@ -61,9 +61,16 @@ tags:
   - **ROADEF** (每一到两年) [http://www.roadef.org/challenge](http://www.roadef.org/challenge)
   - **PACE** (每年) [https://pacechallenge.org/](https://pacechallenge.org/)
   - **VeRoLog** (不规律) [https://www.euro-online.org/websites/verolog/verolog-solver-challenge/](https://www.euro-online.org/websites/verolog/verolog-solver-challenge/)
+  - 电力系统优化
+    - **GOC** (每年) [https://gocompetition.energy.gov/](https://gocompetition.energy.gov/)
 - 生物信息学 BI
   - 蛋白质结构预测
     - **CASP** (每两年) [https://predictioncenter.org/](https://predictioncenter.org/)
+- 计算几何 CG
+  - **CGC** (每年) [https://www.computational-geometry.org/](https://www.computational-geometry.org/)
+    - 历史链接 [https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2022/](https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2022/)
+- 结构力学 SO
+  - **BO** (每年) [http://www.brightoptimizer.com/past-events/](http://www.brightoptimizer.com/past-events/)
 
 
 
@@ -71,6 +78,8 @@ tags:
 
 ## 学术会议或权威机构
 
+- NeurIPS (人工智能相关竞赛汇总) (每年)
+  - [https://neurips.cc/Conferences/2022/CompetitionTrack](https://neurips.cc/Conferences/2022/CompetitionTrack)
 - FLoC (逻辑相关竞赛汇总) (每四年)
   - [https://floc2022.org/](https://floc2022.org/)
   - [https://www.floc2018.org/floc-olympic-games/](https://www.floc2018.org/floc-olympic-games/)
@@ -80,6 +89,7 @@ tags:
   - [https://gecco-2020.sigevo.org/index.html/Competitions](https://gecco-2020.sigevo.org/index.html/Competitions)
 - PATAT (时刻表调度相关竞赛汇总) (不规律) [https://www.patatconference.org/communityService.html](https://www.patatconference.org/communityService.html)
 - TACAS (系统构建与分析的算法与工具相关竞赛汇总) (不规律) [https://tacas.info/toolympics.php](https://tacas.info/toolympics.php)
+- TFLSGO (黑盒优化竞赛汇总) (不规律) [https://www.tflsgo.org/](https://www.tflsgo.org/)
 
 
 ## 竞赛平台

@@ -88,8 +88,8 @@ SDK 一般包含 3 个源文件, 其用途与内容如下:
 
 每个算例会使用不同随机种子进行多次独立重复测试 (一般为 5-10 次), 每次独立重复测试的超时时间依次递增.
 超时时间和随机种子由两个命令行参数依次给出.
-达到超时时间后, 平台将额外等待 2 秒, 若程序仍未自行退出, 将向程序发送 SIGINT 信号, 等待 1 秒若仍未结束运行则再次发送 SIGINT 信号, 等待 2 秒若还未退出则强行终止进程.
-若基于 SDK 开发一般无需处理 SIGINT 信号.
+达到超时时间后, 平台将额外等待 2 秒, 若程序仍未自行退出, ~~将向程序发送 SIGINT 信号, 等待 1 秒若仍未结束运行则再次发送 SIGINT 信号,~~ 再等待 2 秒若还未退出则强行终止进程.
+若基于 SDK 开发则无需处理 SIGINT 信号.
 <details style="border: 1px solid #aaa; border-radius: 4px;"><summary>⯈ 处理 SIGINT 信号</summary>
 如确实有需要, 可参考如下代码设置中断信号的响应函数, 以便在收到信号时保存解或设置结束求解的标记位.
 由于相关接口属于 C 语言标准库, 不支持闭包, 必须使用全局变量, 不满足提交要求, 因此强烈建议不使用该机制.
@@ -126,9 +126,12 @@ UncoveredNode 列表示未覆盖的客户数, 若大于 0 则为不可行解, �
 
 # 排行榜
 
-目前提供 Rank 和 Leaderboard 两种计算结果统计视图, 导航页面见 [https://gitee.com/suzhouxing/npbenchmark.data/tree/data](https://gitee.com/suzhouxing/npbenchmark.data/tree/data).
+目前提供 Rank, Leaderboard, Best 共 3 种计算结果统计视图, 导航页面见 [https://gitee.com/suzhouxing/npbenchmark.data/tree/data](https://gitee.com/suzhouxing/npbenchmark.data/tree/data).
 Rank 视图以算例为中心, 列出每个算例上的最好结果 (前 10 名).
+Rank 视图的排名主要依据目标函数值, 目标函数值相同的情况下算法执行时间越短越好, 算法执行时间相近时 (例如差距在 1 秒以内) 提交时间越早越好.
 Leaderboard 视图以提交为中心, 对每个问题的每个提交在所有算例上的整体结果进行评分与排序.
+Leaderboard 视图的排名根据所有算例的总分进行排名, 每个算例的分数为重复测试中的最好结果与已知最优目标函数值的比值.
+Best 视图以提交者为中心, 对每个问题的每个提交者在所有算例上的最优整体结果进行评分与排序, 排序方式与 Leaderboard 视图相同.
 
 由于目前使用的托管平台不支持 csv 文件的渲染, 可以下载后使用 Excel 等软件打开.
 也可以参考 ({% post_link GiteeCsvSupport 'Gitee 渲染 CSV 文件' %}) 将其格式化以直接在网页中查看, 得到下图所示的展示效果.

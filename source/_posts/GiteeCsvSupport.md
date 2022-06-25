@@ -13,7 +13,7 @@ tags:
 美中不足的是, 它不支持对常见的数据文件格式进行渲染.
 其中就有 CSV 等纯文本表格文件, 在没有按列对齐的情况下可读性相对较低.
 作为一个程序员, 当然要自己动手丰衣足食.
-下面简单记录一下我的魔改方案.
+下面简单记录一下我的魔改方案 (该方案已发布至 [https://greasyfork.org/zh-CN/scripts/446381-gitee-csv-formatter](https://greasyfork.org/zh-CN/scripts/446381-gitee-csv-formatter) 可以一键安装).
 此外, 顺便夹带一点关于表格 CSS 样式设置的小技巧.
 
 

@@ -24,8 +24,9 @@ tags:
 
 - 参考文献.
   - [1] P. Galinier, E. Lemamou, and M. W. Bouzidi, “Applying local search to the feedback vertex set problem,” Journal of Heuristics, vol. 19, no. 5, pp. 797–818, Oct. 2013, doi: 10.1007/s10732-013-9224-z.
-  - [2] P. Festa, P. M. Pardalos, and M. G. C. Resende, “Feedback Set Problems,” in Handbook of Combinatorial Optimization: Supplement Volume A, D.-Z. Du and P. M. Pardalos, Eds. Boston, MA: Springer US, 1999, pp. 209–258. doi: 10.1007/978-1-4757-3023-4_4.
-  - [3] D. Zhao, L. Xu, S. -M. Qin, G. Liu, and Z. Wang, “The Feedback Vertex Set Problem of Multiplex Networks,” IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 67, no. 12, pp. 3492–3496, Dec. 2020, doi: 10.1109/TCSII.2020.2997974.
+  - [2] Hen-Ming Lin and Jing-Yang Jou, “Computing minimum feedback vertex sets by contraction operations and its applications on CAD,” in Proceedings 1999 IEEE International Conference on Computer Design: VLSI in Computers and Processors (Cat. No.99CB37040), Oct. 1999, pp. 364–369. doi: 10.1109/ICCD.1999.808567.
+  - [3] P. Festa, P. M. Pardalos, and M. G. C. Resende, “Feedback Set Problems,” in Handbook of Combinatorial Optimization: Supplement Volume A, D.-Z. Du and P. M. Pardalos, Eds. Boston, MA: Springer US, 1999, pp. 209–258. doi: 10.1007/978-1-4757-3023-4_4.
+  - [4] D. Zhao, L. Xu, S. -M. Qin, G. Liu, and Z. Wang, “The Feedback Vertex Set Problem of Multiplex Networks,” IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 67, no. 12, pp. 3492–3496, Dec. 2020, doi: 10.1109/TCSII.2020.2997974.
 
 
 ## 命令行参数
@@ -92,9 +93,7 @@ dfvsp.exe 600 123456 <../data/pardalos.n50e100.txt >sln.pardalos.n50e100.txt
     - 删除节点数.
     - 计算耗时.
   - **可选** 算法在各算例上求得的颜色数最少的解文件 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).
-- 若成功提交, 在收到邮件时以及测试完成后系统均会自动发送邮件反馈提交情况.
-  - 若测试结果较优, 可在排行榜页面看到自己的运行情况 ([https://gitee.com/suzhouxing/npbenchmark.data/DFVSP](https://gitee.com/suzhouxing/npbenchmark.data/DFVSP)).
-- 其他说明参考 ({% post_link Contest-ReadMe 'SmartLab Challenge - ReadMe' %}).
+- 其他所有问题通用的要求见 {% post_link Contest-ReadMe 'SmartLab Challenge - ReadMe' %}.
 
 例如:
 ```
