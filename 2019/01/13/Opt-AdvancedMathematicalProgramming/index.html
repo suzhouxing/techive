@@ -2,68 +2,76 @@
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">组合优化 (五) 数学规划进阶</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">组合优化 (五) 数学规划进阶</h1><div class="post-meta">Jan 13, 2019<span> | </span><span class="category"><a href="/techive/categories/组合优化/">组合优化</a></span></div><a data-disqus-identifier="2019/01/13/Opt-AdvancedMathematicalProgramming/" href="/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>虽然目前最顶尖的商业求解器已经非常高效, 直接求解完整的问题模型往往比普通人自己实现算法性能更好, 但是面对特定的问题, 仍然有改进空间.<br>另一方面, 先贤们告诉我们要站在巨人的肩膀上, 要重用前人的优秀成果.<br>于是, 我们可以得到一个在完全自行设计算法和完全使用通用求解器之间的折中的方案, 发挥多种方法各自的优势, 更好地解决问题.</p>
-<h1 id="线性规划与混合整数规划-进阶技巧"><a href="#线性规划与混合整数规划-进阶技巧" class="headerlink" title="线性规划与混合整数规划 (进阶技巧)"></a>线性规划与混合整数规划 (进阶技巧)</h1><h2 id="非线性表达式"><a href="#非线性表达式" class="headerlink" title="非线性表达式"></a>非线性表达式</h2><ul>
-<li>可以转化为线性表达式的非线性表达式<ul>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">组合优化 (五) 数学规划进阶</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">组合优化 (五) 数学规划进阶</h1><div class="post-meta">Jan 13, 2019<span> | </span><span class="category"><a href="/techive/categories/组合优化/">组合优化</a></span></div><a data-disqus-identifier="2019/01/13/Opt-AdvancedMathematicalProgramming/" href="/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>虽然目前最顶尖的商业求解器已经非常高效, 直接求解完整的问题模型往往比普通人自己实现算法性能更好, 但是面对特定的问题, 仍然有改进空间. 另一方面, 先贤们告诉我们要站在巨人的肩膀上, 要重用前人的优秀成果. 于是, 我们可以得到一个在完全自行设计算法和完全使用通用求解器之间的折中的方案, 发挥多种方法各自的优势, 更好地解决问题.</p>
+<h1 id="线性规划与混合整数规划-进阶技巧">线性规划与混合整数规划 (进阶技巧)</h1>
+<h2 id="非线性表达式">非线性表达式</h2>
+<ul>
+<li>可以转化为线性表达式的非线性表达式
+<ul>
 <li>最大值最小值</li>
 <li>绝对值</li>
 <li>分段线性函数</li>
-<li>…</li>
-</ul>
-</li>
-<li>可以较高效求解的非线性表达式<ul>
+<li>...</li>
+</ul></li>
+<li>可以较高效求解的非线性表达式
+<ul>
 <li>Quadratic Program (QP)</li>
 <li>Special Ordered Set (SOS)</li>
 <li>Mixed Integer Program (MIP)</li>
-<li>…</li>
-</ul>
-</li>
+<li>...</li>
+</ul></li>
 </ul>
 <p>详见 <a href="https://github.com/HUST-Smart/Training/blob/master/%5B1.5%5D%20%E7%BA%BF%E6%80%A7%E5%8C%96%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A1%A8%E8%BE%BE%E5%BC%8F.docx" target="_blank" rel="noopener">[1.5] 线性化非线性表达式.docx</a>.</p>
-<h3 id="最小化最大值"><a href="#最小化最大值" class="headerlink" title="最小化最大值"></a>最小化最大值</h3><ul>
+<h3 id="最小化最大值">最小化最大值</h3>
+<ul>
 <li>使用一个辅助变量限制决策变量的界</li>
-<li>约束的可行区域应与优化方向 “相反”<ul>
-<li>最小化一个表达式 $l = f(x)$, 应该确定 $l$ 的下界, 即 $g(x) \le l \le +\infty$</li>
-<li>最大化一个表达式 $u = f(x)$, 如果只约束其下界, 将导致目标无限增大</li>
+<li>约束的可行区域应与优化方向 "相反"
+<ul>
+<li>最小化一个表达式 <span class="math inline">\(l = f(x)\)</span>, 应该确定 <span class="math inline">\(l\)</span> 的下界, 即 <span class="math inline">\(g(x) \le l \le +\infty\)</span></li>
+<li>最大化一个表达式 <span class="math inline">\(u = f(x)\)</span>, 如果只约束其下界, 将导致目标无限增大</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="最小化最小值"><a href="#最小化最小值" class="headerlink" title="最小化最小值"></a>最小化最小值</h3><ul>
+<h3 id="最小化最小值">最小化最小值</h3>
+<ul>
 <li>最小值的下界? 让较大的值都可以忽略</li>
 <li>Big-M (充分大的 M)</li>
 </ul>
-<h3 id="课堂练习"><a href="#课堂练习" class="headerlink" title="课堂练习"></a>课堂练习</h3><ul>
+<h3 id="课堂练习">课堂练习</h3>
+<ul>
 <li>最大化最大值?</li>
 <li>最大化绝对值?</li>
 </ul>
-<h2 id="多目标"><a href="#多目标" class="headerlink" title="多目标"></a>多目标</h2><ul>
-<li>线性加权模式<ul>
+<h2 id="多目标">多目标</h2>
+<ul>
+<li>线性加权模式
+<ul>
 <li>简单, 本质上就是单目标</li>
 <li>各目标量纲不同时难以确定权重系数</li>
-</ul>
-</li>
-<li>优先级模式<ul>
+</ul></li>
+<li>优先级模式
+<ul>
 <li>高优先级对低优先级有压倒性优势</li>
 <li>高优先级目标有一定的绝对/相对容差范围</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="实现优先级模式"><a href="#实现优先级模式" class="headerlink" title="实现优先级模式"></a>实现优先级模式</h3><ul>
-<li>使用线性加权模式模拟<ul>
+<h3 id="实现优先级模式">实现优先级模式</h3>
+<ul>
+<li>使用线性加权模式模拟
+<ul>
 <li>难以确定各目标的取值范围以形成隔离</li>
 <li>目标过多容易溢出或者产生巨大的数值误差</li>
-</ul>
-</li>
-<li>迭代求解<ul>
+</ul></li>
+<li>迭代求解
+<ul>
 <li>按优先级逐个优化</li>
 <li>每个目标算到最优解后根据容差范围添加约束限制目标函数的取值</li>
 <li>求解性能依赖热启动 (warm start) 效果</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="约束类型"><a href="#约束类型" class="headerlink" title="约束类型"></a>约束类型</h2><table>
+<h2 id="约束类型">约束类型</h2>
+<table>
 <thead>
-<tr>
+<tr class="header">
 <th>类型</th>
 <th>特征</th>
 <th>最优性</th>
@@ -73,7 +81,7 @@ ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type=
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>user cut</td>
 <td>排除显然不可能最优的解向量</td>
 <td>不改变最优解</td>
@@ -81,7 +89,7 @@ ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type=
 <td>可能在任意时刻被检查</td>
 <td>可能</td>
 </tr>
-<tr>
+<tr class="even">
 <td>lazy constraint</td>
 <td>最优解不太可能违反的约束</td>
 <td>会改变最优解</td>
@@ -89,7 +97,7 @@ ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type=
 <td>仅在找到解时才被检查</td>
 <td>不会</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>constraint</td>
 <td>容易与优化目标产生冲突的约束</td>
 <td>会改变最优解</td>
@@ -111,25 +119,44 @@ ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type=
 </blockquote>
 <p>user cut 与约束编程 (Constraint Programming) 中的 surrogate constraints 功能类似:</p>
 <blockquote>
-<p>Since constraint propagation decreases the size of the search space by reducing the domains of variables, it is obviously important to express all necessary constraints. In some cases, it is even a good idea to introduce implicit constraints to reduce the size of the search space by supplementary propagation.<br>Processing supplementary constraints inevitably slows down execution. However, this slowing down may be negligible in certain problems when it is compared with the efficiency gained from reducing the size of the search space.</p>
-<p>A surrogate constraint makes explicit a property that satisfies a solution implicitly. Such a constraint should not change the nature of the solution, but its propagation should delimit the general shape of the solution more quickly.<br>Of course, there is no need to express grossly obvious redundant constraints since the highly optimized algorithms that CP Optimizer uses to insure arc consistency already work well enough. For example, given this system of equations:<br>$x = y + z$<br>$z = a + b$<br>no efficiency whatsoever is gained by adding this constraint:<br>$x = y + a + b$<br>However, in any case where an implicit property makes good sense, or derives from experience, or satisfies formal computations, its explicit implementation as a surrogate constraint can be beneficial.</p>
-<p>Consider the problem of the magic sequence. Assume that there are n+1 unknowns, namely, $x_0, x_1, . . . , x_n$. These $x_i$ must respect the following constraints:<br>0 appears $x_0$ times in the solution.<br>1 appears $x_1$ times.<br>In general, $i$ appears $x_i$ times.<br>$n$ appears $x_n$ times.<br>The constraint of this problem can easily be written, using the specialized distribute constraint. However, the search for a solution can be greatly accelerated by introducing the following surrogate constraint that expresses the fact that $n+1$ numbers are counted.<br>$1<em>x_1 + 2</em>x_2 + . . . + n*x_n = n+1$.</p>
+<p>Since constraint propagation decreases the size of the search space by reducing the domains of variables, it is obviously important to express all necessary constraints. In some cases, it is even a good idea to introduce implicit constraints to reduce the size of the search space by supplementary propagation. Processing supplementary constraints inevitably slows down execution. However, this slowing down may be negligible in certain problems when it is compared with the efficiency gained from reducing the size of the search space.</p>
+<p>A surrogate constraint makes explicit a property that satisfies a solution implicitly. Such a constraint should not change the nature of the solution, but its propagation should delimit the general shape of the solution more quickly. Of course, there is no need to express grossly obvious redundant constraints since the highly optimized algorithms that CP Optimizer uses to insure arc consistency already work well enough. For example, given this system of equations: <span class="math inline">\(x = y + z\)</span> <span class="math inline">\(z = a + b\)</span> no efficiency whatsoever is gained by adding this constraint: <span class="math inline">\(x = y + a + b\)</span> However, in any case where an implicit property makes good sense, or derives from experience, or satisfies formal computations, its explicit implementation as a surrogate constraint can be beneficial.</p>
+<p>Consider the problem of the magic sequence. Assume that there are n+1 unknowns, namely, <span class="math inline">\(x_0, x_1, . . . , x_n\)</span>. These <span class="math inline">\(x_i\)</span> must respect the following constraints: 0 appears <span class="math inline">\(x_0\)</span> times in the solution. 1 appears <span class="math inline">\(x_1\)</span> times. In general, <span class="math inline">\(i\)</span> appears <span class="math inline">\(x_i\)</span> times. <span class="math inline">\(n\)</span> appears <span class="math inline">\(x_n\)</span> times. The constraint of this problem can easily be written, using the specialized distribute constraint. However, the search for a solution can be greatly accelerated by introducing the following surrogate constraint that expresses the fact that <span class="math inline">\(n+1\)</span> numbers are counted. <span class="math inline">\(1*x_1 + 2*x_2 + . . . + n*x_n = n+1\)</span>.</p>
 </blockquote>
-<h2 id="列生成-Column-Generation"><a href="#列生成-Column-Generation" class="headerlink" title="列生成 (Column Generation)"></a>列生成 (Column Generation)</h2><p>如果说 TSP 中经典的子回路消除 (割平面法) 是一种逐步添加惰性约束的 “行生成” 算法, 那么其对偶算法就是逐步添加决策变量的 “列生成” 算法.<br>前者适用于原始问题约束非常多, 但是真正对限制最优解的取值发挥作用的重要约束很少的情况;<br>后者则恰好相反, 适用于决策变量非常多, 但大多数决策变量的子集的取值组合不可能出现在最优解中的情况.</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>给定主问题及其对偶问题的线性规划模型<br>$$<br>\begin{align}<br>\min &amp;  &amp; \mathbf{c}^{T} \mathbf{x}            &amp; &amp;                 &amp; &amp; \max &amp;  &amp; \mathbf{y}^{T} \mathbf{b}\<br>s.t. &amp;  &amp; \mathbf{A} \mathbf{x} \ge \mathbf{b} &amp; &amp; \Leftrightarrow &amp; &amp; s.t. &amp;  &amp; \mathbf{y}^{T} \mathbf{A} \le \mathbf{c}^{T}\<br>     &amp;  &amp; \mathbf{x} \ge \mathbf{0}            &amp; &amp;                 &amp; &amp;      &amp;  &amp; \mathbf{y} \ge \mathbf{0}<br>\end{align}<br>$$</p>
-<p>令 $\mathbf{x}^{T} = [\mathbf{x}^{T}<em>{B}, \mathbf{x}^{T}</em>{N}]$, 其中 $\mathbf{x}<em>{B}$ 表示基向量, $\mathbf{x}</em>{N}$ 表示非基变量. 对应地, $\mathbf{A} = [\mathbf{B}, \mathbf{N}]$, $\mathbf{c} = [\mathbf{c}<em>{B}, \mathbf{c}</em>{N}]$.</p>
-<p>对约束进行如下等价变换<br>$$<br>\mathbf{A} \mathbf{x} \ge \mathbf{b} <del>\Leftrightarrow</del> \mathbf{B} \mathbf{x}<em>{B} + \mathbf{N} \mathbf{x}</em>{N} \ge \mathbf{b} <del>\Leftrightarrow</del> \mathbf{x}<em>{B} \ge \mathbf{B}^{-1} \mathbf{b} - \mathbf{B}^{-1} \mathbf{N} \mathbf{x}</em>{N}<br>$$</p>
-<p>将上式代入目标函数<br>$$<br>\mathbf{c}^{T} \mathbf{x} <del>=</del> \mathbf{c}^{T}<em>{B} \mathbf{x}</em>{B} + \mathbf{c}^{T}<em>{N} \mathbf{x}</em>{N} <del>\ge</del> \mathbf{c}^{T}<em>{B} (\mathbf{B}^{-1} \mathbf{b} - \mathbf{B}^{-1} \mathbf{N} \mathbf{x}</em>{N}) + \mathbf{c}^{T}<em>{N} \mathbf{x}</em>{N} <del>=</del> \mathbf{c}^{T}<em>{B} \mathbf{B}^{-1} \mathbf{b} + (\mathbf{c}^{T}</em>{N} - \mathbf{c}^{T}<em>{B} \mathbf{B}^{-1} \mathbf{N}) \mathbf{x}</em>{N}<br>$$</p>
-<p>定义目标函数中非基变量的系数 Reduced Cost 为<br>$$<br>\mathbf{r} = \mathbf{c}^{T}<em>{N} - \mathbf{c}^{T}</em>{B} \mathbf{B}^{-1} \mathbf{N}<br>$$</p>
-<p>若 $\exist \mathbf{N}<em>{i} \in \mathbf{N}$ 满足 $\mathbf{r}</em>{i} &lt; 0$, 则可通过增加非基变量 $\mathbf{x}<em>{i}$ 的值实现降低目标函数值.<br>若不存在这样的项, 即 $\forall \mathbf{N}</em>{i} \in \mathbf{N}, \mathbf{c}^{T}<em>{i} - \mathbf{c}^{T}</em>{B} \mathbf{B}^{-1} \mathbf{N}<em>{i} \ge 0$, 则 $[\mathbf{x}</em>{B}, \mathbf{0}]$ 为最优解.</p>
-<p>由 Complementary Slackness 定理可知 $\mathbf{y}^{T} = \mathbf{c}^{T}<em>{B} \mathbf{B}^{-1}$, 由此可得 $\mathbf{r} = \mathbf{c}^{T}</em>{N} - \mathbf{y}^{T} \mathbf{N}$.<br>则寻找可最大程度改进当前解的非基变量的子问题目标函数为 $\min \mathbf{c}^{T}_{N} - \mathbf{y}^{T} \mathbf{N}$.</p>
-<p>$~~~~$</p>
-<p><em>(本节内容基于 <a href="https://zhuanlan.zhihu.com/p/55424545" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/55424545</a> 整理)</em></p>
+<h2 id="列生成-column-generation">列生成 (Column Generation)</h2>
+<p>如果说 TSP 中经典的子回路消除 (割平面法) 是一种逐步添加惰性约束的 "行生成" 算法, 那么其对偶算法就是逐步添加决策变量的 "列生成" 算法. 前者适用于原始问题约束非常多, 但是真正对限制最优解的取值发挥作用的重要约束很少的情况; 后者则恰好相反, 适用于决策变量非常多, 但大多数决策变量的子集的取值组合不可能出现在最优解中的情况.</p>
+<h3 id="原理">原理</h3>
+<p>给定主问题及其对偶问题的线性规划模型 <span class="math display">\[
+\begin{align}
+\min &amp;  &amp; \mathbf{c}^{T} \mathbf{x}            &amp; &amp;                 &amp; &amp; \max &amp;  &amp; \mathbf{y}^{T} \mathbf{b}\\
+s.t. &amp;  &amp; \mathbf{A} \mathbf{x} \ge \mathbf{b} &amp; &amp; \Leftrightarrow &amp; &amp; s.t. &amp;  &amp; \mathbf{y}^{T} \mathbf{A} \le \mathbf{c}^{T}\\
+     &amp;  &amp; \mathbf{x} \ge \mathbf{0}            &amp; &amp;                 &amp; &amp;      &amp;  &amp; \mathbf{y} \ge \mathbf{0}
+\end{align}
+\]</span></p>
+<p>令 <span class="math inline">\(\mathbf{x}^{T} = [\mathbf{x}^{T}_{B}, \mathbf{x}^{T}_{N}]\)</span>, 其中 <span class="math inline">\(\mathbf{x}_{B}\)</span> 表示基向量, <span class="math inline">\(\mathbf{x}_{N}\)</span> 表示非基变量. 对应地, <span class="math inline">\(\mathbf{A} = [\mathbf{B}, \mathbf{N}]\)</span>, <span class="math inline">\(\mathbf{c} = [\mathbf{c}_{B}, \mathbf{c}_{N}]\)</span>.</p>
+<p>对约束进行如下等价变换 <span class="math display">\[
+\mathbf{A} \mathbf{x} \ge \mathbf{b} ~~\Leftrightarrow~~ \mathbf{B} \mathbf{x}_{B} + \mathbf{N} \mathbf{x}_{N} \ge \mathbf{b} ~~\Leftrightarrow~~ \mathbf{x}_{B} \ge \mathbf{B}^{-1} \mathbf{b} - \mathbf{B}^{-1} \mathbf{N} \mathbf{x}_{N}
+\]</span></p>
+<p>将上式代入目标函数 <span class="math display">\[
+\mathbf{c}^{T} \mathbf{x} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{x}_{B} + \mathbf{c}^{T}_{N} \mathbf{x}_{N} ~~\ge~~ \mathbf{c}^{T}_{B} (\mathbf{B}^{-1} \mathbf{b} - \mathbf{B}^{-1} \mathbf{N} \mathbf{x}_{N}) + \mathbf{c}^{T}_{N} \mathbf{x}_{N} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{b} + (\mathbf{c}^{T}_{N} - \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N}) \mathbf{x}_{N}
+\]</span></p>
+<p>定义目标函数中非基变量的系数 Reduced Cost 为 <span class="math display">\[
+\mathbf{r} = \mathbf{c}^{T}_{N} - \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N}
+\]</span></p>
+<p>若 <span class="math inline">\(\exist \mathbf{N}_{i} \in \mathbf{N}\)</span> 满足 <span class="math inline">\(\mathbf{r}_{i} &lt; 0\)</span>, 则可通过增加非基变量 <span class="math inline">\(\mathbf{x}_{i}\)</span> 的值实现降低目标函数值. 若不存在这样的项, 即 <span class="math inline">\(\forall \mathbf{N}_{i} \in \mathbf{N}, \mathbf{c}^{T}_{i} - \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N}_{i} \ge 0\)</span>, 则 <span class="math inline">\([\mathbf{x}_{B}, \mathbf{0}]\)</span> 为最优解.</p>
+<p>由 Complementary Slackness 定理可知 <span class="math inline">\(\mathbf{y}^{T} = \mathbf{c}^{T}_{B} \mathbf{B}^{-1}\)</span>, 由此可得 <span class="math inline">\(\mathbf{r} = \mathbf{c}^{T}_{N} - \mathbf{y}^{T} \mathbf{N}\)</span>. 则寻找可最大程度改进当前解的非基变量的子问题目标函数为 <span class="math inline">\(\min \mathbf{c}^{T}_{N} - \mathbf{y}^{T} \mathbf{N}\)</span>.</p>
+<p><span class="math inline">\(~~~~\)</span></p>
+<p><em>(本节内容基于 https://zhuanlan.zhihu.com/p/55424545 整理)</em></p>
 <blockquote>
-<p>附: Complementary Slackness 定理证明过程 (可能有问题):<br>令 $\mathbf{y}^{T} = \mathbf{c}^{T}<em>{B} \mathbf{B}^{-1}$, 对于限制主问题的最优解 $\mathbf{x}$, 有 $\mathbf{x}</em>{N} = \mathbf{0}$, 以及 $\mathbf{c}^{T}<em>{B} \mathbf{B}^{-1} \mathbf{N} \le \mathbf{c}^{T}</em>{N}$, 可得<br>$$<br>\mathbf{y}^{T} \mathbf{A} <del>=</del> \mathbf{c}^{T}<em>{B} \mathbf{B}^{-1} \mathbf{A} <del>=</del> \mathbf{c}^{T}</em>{B} \mathbf{B}^{-1} [\mathbf{B}, \mathbf{N}] <del>=</del> [\mathbf{c}^{T}<em>{B}, \mathbf{c}^{T}</em>{B} \mathbf{B}^{-1} \mathbf{N}] <del>\le</del> [\mathbf{c}^{T}<em>{B}, \mathbf{c}^{T}</em>{N}] <del>=</del> \mathbf{c}^{T}<br>$$<br>$$<br>\mathbf{y}^{T} \mathbf{b} <del>=</del> \mathbf{c}^{T}<em>{B} \mathbf{B}^{-1} \mathbf{b} <del>=</del> \mathbf{c}^{T}</em>{B} \mathbf{x}_{B} <del>=</del> \mathbf{c}^{T} \mathbf{x}<br>$$<br>即 $\mathbf{y}^{T}$ 为限制对偶问题的最优解.</p>
+<p>附: Complementary Slackness 定理证明过程 (可能有问题): 令 <span class="math inline">\(\mathbf{y}^{T} = \mathbf{c}^{T}_{B} \mathbf{B}^{-1}\)</span>, 对于限制主问题的最优解 <span class="math inline">\(\mathbf{x}\)</span>, 有 <span class="math inline">\(\mathbf{x}_{N} = \mathbf{0}\)</span>, 以及 <span class="math inline">\(\mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N} \le \mathbf{c}^{T}_{N}\)</span>, 可得 <span class="math display">\[
+\mathbf{y}^{T} \mathbf{A} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{A} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{B}^{-1} [\mathbf{B}, \mathbf{N}] ~~=~~ [\mathbf{c}^{T}_{B}, \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{N}] ~~\le~~ [\mathbf{c}^{T}_{B}, \mathbf{c}^{T}_{N}] ~~=~~ \mathbf{c}^{T}
+\]</span> <span class="math display">\[
+\mathbf{y}^{T} \mathbf{b} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{B}^{-1} \mathbf{b} ~~=~~ \mathbf{c}^{T}_{B} \mathbf{x}_{B} ~~=~~ \mathbf{c}^{T} \mathbf{x}
+\]</span> 即 <span class="math inline">\(\mathbf{y}^{T}\)</span> 为限制对偶问题的最优解.</p>
 </blockquote>
-<h2 id="线性分数规划-Linear-Fractional-Programming"><a href="#线性分数规划-Linear-Fractional-Programming" class="headerlink" title="线性分数规划 (Linear-Fractional Programming)"></a>线性分数规划 (Linear-Fractional Programming)</h2><p>目标函数为分数形式.<br>可以转换成线性规划.</p>
-</div><div class="tags"><a href="/techive/tags/组合优化/">组合优化</a><a href="/techive/tags/优化/">优化</a><a href="/techive/tags/技术/">技术</a><a href="/techive/tags/建模/">建模</a><a href="/techive/tags/数学/">数学</a></div><div class="post-nav"><a href="/techive/2020/12/09/Contest-2020GraphColoring/" class="pre">SmartLab Challenge 2020 - Graph Coloring</a><a href="/techive/2019/01/13/Opt-SoftwareEngineering/" class="next">组合优化 (四) 算法工程</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
+<h2 id="线性分数规划-linear-fractional-programming">线性分数规划 (Linear-Fractional Programming)</h2>
+<p>目标函数为分数形式. 可以转换成线性规划.</p>
+</div><div class="tags"><a href="/techive/tags/优化/">优化</a><a href="/techive/tags/组合优化/">组合优化</a><a href="/techive/tags/技术/">技术</a><a href="/techive/tags/建模/">建模</a><a href="/techive/tags/数学/">数学</a></div><div class="post-nav"><a href="/techive/2020/12/09/Contest-2020GraphColoring/" class="pre">SmartLab Challenge 2020 - Graph Coloring</a><a href="/techive/2019/01/13/Opt-SoftwareEngineering/" class="next">组合优化 (四) 算法工程</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
 var disqus_identifier = '2019/01/13/Opt-AdvancedMathematicalProgramming/';
 var disqus_title = '组合优化 (五) 数学规划进阶';
 var disqus_url = 'http://suzhouxing.github.io/techive/2019/01/13/Opt-AdvancedMathematicalProgramming/';
@@ -154,7 +181,7 @@ $.ajax({
   error: function() {
     $('.btn_click_load').css('display','block');
   }
-});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/团队建设/" style="font-size: 15px;">团队建设</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/30/GiteeCsvSupport/">Gitee 渲染 CSV 文件</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/26/Contest-ReadMe/">SmartLab Challenge - ReadMe</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/28/Contest-2023PECCP/">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/TeamBuilding/">论实验室团队建设</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/Contest-2022MCDSP/">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/16/CompetitionNavigation/">运筹优化相关算法竞赛合集</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://smart.hust.edu.cn" title="智能决策与系统优化实验室" target="_blank">智能决策与系统优化实验室</a><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的主页 (Gitee)" target="_blank">苏宙行的主页 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的主页 (Github)" target="_blank">苏宙行的主页 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Homepage (Gitee)" target="_blank">Zhouxing Su's Homepage (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Homepage (Github)" target="_blank">Zhouxing Su's Homepage (Github)</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/团队建设/" style="font-size: 15px;">团队建设</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2022/08/24/Contest-2023DARP/">SmartLab Challenge 2023 - Dial-A-Ride Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/30/GiteeCsvSupport/">Gitee 渲染 CSV 文件</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/26/Contest-ReadMe/">SmartLab Challenge - ReadMe</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/28/Contest-2023PECCP/">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/TeamBuilding/">论实验室团队建设</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/Contest-2022MCDSP/">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/09/27/Contest-2021VRP/">SmartLab Challenge 2021 - Vehicle Routing Problem with Time Windows</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://smart.hust.edu.cn" title="智能决策与系统优化实验室" target="_blank">智能决策与系统优化实验室</a><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的主页 (Gitee)" target="_blank">苏宙行的主页 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的主页 (Github)" target="_blank">苏宙行的主页 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Homepage (Gitee)" target="_blank">Zhouxing Su's Homepage (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Homepage (Github)" target="_blank">Zhouxing Su's Homepage (Github)</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
