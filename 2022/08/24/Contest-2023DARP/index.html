@@ -2,146 +2,65 @@
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2023 - Dial-A-Ride Problem</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2023 - Dial-A-Ride Problem</h1><div class="post-meta">Aug 24, 2022<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2022/08/24/Contest-2023DARP/" href="/techive/2022/08/24/Contest-2023DARP/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>出租车调度问题是交通运输与智能制造等领域中的重要问题, 其应用场景在生产生活中广泛存在. 出租车调度问题主要研究如何确定一系列从同一个车库出发的出租车的行驶路径, 在每辆车均不超载且在指定时间窗内到达接送订单起点和终点的前提下, 确保各乘客的乘车时间和各车辆的行驶时间分别不超过给定上限, 在此基础上最小化所有车辆的行驶时间之和. 比如网约车平台的派单过程中, 出租车同时能服务的订单数或搭载的乘客人数 (拼车) 有限, 且每个订单的对上下车时间有要求, 网约车平台需要调度出租车用最短的工时完成所有接送订单. 比如芯片代工厂中的物料传送系统的运行过程中, 运输车能够装载的晶圆数量有限, 且上层生产排程系统对每道工序的开工时间有要求, 物料传送系统需要调度运输车用最短的时长完成所有运输任务. 因此, 高效的出租车调度问题的求解算法在理论上与实践上均意义重大.</p>
-<h1 id="出租车调度算法训练">出租车调度算法训练</h1>
-<h2 id="问题概述">问题概述</h2>
-<p>给定一个有向完全图, 图中包含一个车库节点和若干客户节点. 同时给定一系列乘车请求, 每个请求包含一个上车节点和下车节点, 需由同一辆车分别在对应的时间窗内完成接送 (提前到达可先原地等待), 上下客花费固定的时间. 此外, 每辆车的最大载客量相同且均需从车库出发最后回到车库, 同时任意两点间的最短行驶时间已知. 最后, 每个乘客上车后到下车前的乘车时间与每辆车从车库出发到返回车库的出勤时间分别不得超过给定上限. 请确定使用几辆车参与配送, 并给出每辆车依次访问的有序节点列表, 使得所有车辆的总行驶时间 (不包括停车等待和上下客时间) 最短.</p>
+ga('create','UA-64116442-1','auto');ga('send','pageview');</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML" async></script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SmartLab Challenge 2023 - Dial-A-Ride Problem</h1><a id="logo" href="/techive/.">Techive</a><p class="description">An Archive for Technologies</p></div><div id="nav-menu"><a href="/techive/." class="current"><i class="fa fa-home"> Home</i></a><a href="/techive/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/techive/about/"><i class="fa fa-user"> About</i></a><a href="/techive/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">SmartLab Challenge 2023 - Dial-A-Ride Problem</h1><div class="post-meta">Aug 24, 2022<span> | </span><span class="category"><a href="/techive/categories/算法挑战/">算法挑战</a></span></div><a data-disqus-identifier="2022/08/24/Contest-2023DARP/" href="/techive/2022/08/24/Contest-2023DARP/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>出租车调度问题是交通运输与智能制造等领域中的重要问题, 其应用场景在生产生活中广泛存在.<br>出租车调度问题主要研究如何确定一系列从同一个车库出发的出租车的行驶路径, 在每辆车均不超载且在指定时间窗内到达接送订单起点和终点的前提下, 确保各乘客的乘车时间和各车辆的行驶时间分别不超过给定上限, 在此基础上最小化所有车辆的行驶时间之和.<br>比如网约车平台的派单过程中, 出租车同时能服务的订单数或搭载的乘客人数 (拼车) 有限, 且每个订单的对上下车时间有要求, 网约车平台需要调度出租车用最短的工时完成所有接送订单.<br>比如芯片代工厂中的物料传送系统的运行过程中, 运输车能够装载的晶圆数量有限, 且上层生产排程系统对每道工序的开工时间有要求, 物料传送系统需要调度运输车用最短的时长完成所有运输任务.<br>因此, 高效的出租车调度问题的求解算法在理论上与实践上均意义重大.</p>
+<h1 id="出租车调度算法训练"><a href="#出租车调度算法训练" class="headerlink" title="出租车调度算法训练"></a>出租车调度算法训练</h1><h2 id="问题概述"><a href="#问题概述" class="headerlink" title="问题概述"></a>问题概述</h2><p>给定一个有向完全图, 图中包含一个车库节点和若干客户节点.<br>同时给定一系列乘车请求, 每个请求包含一个上车节点和下车节点, 需由同一辆车分别在对应的时间窗内完成接送 (提前到达可先原地等待), 上下客花费固定的时间.<br>此外, 每辆车的最大载客量相同且均需从车库出发最后回到车库, 同时任意两点间的最短行驶时间已知.<br>最后, 每个乘客上车后到下车前的乘车时间与每辆车从车库出发到返回车库的出勤时间分别不得超过给定上限.<br>请确定使用几辆车参与配送, 并给出每辆车依次访问的有序节点列表, 使得所有车辆的总行驶时间 (不包括停车等待和上下客时间) 最短.</p>
 <ul>
-<li>参考文献.
-<ul>
+<li>参考文献.<ul>
 <li>[1] T. Gschwind and M. Drexl, “Adaptive Large Neighborhood Search with a Constant-Time Feasibility Test for the Dial-a-Ride Problem,” Transportation Science, vol. 53, no. 2, pp. 480–491, 2019, doi: 10.1287/trsc.2018.0837.</li>
 <li>[2] S. C. Ho, W. Y. Szeto, Y. H. Kuo, J. M. Y. Leung, M. Petering, and T. W. H. Tou, “A survey of dial-a-ride problems: Literature review and recent developments,” Transportation Research Part B: Methodological, vol. 111, pp. 395–421, May 2018, doi: 10.1016/j.trb.2018.02.001.</li>
 <li>[3] Y. Molenbruch, K. Braekers, and A. Caris, “Typology and literature review for dial-a-ride problems,” Annals of Operations Research, vol. 259, no. 1, Art. no. 1, Dec. 2017, doi: 10.1007/s10479-017-2525-0.</li>
 <li>[4] S. Ropke and D. Pisinger, “An Adaptive Large Neighborhood Search Heuristic for the Pickup and Delivery Problem with Time Windows,” Transportation Science, vol. 40, no. 4, pp. 455–472, 2006, doi: 10.1287/trsc.1050.0135.</li>
-</ul></li>
 </ul>
-<h2 id="命令行参数">命令行参数</h2>
-<p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535). 算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>). 例如, 在控制台运行以下命令表示调用可执行文件 <code>darp.exe</code> 在限时 300 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/pr01.txt</code> 的算例, 解文件输出至 <code>sln.pr01.txt</code>: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">darp.exe 300 123456 &lt;../data/pr01.txt &gt;sln.pr01.txt</span><br></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>请大家编写程序时支持两个命令行参数, 依次为运行时间上限 (单位为秒) 和随机种子 (0-65535).<br>算例文件已重定向至标准输入 <code>stdin</code>/<code>cin</code>, 标准输出 <code>stdout</code>/<code>cout</code> 已重定向至解文件 (如需打印调试信息, 请使用标准错误输出 <code>stderr</code>/<code>cerr</code>).<br>例如, 在控制台运行以下命令表示调用可执行文件 <code>darp.exe</code> 在限时 300 秒, 随机种子为 12345 的情况下求解路径为 <code>../data/pr01.txt</code> 的算例, 解文件输出至 <code>sln.pr01.txt</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">darp.exe 300 123456 &lt;../data/pr01.txt &gt;sln.pr01.txt</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>运行时间上限.
-<ul>
+<li>运行时间上限.<ul>
 <li>超出运行时间上限后测试程序会强行终止算法, 请确保在此之前已输出解 (最好还能自行正常退出).</li>
-</ul></li>
-<li>随机种子设置.
-<ul>
+</ul>
+</li>
+<li>随机种子设置.<ul>
 <li>使用 C 语言随机数生成器请用 <code>srand</code>.</li>
 <li>使用 C++ 随机数生成器 (如 <code>mt19937</code>) 请在构造时传参或调用 <code>seed()</code> 方法设置.</li>
-</ul></li>
 </ul>
-<h2 id="输入的算例文件格式">输入的算例文件格式</h2>
-<p>所有算例的节点和车辆分别从 0 开始连续编号, 所有节点分布于平面直角坐标系中. 节点 0 为车库, 即车辆的起点和终点, 其服务时间, 乘客数量, 时间窗开始时间均为 0.</p>
-<p>第一行给出 5 个由空白字符分隔的整数, 分别表示接送请求数 N, 最大可用车辆数 K, 各车辆的载重量上限 Q, 各车辆最长行驶时间 T, 以及各乘客的最长乘车时间 L. 接下来连续 2N+1 行, 每行包含 6 个由空白字符分隔的数字 (前 2 个为实数, 后 4 个为整数), 第 i 行的 6 个数字依次表示第 i 个节点的 x 坐标, y 坐标, 乘客数量, 最短停留时间 (服务时间), 最早到达时间, 最晚到达时间. 其中编号在 [1, N] 范围内的节点为乘客上车节点, 乘客数量为正数, 每个上车节点 i 的下车节点为 i+N, 乘客数量为其相反数.</p>
-<p>例如, 以下算例文件表示有 2 个接送请求 (5 个节点) 和 3 辆车, 每辆车的容量为 10, 车辆最长行驶时间为 25, 乘客最长乘车时间为 15; 其中,<br>
-节点 0 的坐标为 (1.234, 5.456), 乘客数量为 0, 最短停留时间为 0, 时间窗开始和结束时间分别为 0 和 30;<br>
-节点 1 的坐标为 (2.000, 1.000), 乘客数量为 1, 最短停留时间为 3, 时间窗开始和结束时间分别为 4 和 5;<br>
-节点 2 的坐标为 (3.000, 7.000), 乘客数量为 2, 最短停留时间为 4, 时间窗开始和结束时间分别为 5 和 6;<br>
-节点 3 的坐标为 (6.000, 8.000), 乘客数量为 -1, 最短停留时间为 5, 时间窗开始和结束时间分别为 6 和 7;<br>
-节点 4 的坐标为 (8.000, 8.000), 乘客数量为 -2, 最短停留时间为 6, 时间窗开始和结束时间分别为 7 和 8: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2 3 10 25 15</span><br><span class="line">1.234 5.456 0 0 0 30</span><br><span class="line">2.000 1.000 1 3 4 5</span><br><span class="line">3.000 7.000 2 4 5 6</span><br><span class="line">6.000 8.000 -1 5 6 7</span><br><span class="line">8.000 8.000 -2 6 7 8</span><br></pre></td></tr></table></figure></p>
-<p>注意, 本问题所用算例集中假设行驶时间等于两点间的距离, 目前的距离计算使用截断保留 3 位小数的欧氏距离 (<span class="math inline">\(t = \lfloor 10^3 d \rfloor / 10^3\)</span>), 具体计算方式以 SDK 中的代码为准.</p>
-<h2 id="输出的解文件格式">输出的解文件格式</h2>
-<p>输出 V 行整数表示 V 辆车 (V <span class="math inline">\(\le\)</span> K) 的行驶路径, 第 i 行第 j 个整数表示第 i 辆车经过的第 j 个客户节点.</p>
-<p>例如, 以下解文件表示 2 辆车的行驶路径; 其中,<br>
-车辆 0 从车库 0 出发后依次经过节点 1 和 3, 最后回到车库 0;<br>
-车辆 1 从车库 0 出发后依次经过节点 2 和 4, 最后回到车库 0: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure></p>
-<h2 id="提交要求">提交要求</h2>
-<ul>
+</li>
+</ul>
+<h2 id="输入的算例文件格式"><a href="#输入的算例文件格式" class="headerlink" title="输入的算例文件格式"></a>输入的算例文件格式</h2><p>所有算例的节点和车辆分别从 0 开始连续编号, 所有节点分布于平面直角坐标系中.<br>节点 0 为车库, 即车辆的起点和终点, 其服务时间, 乘客数量, 时间窗开始时间均为 0.</p>
+<p>第一行给出 5 个由空白字符分隔的整数, 分别表示接送请求数 N, 最大可用车辆数 K, 各车辆的载重量上限 Q, 各车辆最长行驶时间 T, 以及各乘客的最长乘车时间 L.<br>接下来连续 2N+1 行, 每行包含 6 个由空白字符分隔的数字 (前 2 个为实数, 后 4 个为整数), 第 i 行的 6 个数字依次表示第 i 个节点的 x 坐标, y 坐标, 乘客数量, 最短停留时间 (服务时间), 最早到达时间, 最晚到达时间.<br>其中编号在 [1, N] 范围内的节点为乘客上车节点, 乘客数量为正数, 每个上车节点 i 的下车节点为 i+N, 乘客数量为其相反数.</p>
+<p>例如, 以下算例文件表示有 2 个接送请求 (5 个节点) 和 3 辆车, 每辆车的容量为 10, 车辆最长行驶时间为 25, 乘客最长乘车时间为 15; 其中,<br>节点 0 的坐标为 (1.234, 5.456), 乘客数量为 0, 最短停留时间为 0, 时间窗开始和结束时间分别为 0 和 30;<br>节点 1 的坐标为 (2.000, 1.000), 乘客数量为 1, 最短停留时间为 3, 时间窗开始和结束时间分别为 4 和 5;<br>节点 2 的坐标为 (3.000, 7.000), 乘客数量为 2, 最短停留时间为 4, 时间窗开始和结束时间分别为 5 和 6;<br>节点 3 的坐标为 (6.000, 8.000), 乘客数量为 -1, 最短停留时间为 5, 时间窗开始和结束时间分别为 6 和 7;<br>节点 4 的坐标为 (8.000, 8.000), 乘客数量为 -2, 最短停留时间为 6, 时间窗开始和结束时间分别为 7 和 8:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2 3 10 25 15</span><br><span class="line">1.234 5.456 0 0 0 30</span><br><span class="line">2.000 1.000 1 3 4 5</span><br><span class="line">3.000 7.000 2 4 5 6</span><br><span class="line">6.000 8.000 -1 5 6 7</span><br><span class="line">8.000 8.000 -2 6 7 8</span><br></pre></td></tr></table></figure></p>
+<p>注意, 本问题所用算例集中假设行驶时间等于两点间的距离, 目前的距离计算使用截断保留 3 位小数的欧氏距离 ($t = \lfloor 10^3 d \rfloor / 10^3$), 具体计算方式以 SDK 中的代码为准.</p>
+<h2 id="输出的解文件格式"><a href="#输出的解文件格式" class="headerlink" title="输出的解文件格式"></a>输出的解文件格式</h2><p>输出 V 行整数表示 V 辆车 (V $\le$ K) 的行驶路径, 第 i 行第 j 个整数表示第 i 辆车经过的第 j 个客户节点.</p>
+<p>例如, 以下解文件表示 2 辆车的行驶路径; 其中,<br>车辆 0 从车库 0 出发后依次经过节点 1 和 3, 最后回到车库 0;<br>车辆 1 从车库 0 出发后依次经过节点 2 和 4, 最后回到车库 0:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure></p>
+<h2 id="提交要求"><a href="#提交要求" class="headerlink" title="提交要求"></a>提交要求</h2><ul>
 <li>发送至邮箱 <a href="mailto:szx@duhe.tech" target="_blank" rel="noopener">szx@duhe.tech</a>.</li>
-<li>邮件标题格式为 "<strong>Challenge2023DARP2d-姓名-学校-专业</strong>".</li>
-<li>邮件附件为单个压缩包, 文件名为 "<strong>姓名-学校-专业</strong>", 其内包含下列文件.
-<ul>
-<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).
-<ul>
+<li>邮件标题格式为 “<strong>Challenge2023DARP2d-姓名-学校-专业</strong>“.</li>
+<li>邮件附件为单个压缩包, 文件名为 “<strong>姓名-学校-专业</strong>“, 其内包含下列文件.<ul>
+<li><strong>必要</strong> 算法的可执行文件 (Windows 平台).<ul>
 <li>建议基于官方 SDK 开发 (<a href="https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.DARP2d" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark/tree/main/SDK.DARP2d</a>).</li>
 <li>用 g++ 的同学编译时请静态链接, 即添加 <code>-static-libgcc -static-libstdc++</code> 编译选项.</li>
-</ul></li>
-<li><strong>必要</strong> 算法源码.
-<ul>
+</ul>
+</li>
+<li><strong>必要</strong> 算法源码.<ul>
 <li>可重入 (可在同一线程内反复调用而不会出现数据初始化错误或内存泄漏).</li>
 <li>可并发 (可在同一进程内的多个线程同时运行多个算法求解实例而互不干扰, 满足此要求一般不能有全局的非只读变量).</li>
 <li>可伸缩 (数据结构可以根据算例规模动态申请内存, 而非根据预先指定的编译期常量进行内存分配).</li>
-</ul></li>
-<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).
-<ul>
+</ul>
+</li>
+<li><strong>可选</strong> 算法在各算例上的运行情况概要, 至少包括以下几项信息 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).<ul>
 <li>算例名.</li>
 <li>使用的车辆数.</li>
 <li>所有车辆的行驶时长总和.</li>
 <li>计算耗时.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>可选</strong> 算法在各算例上求得的路径总长度最短的解文件 (仅在无法成功调用算法输出可通过检查程序的解时作为参考).</li>
-</ul></li>
+</ul>
+</li>
 <li>其他所有问题通用的要求见 <a href="/techive/2022/05/26/Contest-ReadMe/" title="SmartLab Challenge - ReadMe">SmartLab Challenge - ReadMe</a>.</li>
 </ul>
-<p>例如: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   darp2d.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        pr01.n101v25c200.txt</span><br><span class="line">        pr02.n101v25c200.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
-<h2 id="算例清单">算例清单</h2>
-<p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data/DARP2d/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data/DARP2d/Instance</a></p>
-<p>pr01.r24v3c6t480l90<br>
-pr02.r48v5c6t480l90<br>
-pr03.r72v7c6t480l90<br>
-pr04.r96v9c6t480l90<br>
-pr05.r120v11c6t480l90<br>
-pr06.r144v13c6t480l90<br>
-pr07.r36v4c6t480l90<br>
-pr08.r72v6c6t480l90<br>
-pr09.r108v8c6t480l90<br>
-pr10.r144v10c6t480l90<br>
-pr11.r24v3c6t480l90<br>
-pr12.r48v5c6t480l90<br>
-pr13.r72v7c6t480l90<br>
-pr14.r96v9c6t480l90<br>
-pr15.r120v11c6t480l90<br>
-pr16.r144v13c6t480l90<br>
-pr17.r36v4c6t480l90<br>
-pr18.r72v6c6t480l90<br>
-pr19.r108v8c6t480l90<br>
-pr20.r144v10c6t480l90<br>
-a2-16.r16v2c3t480l30<br>
-a2-20.r20v2c3t600l30<br>
-a2-24.r24v2c3t720l30<br>
-a3-18.r18v3c3t360l30<br>
-a3-24.r24v3c3t480l30<br>
-a3-30.r30v3c3t600l30<br>
-a3-36.r36v3c3t720l30<br>
-a4-16.r16v4c3t240l30<br>
-a4-24.r24v4c3t360l30<br>
-a4-32.r32v4c3t480l30<br>
-a4-40.r40v4c3t600l30<br>
-a4-48.r48v4c3t720l30<br>
-a5-40.r40v5c3t480l30<br>
-a5-50.r50v5c3t600l30<br>
-a5-60.r60v5c3t720l30<br>
-a6-48.r48v6c3t480l30<br>
-a6-60.r60v6c3t600l30<br>
-a6-72.r72v6c3t720l30<br>
-a7-56.r56v7c3t480l30<br>
-a7-70.r70v7c3t600l30<br>
-a7-84.r84v7c3t720l30<br>
-a8-64.r64v8c3t480l30<br>
-a8-80.r80v8c3t600l30<br>
-a8-96.r96v8c3t720l30<br>
-b2-16.r16v2c6t480l45<br>
-b2-20.r20v2c6t600l45<br>
-b2-24.r24v2c6t720l45<br>
-b3-18.r18v3c6t360l45<br>
-b3-24.r24v3c6t480l45<br>
-b3-30.r30v3c6t600l45<br>
-b3-36.r36v3c6t720l45<br>
-b4-16.r16v4c6t240l45<br>
-b4-24.r24v4c6t360l45<br>
-b4-32.r32v4c6t480l45<br>
-b4-40.r40v4c6t600l45<br>
-b4-48.r48v4c6t720l45<br>
-b5-40.r40v5c6t480l45<br>
-b5-50.r50v5c6t600l45<br>
-b5-60.r60v5c6t720l45<br>
-b6-48.r48v6c6t480l45<br>
-b6-60.r60v6c6t600l45<br>
-b6-72.r72v6c6t720l45<br>
-b7-56.r56v7c6t480l45<br>
-b7-70.r70v7c6t600l45<br>
-b7-84.r84v7c6t720l45<br>
-b8-64.r64v8c6t480l45<br>
-b8-80.r80v8c6t600l45<br>
-b8-96.r96v8c6t720l45</p>
+<p>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">苏宙行-华科-计科.zip</span><br><span class="line">|   darp2d.exe</span><br><span class="line">|   results.csv</span><br><span class="line">|</span><br><span class="line">+---src</span><br><span class="line">|       main.cpp</span><br><span class="line">|       algorithm.cpp</span><br><span class="line">|       algorithm.h</span><br><span class="line">|</span><br><span class="line">+---results</span><br><span class="line">        pr01.n101v25c200.txt</span><br><span class="line">        pr02.n101v25c200.txt</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="算例清单"><a href="#算例清单" class="headerlink" title="算例清单"></a>算例清单</h2><p>下载地址: <a href="https://gitee.com/suzhouxing/npbenchmark.data/tree/data/DARP2d/Instance" target="_blank" rel="noopener">https://gitee.com/suzhouxing/npbenchmark.data/tree/data/DARP2d/Instance</a></p>
+<p>pr01.r24v3c6t480l90<br>pr02.r48v5c6t480l90<br>pr03.r72v7c6t480l90<br>pr04.r96v9c6t480l90<br>pr05.r120v11c6t480l90<br>pr06.r144v13c6t480l90<br>pr07.r36v4c6t480l90<br>pr08.r72v6c6t480l90<br>pr09.r108v8c6t480l90<br>pr10.r144v10c6t480l90<br>pr11.r24v3c6t480l90<br>pr12.r48v5c6t480l90<br>pr13.r72v7c6t480l90<br>pr14.r96v9c6t480l90<br>pr15.r120v11c6t480l90<br>pr16.r144v13c6t480l90<br>pr17.r36v4c6t480l90<br>pr18.r72v6c6t480l90<br>pr19.r108v8c6t480l90<br>pr20.r144v10c6t480l90<br>a2-16.r16v2c3t480l30<br>a2-20.r20v2c3t600l30<br>a2-24.r24v2c3t720l30<br>a3-18.r18v3c3t360l30<br>a3-24.r24v3c3t480l30<br>a3-30.r30v3c3t600l30<br>a3-36.r36v3c3t720l30<br>a4-16.r16v4c3t240l30<br>a4-24.r24v4c3t360l30<br>a4-32.r32v4c3t480l30<br>a4-40.r40v4c3t600l30<br>a4-48.r48v4c3t720l30<br>a5-40.r40v5c3t480l30<br>a5-50.r50v5c3t600l30<br>a5-60.r60v5c3t720l30<br>a6-48.r48v6c3t480l30<br>a6-60.r60v6c3t600l30<br>a6-72.r72v6c3t720l30<br>a7-56.r56v7c3t480l30<br>a7-70.r70v7c3t600l30<br>a7-84.r84v7c3t720l30<br>a8-64.r64v8c3t480l30<br>a8-80.r80v8c3t600l30<br>a8-96.r96v8c3t720l30<br>b2-16.r16v2c6t480l45<br>b2-20.r20v2c6t600l45<br>b2-24.r24v2c6t720l45<br>b3-18.r18v3c6t360l45<br>b3-24.r24v3c6t480l45<br>b3-30.r30v3c6t600l45<br>b3-36.r36v3c6t720l45<br>b4-16.r16v4c6t240l45<br>b4-24.r24v4c6t360l45<br>b4-32.r32v4c6t480l45<br>b4-40.r40v4c6t600l45<br>b4-48.r48v4c6t720l45<br>b5-40.r40v5c6t480l45<br>b5-50.r50v5c6t600l45<br>b5-60.r60v5c6t720l45<br>b6-48.r48v6c6t480l45<br>b6-60.r60v6c6t600l45<br>b6-72.r72v6c6t720l45<br>b7-56.r56v7c6t480l45<br>b7-70.r70v7c6t600l45<br>b7-84.r84v7c6t720l45<br>b8-64.r64v8c6t480l45<br>b8-80.r80v8c6t600l45<br>b8-96.r96v8c6t720l45  </p>
 </div><div class="tags"><a href="/techive/tags/Challenge/">Challenge</a><a href="/techive/tags/算法挑战/">算法挑战</a><a href="/techive/tags/组合优化/">组合优化</a></div><div class="post-nav"><a href="/techive/2023/08/23/Contest-2024LSC/" class="pre">SmartLab Challenge 2024 - Latin Square Completion</a><a href="/techive/2022/05/30/GiteeCsvSupport/" class="next">Gitee 渲染 CSV 文件</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'techive';
 var disqus_identifier = '2022/08/24/Contest-2023DARP/';
 var disqus_title = 'SmartLab Challenge 2023 - Dial-A-Ride Problem';
@@ -167,7 +86,7 @@ $.ajax({
   error: function() {
     $('.btn_click_load').css('display','block');
   }
-});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/团队建设/" style="font-size: 15px;">团队建设</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2023/08/23/Contest-2024LSC/">SmartLab Challenge 2024 - Latin Square Completion</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/08/24/Contest-2023DARP/">SmartLab Challenge 2023 - Dial-A-Ride Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/30/GiteeCsvSupport/">Gitee 渲染 CSV 文件</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/26/Contest-ReadMe/">SmartLab Challenge - ReadMe</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/28/Contest-2023PECCP/">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/TeamBuilding/">论实验室团队建设</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/Contest-2022MCDSP/">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://smart.hust.edu.cn" title="智能决策与系统优化实验室" target="_blank">智能决策与系统优化实验室</a><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的主页 (Gitee)" target="_blank">苏宙行的主页 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的主页 (Github)" target="_blank">苏宙行的主页 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Homepage (Gitee)" target="_blank">Zhouxing Su's Homepage (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Homepage (Github)" target="_blank">Zhouxing Su's Homepage (Github)</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2023 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+});</script><script id="dsq-count-scr" src="//techive.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/techive/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/异想天开/">异想天开</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/技术/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/数学/">数学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/日常/">日常</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/科学/">科学</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/算法挑战/">算法挑战</a></li><li class="category-list-item"><a class="category-list-link" href="/techive/categories/组合优化/">组合优化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/techive/tags/日常/" style="font-size: 15px;">日常</a> <a href="/techive/tags/Challenge/" style="font-size: 15px;">Challenge</a> <a href="/techive/tags/算法挑战/" style="font-size: 15px;">算法挑战</a> <a href="/techive/tags/组合优化/" style="font-size: 15px;">组合优化</a> <a href="/techive/tags/优化/" style="font-size: 15px;">优化</a> <a href="/techive/tags/运筹优化/" style="font-size: 15px;">运筹优化</a> <a href="/techive/tags/技术/" style="font-size: 15px;">技术</a> <a href="/techive/tags/算法竞赛/" style="font-size: 15px;">算法竞赛</a> <a href="/techive/tags/网址导航/" style="font-size: 15px;">网址导航</a> <a href="/techive/tags/Git/" style="font-size: 15px;">Git</a> <a href="/techive/tags/科学/" style="font-size: 15px;">科学</a> <a href="/techive/tags/建模/" style="font-size: 15px;">建模</a> <a href="/techive/tags/需求分析/" style="font-size: 15px;">需求分析</a> <a href="/techive/tags/通用求解器/" style="font-size: 15px;">通用求解器</a> <a href="/techive/tags/异想天开/" style="font-size: 15px;">异想天开</a> <a href="/techive/tags/电影/" style="font-size: 15px;">电影</a> <a href="/techive/tags/黑客帝国/" style="font-size: 15px;">黑客帝国</a> <a href="/techive/tags/Bug/" style="font-size: 15px;">Bug</a> <a href="/techive/tags/博客/" style="font-size: 15px;">博客</a> <a href="/techive/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/techive/tags/数学公式/" style="font-size: 15px;">数学公式</a> <a href="/techive/tags/MathJax/" style="font-size: 15px;">MathJax</a> <a href="/techive/tags/LaTeX/" style="font-size: 15px;">LaTeX</a> <a href="/techive/tags/主题/" style="font-size: 15px;">主题</a> <a href="/techive/tags/缓存/" style="font-size: 15px;">缓存</a> <a href="/techive/tags/编程/" style="font-size: 15px;">编程</a> <a href="/techive/tags/招聘/" style="font-size: 15px;">招聘</a> <a href="/techive/tags/求职/" style="font-size: 15px;">求职</a> <a href="/techive/tags/数学/" style="font-size: 15px;">数学</a> <a href="/techive/tags/提问/" style="font-size: 15px;">提问</a> <a href="/techive/tags/高中/" style="font-size: 15px;">高中</a> <a href="/techive/tags/软件工程/" style="font-size: 15px;">软件工程</a> <a href="/techive/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/techive/tags/多目标/" style="font-size: 15px;">多目标</a> <a href="/techive/tags/团队建设/" style="font-size: 15px;">团队建设</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/techive/2023/08/23/Contest-2024LSC/">SmartLab Challenge 2024 - Latin Square Completion</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/08/24/Contest-2023DARP/">SmartLab Challenge 2023 - Dial-A-Ride Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/30/GiteeCsvSupport/">Gitee 渲染 CSV 文件</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/05/26/Contest-ReadMe/">SmartLab Challenge - ReadMe</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/28/Contest-2023PECCP/">SmartLab Challenge 2023 - Packing Equal Circles in a Circle Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/TeamBuilding/">论实验室团队建设</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/23/Contest-2022MCDSP/">SmartLab Challenge 2022 - Minimum Connected Dominating Sets</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/04/15/Contest-2022DFVS/">SmartLab Challenge 2022 - Directed Feedback Vertex Set Problem</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2022/03/25/Contest-2022OARSMT/">SmartLab Challenge 2022 - Obstacle-Avoiding Rectilinear Steiner Minimum Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/techive/2021/10/03/FromBadmintonToResearch/">从羽毛球的角度谈科研</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//techive.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://smart.hust.edu.cn" title="智能决策与系统优化实验室" target="_blank">智能决策与系统优化实验室</a><ul></ul><a href="https://suzhouxing.gitee.io" title="苏宙行的主页 (Gitee)" target="_blank">苏宙行的主页 (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io" title="苏宙行的主页 (Github)" target="_blank">苏宙行的主页 (Github)</a><ul></ul><a href="https://suzhouxing.gitee.io/index.en.html" title="Zhouxing Su's Homepage (Gitee)" target="_blank">Zhouxing Su's Homepage (Gitee)</a><ul></ul><a href="https://suzhouxing.github.io/index.en.html" title="Zhouxing Su's Homepage (Github)" target="_blank">Zhouxing Su's Homepage (Github)</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2023 <a href="/techive/." rel="nofollow">Techive.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/techive/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/techive/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/techive/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
