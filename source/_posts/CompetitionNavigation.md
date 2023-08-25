@@ -122,6 +122,8 @@ tags:
     - 历史链接 [http://www.mage.fst.uha.fr/brevilliers/gecco-2021-ocp-uscp-competition](http://www.mage.fst.uha.fr/brevilliers/gecco-2021-ocp-uscp-competition)
 - AIcrowd
   - **列车调度** [https://www.aicrowd.com/challenges/flatland-3](https://www.aicrowd.com/challenges/flatland-3)
+- Biendata
+  - **柔性作业车间调度** [https://www.biendata.net/competition/Siemens02/?source=ximenzi03](https://www.biendata.net/competition/Siemens02/?source=ximenzi03)
 - 京东
   - **库存管理** [https://jdata.jd.com/html/detail.html?id=4](https://jdata.jd.com/html/detail.html?id=4)
   - **车辆路由** [https://jdata.jd.com/html/detail.html?id=5](https://jdata.jd.com/html/detail.html?id=5)
